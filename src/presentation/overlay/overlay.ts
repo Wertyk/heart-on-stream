@@ -1,9 +1,13 @@
 import { connectOverlay } from "./connection";
 import { parseOverlayOptions } from "./options";
 import { renderOverlay } from "./render";
-import { disconnectScene, emptyScene, receiveSnapshot } from "./scene";
+import {
+  advanceScene,
+  disconnectScene,
+  emptyScene,
+  receiveSnapshot,
+} from "./scene";
 import { overlayView } from "./view";
-import { playWave, waveTrail } from "./wave-buffer";
 
 const canvas = document.querySelector<HTMLCanvasElement>("#overlay");
 if (!canvas) throw new Error("Overlay canvas is missing.");
@@ -39,6 +43,7 @@ window.addEventListener("resize", resize);
 resize();
 
 let scene = emptyScene();
+let view = overlayView(scene.state);
 let stopped = false;
 const disconnect = connectOverlay(
   port,
@@ -48,31 +53,20 @@ const disconnect = connectOverlay(
       state,
       performance.now(),
     );
+    view = overlayView(scene.state);
   },
   () => {
     scene = disconnectScene(scene);
+    view = overlayView(scene.state);
   },
 );
 
 let frame = 0;
 function draw(nowMs: number): void {
   if (stopped || !context) return;
-  const beat = playWave(scene.beat, nowMs);
-  const breath = playWave(scene.breath, nowMs);
-  scene = { ...scene, beat: beat.buffer, breath: breath.buffer };
-  renderOverlay(
-    context,
-    width,
-    height,
-    theme,
-    overlayView(scene.state),
-    beat.value,
-    {
-      points: waveTrail(breath.buffer),
-      cursorAtMs: breath.buffer.cursorAtMs,
-      opacity: breath.opacity,
-    },
-  );
+  const next = advanceScene(scene, nowMs);
+  scene = next.scene;
+  renderOverlay(context, width, height, theme, view, next.animation);
   frame = requestAnimationFrame(draw);
 }
 frame = requestAnimationFrame(draw);

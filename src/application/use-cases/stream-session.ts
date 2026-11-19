@@ -214,6 +214,7 @@ export class StreamSession {
       validation: this.active ? snapshot.validation : null,
       processing: this.processing,
       sdkStarted: this.sdkStarted,
+      sessionDurationMs: this.finalDurationMs,
       highlights: this.currentHighlights,
       errors: [...this.errors].map(([operation, message]) => ({
         operation,

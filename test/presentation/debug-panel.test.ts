@@ -36,7 +36,10 @@ class ElementFake {
   readonly play = vi.fn(async () => {});
   readonly children: (ElementFake | string)[] = [];
   readonly attributes = new Map<string, string>();
-  private readonly listeners = new Map<string, () => void>();
+  private readonly listeners = new Map<
+    string,
+    (event: KeyboardEvent) => void
+  >();
   constructor(readonly tag: string) {}
   get length() {
     return this.children.length;
@@ -54,6 +57,7 @@ class ElementFake {
     else this.inputValue = value;
   }
   setAttribute(name: string, value: string) {
+    if (name === "id") this.id = value;
     this.attributes.set(name, value);
   }
   append(...children: (ElementFake | string)[]) {
@@ -62,11 +66,11 @@ class ElementFake {
   replaceChildren(...children: (ElementFake | string)[]) {
     this.children.splice(0, this.children.length, ...children);
   }
-  addEventListener(event: string, callback: () => void) {
+  addEventListener(event: string, callback: (event: KeyboardEvent) => void) {
     this.listeners.set(event, callback);
   }
-  trigger(event: string) {
-    this.listeners.get(event)?.();
+  trigger(event: string, key = "") {
+    this.listeners.get(event)?.({ key, preventDefault() {} } as KeyboardEvent);
   }
 }
 afterEach(() => vi.unstubAllGlobals());
@@ -77,12 +81,14 @@ function fixture(
   cameraStorage = new Map<string, string>(),
 ) {
   const elements: ElementFake[] = [];
+  const createElement = (tag: string) => {
+    const node = new ElementFake(tag);
+    elements.push(node);
+    return node;
+  };
   vi.stubGlobal("document", {
-    createElement(tag: string) {
-      const node = new ElementFake(tag);
-      elements.push(node);
-      return node;
-    },
+    createElement,
+    createElementNS: (_: string, tag: string) => createElement(tag),
   });
   vi.stubGlobal("window", {
     localStorage: {
@@ -182,6 +188,22 @@ function fixture(
 const settle = async () => {
   for (let i = 0; i < 8; i++) await Promise.resolve();
 };
+
+function visibleDescendants(node: ElementFake | string): ElementFake[] {
+  return typeof node === "string" || node.hidden
+    ? []
+    : [node, ...node.children.flatMap(visibleDescendants)];
+}
+
+const highlightAt = (sessionOffsetUs: number) => ({
+  t: 1000 + sessionOffsetUs,
+  sessionStartedAt: 1000,
+  sessionOffsetUs,
+  recordingOffsetMs: null,
+  label: "spike +18 vs baseline",
+  deltaBpm: 18,
+  talkingRecent: false,
+});
 
 function liveReceiptFixture() {
   const f = fixture();
@@ -302,10 +324,10 @@ describe("streamer panel DOM", () => {
     const f = fixture();
     const screen = f.screen("consent");
     expect(screen?.hidden).toBe(false);
-    const children = screen?.children ?? [];
-    const agreeIndex = children.indexOf(f.node("agree"));
+    const visible = screen ? visibleDescendants(screen) : [];
+    const agreeIndex = visible.indexOf(f.node("agree"));
     expect(agreeIndex).toBeGreaterThan(0);
-    const beforeAgreement = children.slice(0, agreeIndex);
+    const beforeAgreement = visible.slice(0, agreeIndex);
     expect(beforeAgreement).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -358,7 +380,7 @@ describe("streamer panel DOM", () => {
         f.click("end-session");
         await vi.waitFor(() => expect(f.screen("receipt")?.hidden).toBe(false));
         expect(f.node("receipt-summary").textContent).toBe(
-          "Camera: off · Video saved: no · Highlights: 0 · SDK telemetry: off · Sent to Presage: key check and, by SDK default, automatic vitals insights (no video)",
+          "Camera: off · Video saved: no · Highlights: 0 · SDK telemetry: off · Sent to Presage: key check; the SDK may send automatic vitals check-ins during measurement (no video)",
         );
 
         if (stage === "camera acquisition")
@@ -388,6 +410,203 @@ describe("streamer panel DOM", () => {
       }
     },
   );
+
+  it("clears earlier highlights on New session and blocks exports after a canceled Start", async () => {
+    const f = fixture();
+    await f.accept();
+    const oldRun = { ...f.state, highlights: [highlightAt(21_000_000)] };
+    f.panel.showSession({ ...oldRun, active: true });
+    f.panel.showSession(oldRun);
+    f.panel.showRecording({
+      active: false,
+      filePath: "/prior.jsonl",
+      error: "",
+    });
+    expect(f.node("highlights").children).toHaveLength(1);
+    expect(f.node("export-chapters").disabled).toBe(false);
+    f.click("new-session");
+    f.actions.start.mockImplementationOnce(async () => {
+      f.panel.showMeasurement({ ...f.measurement, busy: true });
+    });
+    f.click("start");
+    expect(f.screen("live")?.hidden).toBe(false);
+    expect(f.node("highlights").children).toHaveLength(0);
+    expect(
+      f.elements.some((node) => node.textContent === "File: /prior.jsonl"),
+    ).toBe(false);
+    f.panel.showSession(oldRun);
+    f.panel.showRecording({
+      active: false,
+      filePath: "/prior.jsonl",
+      error: "",
+    });
+    f.panel.showMeasurement(f.measurement);
+    await settle();
+    expect(f.screen("receipt")?.hidden).toBe(false);
+    expect(f.node("highlights").children).toHaveLength(0);
+    expect(f.node("export-chapters").disabled).toBe(true);
+    f.click("export-chapters");
+    expect(f.actions.exportChapters).not.toHaveBeenCalled();
+    expect(
+      f.elements.some((node) => node.textContent === "File: /prior.jsonl"),
+    ).toBe(false);
+  });
+
+  it.each([
+    [0, "Your heart marked nothing."],
+    [1, "Your heart marked 1 moment."],
+    [2, "Your heart marked 2 moments."],
+  ])("uses the receipt title for %i local highlights", async (count, title) => {
+    const f = fixture();
+    await f.accept();
+    const state = {
+      ...f.state,
+      highlights: Array.from({ length: count }, (_, index) =>
+        highlightAt((index + 1) * 20_000_000),
+      ),
+    };
+    f.panel.showSession({ ...state, active: true });
+    f.panel.showSession(state);
+    expect(f.node("heading-receipt").textContent).toBe(title);
+    expect(f.node("receipt-summary").textContent).toContain(
+      `Highlights: ${count}`,
+    );
+    expect(f.node("receipt-timeline").hidden).toBe(true);
+  });
+
+  it("positions receipt highlights on the finalized session timeline", async () => {
+    const f = fixture(true);
+    await f.accept();
+    const state = {
+      ...f.state,
+      sessionDurationMs: 80_000,
+      highlights: [highlightAt(20_000_000), highlightAt(60_000_000)],
+    };
+    f.panel.showSession({ ...f.state, active: true });
+    f.panel.showSession(state);
+    expect(f.node("receipt-timeline").hidden).toBe(false);
+    const markers = f.node("receipt-timeline-markers")
+      .children as ElementFake[];
+    expect(markers.map((marker) => marker.attributes.get("x1"))).toEqual([
+      "250",
+      "750",
+    ]);
+    f.click("new-session");
+    expect(f.node("receipt-timeline").hidden).toBe(true);
+    expect(f.node("receipt-timeline-markers").children).toHaveLength(0);
+  });
+
+  it("selects the same sharing mode by keyboard and click in the segmented dial", async () => {
+    const f = fixture();
+    await f.accept();
+    f.node("privacy-mode-vibe").trigger("keydown", "ArrowRight");
+    expect(f.node("privacy-mode-numbers").attributes.get("aria-pressed")).toBe(
+      "true",
+    );
+    f.click("start");
+    expect(f.actions.start).toHaveBeenCalledExactlyOnceWith(
+      "camera",
+      "b",
+      false,
+      "numbers",
+    );
+    f.panel.showSession({ ...f.state, active: true, privacyMode: "vibe" });
+    f.node("live-privacy-mode-vibe").trigger("keydown", "ArrowRight");
+    expect(f.node("live-privacy-mode-numbers").focus).toHaveBeenCalledOnce();
+    expect(
+      f.node("live-privacy-mode-numbers").attributes.get("aria-pressed"),
+    ).toBe("true");
+    expect(f.actions.setPrivacyMode).toHaveBeenLastCalledWith("numbers");
+    f.panel.showSession({ ...f.state, active: true, privacyMode: "vibe" });
+    f.click("live-privacy-mode-numbers");
+    expect(
+      f.node("live-privacy-mode-vibe").attributes.get("aria-pressed"),
+    ).toBe("false");
+    expect(f.actions.setPrivacyMode.mock.calls).toEqual([
+      ["numbers"],
+      ["numbers"],
+    ]);
+  });
+
+  it("plots distinct pulse readings in the last two measurement minutes and follows the talking threshold", async () => {
+    const f = fixture(true);
+    await f.accept();
+    const sample = (t: number, value: number, talkingRecent = false) => ({
+      ...f.state,
+      active: true,
+      phase: "live" as const,
+      privacyMode: "vibe" as const,
+      baselineBpm: 65,
+      talkingRecent,
+      t,
+      pulse: { t, value, confidence: 95, stable: true },
+    });
+    const trace = () => f.node("pulse-chart-trace").attributes.get("d") ?? "";
+    f.panel.showSession(sample(1_000_000, 65));
+    const first = trace();
+    expect(first).toMatch(/^M/);
+    f.panel.showSession(sample(1_000_000, 65));
+    expect(trace()).toBe(first);
+    f.panel.showSession(sample(121_000_000, 72));
+    expect(trace()).toMatch(/^M.*L/);
+    expect(f.node("pulse-chart-spike-label").textContent).toContain("80 BPM");
+    const next = sample(122_000_000, 75, true);
+    f.panel.showSession(next);
+    expect(trace().match(/L/gu)).toHaveLength(1);
+    expect(f.node("pulse-chart-spike-label").textContent).toContain("85 BPM");
+    f.panel.showSession({ ...next, t: 243_000_000 });
+    expect(trace()).toBe("");
+  });
+
+  it("clears the pulse chart across second faces, pause, and new sessions without plotting retained readings", async () => {
+    const f = fixture(true);
+    await f.accept();
+    const active = {
+      ...f.state,
+      active: true,
+      phase: "live" as const,
+      privacyMode: "numbers" as const,
+      baselineBpm: 65,
+    };
+    const update = (t: number, options: Partial<typeof f.state> = {}) =>
+      f.panel.showSession({
+        ...active,
+        t,
+        pulse: { t, value: 78, confidence: 95, stable: true },
+        ...options,
+      });
+    const hidden = () => f.node("pulse-chart").hidden;
+    const trace = () => f.node("pulse-chart-trace").attributes.get("d") ?? "";
+    update(2_000);
+    expect(hidden()).toBe(false);
+    expect(trace()).toMatch(/^M/);
+    update(2_500, { pulse: null });
+    expect(hidden()).toBe(true);
+    expect(trace()).toBe("");
+    update(3_000, {
+      phase: "paused",
+      validation: { code: "multipleFacesFound", t: 3_000, hint: "One face" },
+    });
+    expect(hidden()).toBe(true);
+    expect(trace()).toBe("");
+    update(4_000, { pulse: null });
+    expect(trace()).toBe("");
+    update(5_000);
+    expect(trace()).toMatch(/^M[^L]+$/);
+    update(6_000, { phase: "paused", pauseReason: "manual" });
+    expect(hidden()).toBe(true);
+    expect(trace()).toBe("");
+    update(6_000);
+    expect(trace()).toBe("");
+    update(7_000);
+    expect(trace()).toMatch(/^M[^L]+$/);
+    f.panel.showSession(f.state);
+    f.click("new-session");
+    f.click("start");
+    update(2_000);
+    expect(hidden()).toBe(false);
+    expect(trace()).toMatch(/^M[^L]+$/);
+  });
 
   it("requires the only-person checkbox and I agree before Setup or Start; preserves opted-in configuration", async () => {
     const f = fixture();
@@ -596,7 +815,8 @@ describe("streamer panel DOM", () => {
 
   it("replaces consent with a replay notice, hides camera/record controls and keeps REPLAY across every screen", async () => {
     const f = fixture(true);
-    expect(f.screen("consent")?.children).toContainEqual(
+    const notice = f.screen("consent");
+    expect(notice && visibleDescendants(notice)).toContainEqual(
       expect.objectContaining({
         textContent:
           "Replay plays back a saved session of numeric signal and status data. The camera and session recording stay off.",
@@ -708,8 +928,7 @@ describe("streamer panel DOM", () => {
   it("reflects pause/privacy snapshots, handles buttons and disables Off at Setup", async () => {
     const f = fixture();
     await f.accept();
-    f.node("privacy-mode").value = "off";
-    f.node("privacy-mode").trigger("change");
+    f.click("privacy-mode-off");
     expect(f.node("start").disabled).toBe(true);
     f.panel.showSession({
       ...f.state,
@@ -719,7 +938,9 @@ describe("streamer panel DOM", () => {
     });
     expect(f.node("resume").hidden).toBe(false);
     expect(f.node("pause").hidden).toBe(true);
-    expect(f.node("live-privacy-mode").value).toBe("highlightsOnly");
+    expect(
+      f.node("live-privacy-mode-highlightsOnly").attributes.get("aria-pressed"),
+    ).toBe("true");
     f.click("resume");
     expect(f.actions.resume).toHaveBeenCalledOnce();
     expect(f.actions.pause).not.toHaveBeenCalled();
@@ -732,8 +953,7 @@ describe("streamer panel DOM", () => {
     expect(f.node("pause").hidden).toBe(false);
     expect(f.node("resume").hidden).toBe(true);
     f.click("pause");
-    f.node("live-privacy-mode").value = "numbers";
-    f.node("live-privacy-mode").trigger("change");
+    f.click("live-privacy-mode-numbers");
     f.click("end-session");
     await settle();
     expect(f.actions.pause).toHaveBeenCalledOnce();
@@ -756,8 +976,7 @@ describe("streamer panel DOM", () => {
       f.panel.showSession({ ...f.state, active: true, privacyMode: "numbers" });
       const privacy = f.node("live-privacy-mode");
       expect(privacy.disabled).toBe(false);
-      privacy.value = "off";
-      privacy.trigger("change");
+      f.click("live-privacy-mode-off");
       expect(f.actions.setPrivacyMode).toHaveBeenCalledExactlyOnceWith("off");
     } finally {
       finishStart();
@@ -807,7 +1026,10 @@ describe("streamer panel DOM", () => {
     f.node("camera").trigger("change");
     expect(storage.size).toBe(1);
     expect(f.screen("setup")?.hidden).toBe(false);
-    expect(f.screen("setup")?.children).toContain(f.node("setup-delete-data"));
+    const setup = f.screen("setup");
+    expect(setup && visibleDescendants(setup)).toContain(
+      f.node("setup-delete-data"),
+    );
     f.click("setup-delete-data");
     expect(f.node("setup-confirm-delete").focus).toHaveBeenCalledOnce();
     expect(
@@ -1053,6 +1275,26 @@ describe("streamer panel DOM", () => {
         ),
       ).toBe(true);
     }
+    for (const [id, helpId] of [
+      ["privacy-mode", "privacy-help"],
+      ["live-privacy-mode", "live-privacy-help"],
+    ] as const) {
+      const dial = f.node(id);
+      expect(dial.tag).toBe("fieldset");
+      expect(dial.attributes.get("aria-describedby")).toBe(helpId);
+      expect(dial.children).toContainEqual(
+        expect.objectContaining({
+          tag: "legend",
+          textContent: "Privacy dial · overlay sharing",
+        }),
+      );
+      expect(f.node(helpId).textContent).toBe(
+        "Vibe — no BPM or breathing-rate numbers. The overlay receives beat and breath waveform points with timing, intensity and status, so viewers could still estimate a rate from the rhythm.",
+      );
+    }
+    expect(f.elements.every((node) => !node.attributes.has("style"))).toBe(
+      true,
+    );
     expect(
       f.elements.some(
         (node) =>

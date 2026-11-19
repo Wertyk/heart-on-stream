@@ -108,6 +108,7 @@ export function composeApplication(options: LaunchOptions): {
           };
           let disposed = false;
           let starting: Promise<void> | null = null;
+          let currentRunHasRecording = false;
           let userGeneration = 0;
           let exportRevision = 0;
           let stream: StreamSession;
@@ -130,7 +131,7 @@ export function composeApplication(options: LaunchOptions): {
             });
             send("recording:state", {
               active: state.recording,
-              filePath: recorder.filePath,
+              filePath: currentRunHasRecording ? recorder.filePath : null,
               error: state.errors
                 .filter((error) => error.operation.startsWith("recording"))
                 .map((error) => error.message)
@@ -255,7 +256,15 @@ export function composeApplication(options: LaunchOptions): {
                   return result;
                 },
               },
-              recorder,
+              recorder: {
+                async start() {
+                  await recorder.start();
+                  currentRunHasRecording = true;
+                },
+                append: (frame) => recorder.append(frame),
+                stop: () => recorder.stop(),
+                deleteAll: () => recorder.deleteAll(),
+              },
               clock,
               logger,
               highlights: new FsHighlightRepository(app.getPath("userData")),
@@ -378,6 +387,7 @@ export function composeApplication(options: LaunchOptions): {
               return Promise.reject(new Error(replayError));
             if (user) userGeneration++;
             selection = request;
+            currentRunHasRecording = false;
             runEndRequested = false;
             exportRevision++;
             runtime = { ...runtime, replayMessage: "" };

@@ -1,4 +1,5 @@
 import type { PrivacyMode } from "../../domain/privacy/index";
+import { DEFAULT_SPIKE_POLICY } from "../../domain/session/index";
 import type {
   MetricConfiguration,
   PanelCommandResult,
@@ -16,14 +17,20 @@ import {
   isVirtualCamera,
   selectCamera,
 } from "./camera-selection";
+import { element, svgElement } from "./panel-elements";
+import { createPrivacyDial, privacyLabels } from "./privacy-dial";
+import { createPulseChart } from "./pulse-chart";
+import { PulseHistory } from "./pulse-history";
+import { createReceiptTimeline } from "./receipt-timeline";
 import {
   type FlowEvent,
   initialFlow,
   multipleFacesMessage,
   type PanelScreen,
   phaseText,
-  privacyDescriptions,
+  receiptFacts,
   receiptText,
+  receiptTitle,
   sessionHighlights,
   sessionTime,
   transitionFlow,
@@ -70,16 +77,6 @@ export function createDebugPanel(
   actions: PanelActions,
   replay = false,
 ) {
-  function element<K extends keyof HTMLElementTagNameMap>(
-    tag: K,
-    text = "",
-    className = "",
-  ) {
-    const node = document.createElement(tag);
-    node.textContent = text;
-    node.className = className;
-    return node;
-  }
   function button(text: string, id: string, action: () => void) {
     const node = element("button", text);
     node.id = id;
@@ -110,44 +107,51 @@ export function createDebugPanel(
     }
     return node;
   }
-  const header = element("header");
-  const brand = element("div");
-  brand.append(
-    element("p", "YOUR STREAM. YOUR SIGNAL.", "eyebrow"),
-    element("h1", "Heart on Stream"),
-  );
+  function card(...children: Element[]) {
+    const node = element("div", "", "card");
+    node.append(...children);
+    return node;
+  }
+  function heart(className: string) {
+    const node = element("div", "", `heart ${className}`);
+    node.setAttribute("aria-hidden", "true");
+    const icon = svgElement("svg", { viewBox: "0 0 112 112" });
+    icon.append(
+      svgElement("path", {
+        class: "heart-shape",
+        d: "M56 96C44 86 13 64 13 41a22 22 0 0 1 43-10 22 22 0 0 1 43 10c0 23-31 45-43 55Z",
+      }),
+    );
+    node.append(icon);
+    return node;
+  }
+  const header = element("header", "", "panel-header");
+  const brand = element("div", "", "brand");
+  brand.append(heart("brand-heart"), element("h1", "Heart on Stream"));
   const replayBadge = element("span", "REPLAY", "badge replay-badge");
   replayBadge.hidden = !replay;
   header.append(brand, replayBadge);
   const steps = element("nav", "", "steps");
   steps.setAttribute("aria-label", "Session progress");
-  const screens = new Map<PanelScreen, HTMLElement>();
-  const headings = new Map<PanelScreen, HTMLElement>();
-  const stepNodes = new Map<PanelScreen, HTMLElement>();
-  for (const [name, text] of [
-    ["consent", replay ? "Replay notice" : "Consent"],
-    ["setup", "Setup"],
-    ["live", "Live"],
-    ["receipt", "Receipt"],
-  ] as const) {
+  function screen(name: PanelScreen, text: string) {
     const step = element("span", text);
     steps.append(step);
-    stepNodes.set(name, step);
-    const screen = element("section", "", "card");
-    const heading = element("h2", text);
+    const section = element("section", "", `panel-screen panel-${name}`);
+    const heading = element("h2", text, "screen-title");
     heading.id = `heading-${name}`;
     heading.tabIndex = -1;
-    screen.setAttribute("aria-labelledby", heading.id);
-    screen.append(heading);
-    screens.set(name, screen);
-    headings.set(name, heading);
+    section.setAttribute("aria-labelledby", heading.id);
+    return { name, section, heading, step };
   }
-  const consentScreen = screens.get("consent");
-  const setup = screens.get("setup");
-  const live = screens.get("live");
-  const receipt = screens.get("receipt");
-  if (!consentScreen || !setup || !live || !receipt)
-    throw new Error("Panel screen is missing.");
+  const consentView = screen("consent", replay ? "Replay notice" : "Consent");
+  const setupView = screen("setup", "Setup");
+  const liveView = screen("live", "Live");
+  const receiptView = screen("receipt", "Receipt");
+  const screens = [consentView, setupView, liveView, receiptView];
+  const { section: consentScreen, heading: consentTitle } = consentView;
+  const { section: setup, heading: setupTitle } = setupView;
+  const { section: live, heading: liveTitle } = liveView;
+  const { section: receipt, heading: receiptHeading } = receiptView;
   const consent = element("input");
   consent.type = "checkbox";
   consent.id = "only-person";
@@ -174,25 +178,73 @@ export function createDebugPanel(
       });
     },
   );
-  consentScreen.append(
+  agree.className = "primary";
+  const heroText = element("div");
+  consentTitle.textContent = replay
+    ? "Replay notice"
+    : "Your face. Your rules.";
+  if (!replay)
+    heroText.append(element("p", "BEFORE THE CAMERA TURNS ON", "eyebrow"));
+  heroText.append(
+    consentTitle,
     element(
       "p",
       replay
         ? "Replay plays back a saved session of numeric signal and status data. The camera and session recording stay off."
-        : "The camera stays off until you agree and start a session.",
+        : "Pulse and breathing estimates come from your camera via the Presage SmartSpectra SDK.",
+      "hero-intro",
     ),
   );
-  if (!replay)
-    for (const text of [
-      "Pulse and breathing estimates come from your camera via the Presage SmartSpectra SDK.",
-      "The overlay shows only what your selected privacy mode allows. This panel is for you, the streamer, only.",
-      "No video or images are ever saved or sent anywhere. Your camera choice and highlights.json are stored locally. Numeric session recordings are saved only if recording is enabled.",
-      "Pulse and breathing are computed on this computer. The SDK contacts Presage to check your API key. SDK telemetry is disabled.",
-      "During live measurement the Presage SDK also sends automatic LLM Insights check-ins: once readings stabilize and then every 60 seconds, it sends an allowlisted set of the vitals the SDK has computed (pulse rate, breathing rate and heart-rate variability, where available) with session and request identifiers, but no video or images, to Presage, which forwards them to a language model. The SDK has no setting to turn this off. Heart on Stream never requests insights and ignores any replies.",
-      "For wellness / entertainment. This is not a medical device.",
+  const hero = card(heroText, heart("hero-heart"));
+  hero.className = "card consent-hero";
+  consentScreen.append(hero);
+  if (!replay) {
+    const disclosures = element("div", "", "disclosure-grid");
+    for (const [title, text] of [
+      [
+        "Camera stays off",
+        "The camera stays off until you agree and start a session.",
+      ],
+      [
+        "Computed on this computer",
+        "Pulse and breathing are computed on this computer. The SDK contacts Presage to check your API key. SDK telemetry is disabled.",
+      ],
+      [
+        "Viewers see only your dial",
+        "The overlay shows only what your selected privacy mode allows. This panel is for you, the streamer, only.",
+      ],
+      [
+        "One person on camera",
+        "Measurement pauses if a second face comes into view.",
+      ],
     ])
-      consentScreen.append(element("p", text));
-  consentScreen.append(consentLabel, agree);
+      disclosures.append(card(element("h3", title), element("p", text)));
+    const insights = card(
+      element("h3", "Presage LLM Insights"),
+      element(
+        "p",
+        "During live measurement the Presage SDK also sends automatic LLM Insights check-ins: once readings stabilize and then every 60 seconds, it sends an allowlisted set of the vitals the SDK has computed (pulse rate, breathing rate and heart-rate variability, where available) with session and request identifiers, but no video or images, to Presage, which forwards them to a language model. The SDK has no setting to turn this off. Heart on Stream never requests insights and ignores any replies.",
+      ),
+    );
+    insights.className = "card disclosure-box";
+    const storage = element("div", "", "consent-storage");
+    storage.append(
+      element("h3", "Stored only here"),
+      element(
+        "p",
+        "No video or images are ever saved or sent anywhere. Your camera choice and highlights.json are stored locally. Numeric session recordings are saved only if recording is enabled.",
+      ),
+      element(
+        "p",
+        "For wellness / entertainment. This is not a medical device.",
+        "muted",
+      ),
+    );
+    consentScreen.append(disclosures, insights, storage);
+  }
+  const consentFooter = card(consentLabel, agree);
+  consentFooter.className = "card consent-footer";
+  consentScreen.append(consentFooter);
 
   const configurationMessage = status("configuration-message");
   configurationMessage.textContent = "Loading local configuration…";
@@ -229,38 +281,22 @@ export function createDebugPanel(
     "help",
   );
   replayMetricsHelp.hidden = !replay;
-  const mode = select("privacy-mode", [
-    ["off", "Off"],
-    ["vibe", "Vibe"],
-    ["numbers", "Numbers"],
-    ["highlightsOnly", "Highlights only"],
-  ]);
-  const liveMode = select("live-privacy-mode", [
-    ["off", "Off"],
-    ["vibe", "Vibe"],
-    ["numbers", "Numbers"],
-    ["highlightsOnly", "Highlights only"],
-  ]);
-  mode.value = liveMode.value = "vibe";
-  const modeHelp = element("p", privacyDescriptions.vibe, "help");
-  const liveModeHelp = element("p", privacyDescriptions.vibe, "help");
-  modeHelp.id = "privacy-help";
-  liveModeHelp.id = "live-privacy-help";
-  mode.setAttribute("aria-describedby", modeHelp.id);
-  liveMode.setAttribute("aria-describedby", liveModeHelp.id);
+  const mode = createPrivacyDial("privacy-mode", "privacy-help", () =>
+    updateControls(),
+  );
+  const liveMode = createPrivacyDial(
+    "live-privacy-mode",
+    "live-privacy-help",
+    (mode) => {
+      void run(() => actions.setPrivacyMode(mode));
+    },
+  );
   const cycleHelp = () =>
     element(
       "p",
       "The privacy hotkey cycles Vibe → Numbers → Highlights only. Off is excluded because it ends measurement.",
       "help",
     );
-  mode.addEventListener("change", () => {
-    modeHelp.textContent = privacyDescriptions[mode.value as PrivacyMode];
-    updateControls();
-  });
-  liveMode.addEventListener("change", () => {
-    void run(() => actions.setPrivacyMode(liveMode.value as PrivacyMode));
-  });
   const record = element("input");
   record.type = "checkbox";
   record.id = "record-session";
@@ -295,7 +331,7 @@ export function createDebugPanel(
           replay ? "" : (selectedCamera()?.deviceId ?? ""),
           config.value === "b" ? "b" : "a",
           !replay && record.checked,
-          mode.value as PrivacyMode,
+          mode.value,
         ),
       ).finally(() => {
         pending = false;
@@ -312,33 +348,49 @@ export function createDebugPanel(
     },
   );
   start.className = "primary";
-  setup.append(
-    configurationMessage,
-    replayFile,
+  const sessionSettings = card(
+    element("h3", "Measurement"),
     cameraGroup,
     label("Metric configuration", config),
     config,
     replayMetricsHelp,
-    label("Privacy dial · overlay sharing", mode),
-    mode,
-    modeHelp,
-    cycleHelp(),
     recordLabel,
     recordingHelp,
+  );
+  const sharingSettings = card(
+    mode.group,
+    cycleHelp(),
     element("h3", "OBS Browser Source"),
     urlRow,
     copyMessage,
-    start,
+  );
+  sharingSettings.className = "card sharing-settings";
+  const setupGrid = element("div", "", "setup-grid");
+  setupGrid.append(sessionSettings, sharingSettings);
+  const setupControls = element("div", "", "controls setup-controls");
+  setup.append(
+    setupTitle,
+    configurationMessage,
+    replayFile,
+    setupGrid,
+    setupControls,
   );
 
   const liveHeader = element("div", "", "live-header");
+  const liveBadges = element("div", "", "live-badges");
+  const liveStatus = element("span", "Starting…", "badge live-status");
+  liveStatus.hidden = replay;
   const indicator = status("measuring-indicator");
+  indicator.className = replay ? "badge live-status" : "badge";
+  indicator.textContent = replay ? "Replay stopped" : "Camera off";
+  const liveObs = element("span", "OBS is disconnected.", "badge");
+  liveObs.setAttribute("aria-hidden", "true");
   const liveCamera = element("p", "", "muted");
   liveCamera.id = "live-camera";
   liveCamera.hidden = true;
   const badge = element("span", "Vibe", "badge");
   badge.id = "privacy-badge";
-  liveHeader.append(indicator, badge);
+  liveBadges.append(liveStatus, indicator, liveObs, badge);
   const phase = status("session-phase");
   phase.className = "phase";
   const preview = element("video");
@@ -402,64 +454,102 @@ export function createDebugPanel(
   const stop = button("End session", "end-session", () => {
     void run(actions.stop);
   });
+  stop.className = "danger";
   const controls = element("div", "", "controls");
   controls.append(pause, resume, stop);
-  const conditionGroup = element("div");
-  conditionGroup.append(
+  liveTitle.className = "sr-only";
+  liveHeader.append(liveTitle, liveBadges, controls);
+  const conditionGroup = card(
     element("h3", "Conditions"),
+    preview,
+    liveCamera,
     condition,
     validation,
     quality,
   );
-  const signalGrid = element(
-    "div",
-    "",
-    replay ? "signal-grid replay-grid" : "signal-grid",
-  );
-  signalGrid.append(preview, conditionGroup);
-  const livePrivacy = element("div", "", "live-privacy");
-  livePrivacy.append(
-    label("Privacy dial · overlay sharing", liveMode),
-    liveMode,
-    liveModeHelp,
+  const pulseValue = element("strong", "—", "signal-value");
+  const breathingValue = element("strong", "—", "signal-value");
+  const readings = element("dl", "", "signal-readings");
+  for (const [title, value, unit] of [
+    ["Pulse", pulseValue, "BPM"],
+    ["Breathing", breathingValue, "breaths/min"],
+  ] as const) {
+    const metric = element("div", "", "signal-metric");
+    const reading = element("dd");
+    reading.append(value, element("span", unit, "signal-unit"));
+    metric.append(element("dt", title), reading);
+    readings.append(metric);
+  }
+  const intensity = element("span", "Calm", "badge intensity");
+  intensity.hidden = true;
+  const baseline = element("p", "", "baseline-note");
+  const signalCaption = element("div", "", "signal-caption");
+  signalCaption.append(element("h3", "Your signal"), intensity);
+  const signalTop = element("div", "", "signal-top");
+  signalTop.append(heart("signal-heart"), readings);
+  const chart = createPulseChart();
+  const history = new PulseHistory();
+  const signal = card(signalCaption, phase, signalTop, baseline, chart.root);
+  signal.className = "card signal-card";
+
+  const livePrivacy = card(
+    element("h3", "What viewers see"),
+    liveMode.group,
     cycleHelp(),
   );
+  const liveSide = element("div", "", "live-side");
+  liveSide.append(livePrivacy, conditionGroup);
+  const liveGrid = element("div", "", "live-grid");
+  liveGrid.append(signal, liveSide);
+  raw.className = "card raw-card";
+  const highlightsCard = card(
+    element("h3", "Session highlights"),
+    emptyHighlights,
+    highlights,
+  );
+  const liveDetails = element("div", "", "live-details");
+  liveDetails.append(highlightsCard, raw);
   live.append(
     liveHeader,
-    liveCamera,
-    phase,
     multipleFaces,
     unusableInput,
     cameraDisconnected,
-    controls,
+    liveGrid,
+    liveDetails,
     element(
       "p",
       "Pause / Resume: Cmd/Ctrl+Shift+P · Privacy: Cmd/Ctrl+Shift+M",
       "help hotkeys",
     ),
-    signalGrid,
-    livePrivacy,
-    element("h3", "Session highlights"),
-    emptyHighlights,
-    highlights,
-    raw,
   );
 
   const receiptSummary = element(
     "p",
     receiptText(replay, 0, false),
-    "receipt-summary",
+    "receipt-summary sr-only",
   );
   receiptSummary.id = "receipt-summary";
+  const receiptTiles = element("dl", "", "receipt-tiles");
+  // The full receipt summary provides the equivalent content to screen readers.
+  receiptTiles.setAttribute("aria-hidden", "true");
+  function receiptTile(title: string) {
+    const value = element("dd");
+    const tile = card(element("dt", title), value);
+    receiptTiles.append(tile);
+    return { tile, value };
+  }
+  const cameraTile = receiptTile("Camera");
+  const videoTile = receiptTile("Video saved");
+  const telemetryTile = receiptTile("SDK telemetry");
+  const presageTile = receiptTile("Sent to Presage");
+  telemetryTile.tile.hidden = replay;
+  const timeline = createReceiptTimeline();
   const setupDeleteMessage = status("setup-delete-message");
   const receiptMessage = status("receipt-message");
   const setupDelete = deleteControls("setup-", setupDeleteMessage);
   const receiptDelete = deleteControls("", receiptMessage);
-  setup.append(
-    setupDelete.trigger,
-    setupDelete.confirmation,
-    setupDeleteMessage,
-  );
+  setupControls.append(start, setupDelete.trigger);
+  setup.append(setupDelete.confirmation, setupDeleteMessage);
   function deleteControls(prefix: string, message: HTMLElement) {
     const confirmation = element("div", "", "confirmation");
     confirmation.hidden = true;
@@ -467,6 +557,7 @@ export function createDebugPanel(
       confirmation.hidden = false;
       confirm.focus();
     });
+    trigger.className = "danger";
     const confirm = button(
       "Delete permanently",
       `${prefix}confirm-delete`,
@@ -494,6 +585,7 @@ export function createDebugPanel(
     "Export YouTube chapters",
     "export-chapters",
     () => {
+      if (!flow.hasMainSession) return;
       void command(actions.exportChapters, receiptMessage);
     },
   );
@@ -505,28 +597,39 @@ export function createDebugPanel(
     },
   );
   const newSession = button("New session", "new-session", () => {
+    if (transitionFlow(flow, { type: "new" }) === flow) return;
     receiptMessage.textContent = "";
-    receiptSummary.textContent = receiptText(replay, 0, false);
+    showHighlights([], null, false);
+    history.reset();
+    chart.render(false, [], null, null, null);
+    recordingPath.textContent = "";
     error.textContent = "";
-    mode.value = liveMode.value = "vibe";
-    modeHelp.textContent = liveModeHelp.textContent = privacyDescriptions.vibe;
+    mode.setValue("vibe");
+    liveMode.setValue("vibe");
     updateFlow({ type: "new" });
   });
   newSession.className = "primary";
-  receipt.append(
-    receiptSummary,
+  receiptHeading.textContent = receiptTitle(0);
+  const receiptHero = card(receiptHeading, receiptSummary);
+  receiptHero.className = "card receipt-hero";
+  const receiptControls = element("div", "", "controls");
+  receiptControls.append(
+    exportButton,
+    saveHighlights,
+    receiptDelete.trigger,
+    newSession,
+  );
+  const receiptActions = card(
+    receiptControls,
     element(
       "p",
       "Save a highlight list to keep every timestamp, even when YouTube chapter rules cannot be met.",
       "help",
     ),
-    exportButton,
-    saveHighlights,
-    receiptDelete.trigger,
     receiptDelete.confirmation,
     receiptMessage,
-    newSession,
   );
+  receipt.append(receiptHero, receiptTiles, timeline.root, receiptActions);
   const runtimeStatus = element("footer");
   const obs = status("obs-status");
   const overlayError = status("overlay-error");
@@ -559,7 +662,12 @@ export function createDebugPanel(
     recordingError,
     error,
   );
-  root.replaceChildren(header, steps, ...screens.values(), runtimeStatus);
+  root.replaceChildren(
+    header,
+    steps,
+    ...screens.map(({ section }) => section),
+    runtimeStatus,
+  );
 
   let cameraOn = false;
   let cameras: readonly CameraDevice[] = [];
@@ -575,6 +683,7 @@ export function createDebugPanel(
   let disconnectedThrough: number | null = null;
   let sdkValidationCode: number | null = null;
   let lastHighlightKey = "";
+  let lastTimelineDuration: number | null = null;
   function write(node: HTMLElement, text: string): void {
     if (node.textContent !== text) node.textContent = text;
   }
@@ -626,10 +735,11 @@ export function createDebugPanel(
       !flow.sessionActive || latestState?.privacyMode === "off";
     pause.disabled =
       resume.disabled =
-      liveMode.disabled =
+      liveMode.group.disabled =
         sharingControlsDisabled;
     stop.disabled = !flow.sessionActive && !flow.captureBusy && !pending;
-    exportButton.disabled = newSession.disabled = commandBusy;
+    exportButton.disabled = commandBusy || !flow.hasMainSession;
+    newSession.disabled = commandBusy;
     for (const { trigger, confirm } of [setupDelete, receiptDelete])
       trigger.disabled = confirm.disabled =
         commandBusy || pending || flow.captureBusy || flow.sessionActive;
@@ -641,16 +751,17 @@ export function createDebugPanel(
       sessionHighlights(latestState).length === 0;
   }
   function renderScreen(): void {
-    for (const [name, screen] of screens) {
-      screen.hidden = name !== flow.screen;
-      stepNodes
-        .get(name)
-        ?.setAttribute("aria-current", name === flow.screen ? "step" : "false");
+    for (const { name, section, step } of screens) {
+      section.hidden = name !== flow.screen;
+      step.setAttribute(
+        "aria-current",
+        name === flow.screen ? "step" : "false",
+      );
     }
     if (lastScreen !== flow.screen) {
       setupDelete.confirmation.hidden =
         receiptDelete.confirmation.hidden = true;
-      headings.get(flow.screen)?.focus();
+      screens.find(({ name }) => name === flow.screen)?.heading.focus();
       lastScreen = flow.screen;
     }
     updateControls();
@@ -734,6 +845,60 @@ export function createDebugPanel(
       state.pulseOutOfRange &&
       !disconnected &&
       (disconnectedThrough === null || (state.t ?? -1) > disconnectedThrough);
+    const hidden =
+      !state.active ||
+      disconnected ||
+      state.privacyMode === "off" ||
+      state.phase === "paused" ||
+      state.pauseReason !== null ||
+      state.validation?.code === "multipleFacesFound" ||
+      pulseOutOfRange;
+    if (!state.active) history.reset();
+    // Main can withdraw the pulse before it reports a queued second-face warning.
+    const withdrawn = pulse === null && history.samples.length > 0;
+    const time = state.runtime?.sessionStartedAt === null ? null : state.t;
+    const visiblePulse = state.active
+      ? history.update(time, pulse, hidden || withdrawn)
+      : null;
+    const baselineBpm = visiblePulse === null ? null : state.baselineBpm;
+    const threshold = state.talkingRecent
+      ? DEFAULT_SPIKE_POLICY.talkingSpikeDeltaBpm
+      : DEFAULT_SPIKE_POLICY.spikeDeltaBpm;
+    chart.render(
+      !hidden && pulse !== null,
+      history.samples,
+      time,
+      baselineBpm,
+      baselineBpm === null ? null : baselineBpm + threshold,
+    );
+    const delta =
+      baselineBpm === null || visiblePulse === null
+        ? null
+        : Math.round(visiblePulse.value - baselineBpm);
+    write(
+      baseline,
+      baselineBpm === null || delta === null
+        ? ""
+        : `Your baseline ${Math.round(baselineBpm)} · ${delta >= 0 ? "+" : ""}${delta} now`,
+    );
+    write(pulseValue, visiblePulse ? visiblePulse.value.toFixed(0) : "—");
+    write(
+      breathingValue,
+      !hidden && breathing ? breathing.value.toFixed(1) : "—",
+    );
+    intensity.hidden = visiblePulse === null;
+    signal.setAttribute(
+      "data-intensity",
+      visiblePulse === null ? "" : state.intensity,
+    );
+    write(
+      intensity,
+      state.intensity === "spike"
+        ? "Spike"
+        : state.intensity === "elevated"
+          ? "Elevated"
+          : "Calm",
+    );
     write(
       condition,
       validationState?.hint || "Waiting for the SDK condition hint…",
@@ -763,29 +928,64 @@ export function createDebugPanel(
         : (validationState?.code ?? "—"),
     );
   }
+  function showHighlights(
+    current: ReturnType<typeof sessionHighlights>,
+    durationMs: number | null,
+    sdkStarted: boolean,
+  ): void {
+    const key = JSON.stringify(current);
+    if (key !== lastHighlightKey) {
+      highlights.replaceChildren(
+        ...current.map((highlight) =>
+          element(
+            "li",
+            `${sessionTime(highlight.sessionOffsetUs)} · ${highlight.label}`,
+          ),
+        ),
+      );
+      emptyHighlights.hidden = current.length > 0;
+    }
+    if (key !== lastHighlightKey || durationMs !== lastTimelineDuration) {
+      timeline.render(durationMs, current);
+      lastTimelineDuration = durationMs;
+    }
+    lastHighlightKey = key;
+    write(receiptHeading, receiptTitle(current.length));
+    write(receiptSummary, receiptText(replay, current.length, sdkStarted));
+    const facts = receiptFacts(replay, sdkStarted);
+    write(cameraTile.value, facts.camera);
+    write(videoTile.value, facts.video);
+    write(telemetryTile.value, facts.telemetry ?? "SDK did not start");
+    write(presageTile.value, facts.presage);
+  }
   consent.addEventListener("change", updateControls);
   camera.addEventListener("change", () => {
     const selected = selectedCamera();
     if (selected) rememberCamera(selected);
     showCameraChoice();
   });
+  showHighlights([], null, false);
   renderScreen();
   return {
     showSession(state: PanelStatePayload): void {
       latestState = state;
       const wasActive = flow.sessionActive;
       updateFlow({ type: "session", active: state.active });
-      if (state.active || wasActive)
-        mode.value = liveMode.value = state.privacyMode;
-      badge.textContent =
-        state.privacyMode === "highlightsOnly"
-          ? "Highlights only"
-          : state.privacyMode === "vibe"
-            ? "Vibe"
-            : state.privacyMode === "numbers"
-              ? "Numbers"
-              : "Off";
-      liveModeHelp.textContent = privacyDescriptions[state.privacyMode];
+      if (state.active || wasActive) {
+        if (mode.value !== state.privacyMode) mode.setValue(state.privacyMode);
+        if (liveMode.value !== state.privacyMode)
+          liveMode.setValue(state.privacyMode);
+      }
+      write(badge, privacyLabels[state.privacyMode]);
+      write(liveStatus, state.active ? "LIVE" : "Starting…");
+      const running =
+        state.active &&
+        state.pauseReason === null &&
+        state.privacyMode !== "off";
+      (replay ? indicator : liveStatus).setAttribute(
+        "data-running",
+        String(running),
+      );
       write(
         indicator,
         replay
@@ -810,23 +1010,9 @@ export function createDebugPanel(
       write(multipleFaces, message);
       multipleFaces.hidden = !message;
       showReadings(state);
-      const current = flow.hasMainSession ? sessionHighlights(state) : [];
-      const key = JSON.stringify(current);
-      if (key !== lastHighlightKey) {
-        highlights.replaceChildren(
-          ...current.map((highlight) =>
-            element(
-              "li",
-              `${sessionTime(highlight.sessionOffsetUs)} · ${highlight.label}`,
-            ),
-          ),
-        );
-        lastHighlightKey = key;
-      }
-      emptyHighlights.hidden = current.length > 0;
-      receiptSummary.textContent = receiptText(
-        replay,
-        current.length,
+      showHighlights(
+        flow.hasMainSession ? sessionHighlights(state) : [],
+        flow.hasMainSession && !state.active ? state.sessionDurationMs : null,
         flow.hasMainSession && state.sdkStarted,
       );
       show("Processing status", state.processing);
@@ -838,6 +1024,7 @@ export function createDebugPanel(
       );
       if (state.runtime) {
         write(obs, state.runtime.obsMessage);
+        write(liveObs, state.runtime.obsMessage);
         overlayUrl.textContent = state.runtime.overlayUrl;
         write(overlayError, state.runtime.overlayError);
         replayFile.textContent = `Replay file: ${state.runtime.replayFile || "unavailable"}`;
@@ -858,9 +1045,8 @@ export function createDebugPanel(
     },
     showRecording(state: RecordingState): void {
       write(recordingStatus, `Recording: ${state.active ? "on" : "off"}`);
-      recordingPath.textContent = state.filePath
-        ? `File: ${state.filePath}`
-        : "";
+      recordingPath.textContent =
+        flow.hasMainSession && state.filePath ? `File: ${state.filePath}` : "";
       write(recordingError, state.error);
     },
     showCameras(devices: readonly CameraDevice[]): CameraDevice | undefined {

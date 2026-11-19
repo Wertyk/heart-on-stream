@@ -4,6 +4,7 @@ import type {
   VibeOverlayState,
 } from "../../../src/domain/privacy/index";
 import {
+  advanceScene,
   disconnectScene,
   emptyScene,
   receiveSnapshot,
@@ -98,6 +99,36 @@ describe("privacy and status presentation", () => {
         expect(
           overlayView({ ...numbers, status, replay }).readingsCaption,
         ).toBe("camera estimate · not medical");
+    },
+  );
+});
+
+describe("accelerated replay", () => {
+  it.each([2, 8, 20])(
+    "keeps both wave displays and rings active at %i×",
+    (speed) => {
+      let scene = emptyScene();
+      let batchEndMs = 600;
+      for (let nowMs = 0; nowMs <= 20_000; nowMs += 20) {
+        while (batchEndMs / speed <= nowMs) {
+          const points = Array.from({ length: 15 }, (_, index) => {
+            const atMs = batchEndMs - 600 + index * 40;
+            return { atMs, v: 1 - Math.abs((atMs % 800) - 400) / 400 };
+          });
+          scene = receiveSnapshot(
+            scene,
+            { ...vibe, beatWave: points, breathWave: points },
+            batchEndMs / speed,
+          );
+          batchEndMs += 600;
+        }
+        const frame = advanceScene(scene, nowMs);
+        scene = frame.scene;
+        if (nowMs < 19_000) continue;
+        expect(frame.animation.pulseTrace?.points.length).toBeGreaterThan(1);
+        expect(frame.animation.breathRibbon?.points.length).toBeGreaterThan(1);
+        expect(frame.animation.ringProgress.length).toBeGreaterThan(0);
+      }
     },
   );
 });

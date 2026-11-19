@@ -4,7 +4,9 @@ import {
   emptyWaveBuffer,
   interpolateWave,
   playWave,
+  receiveBeatWave,
   receiveWave,
+  visitBeatPeaks,
   waveTrail,
 } from "../../../src/presentation/overlay/wave-buffer";
 
@@ -18,6 +20,67 @@ const wave: OverlayWave = [
 ];
 
 describe("wave accumulation", () => {
+  it("replaces provisional gap fill under late waveform batches from the calm replay", () => {
+    // Projected excerpts from samples/live-b-calm.jsonl at 111.7–112.2 s.
+    const provisional: OverlayWave = [
+      { atMs: 110_600, v: 0 },
+      { atMs: 110_750, v: 0 },
+      { atMs: 110_800, v: 0 },
+      { atMs: 110_850, v: 0 },
+      { atMs: 110_900, v: 0 },
+      { atMs: 110_950, v: 0 },
+      { atMs: 111_000, v: 0 },
+      { atMs: 111_050, v: 0 },
+      { atMs: 111_100, v: 0 },
+    ];
+    const rise: OverlayWave = [
+      { atMs: 110_766.2, v: 0.297 },
+      { atMs: 110_795.2, v: 0.494 },
+      { atMs: 110_831.7, v: 0.727 },
+      { atMs: 110_865.6, v: 0.946 },
+      { atMs: 110_901.4, v: 1 },
+      { atMs: 110_933.9, v: 1 },
+    ];
+    const fall: OverlayWave = [
+      { atMs: 110_962.6, v: 1 },
+      { atMs: 111_002.3, v: 0.93 },
+      { atMs: 111_031.1, v: 0.848 },
+      { atMs: 111_063.9, v: 0.77 },
+      { atMs: 111_096, v: 0.703 },
+      { atMs: 111_133.8, v: 0.648 },
+    ];
+    let buffer = receiveBeatWave(emptyWaveBuffer(), provisional, 111_729.7);
+    buffer = receiveBeatWave(
+      buffer,
+      [...rise, { atMs: 111_100, v: 0 }],
+      111_933.4,
+    );
+    buffer = receiveBeatWave(buffer, fall, 112_136.9);
+    expect(buffer.points).toEqual([provisional[0], ...rise, ...fall]);
+    const peaks: number[] = [];
+    visitBeatPeaks(buffer.points, 110_750, 111_133.8, (peak) =>
+      peaks.push(peak),
+    );
+    expect(peaks).toEqual([110_962.6]);
+    expect(interpolateWave(buffer.points, 110_950)).toBe(1);
+  });
+
+  it("keeps an aligned sample within the same batch as a nearby measured point", () => {
+    const previous: OverlayWave = [
+      { atMs: 731, v: 0.5 },
+      { atMs: 750, v: 0.9 },
+    ];
+    const next: OverlayWave = [
+      { atMs: 784, v: 0.5 },
+      { atMs: 815, v: 0.1 },
+    ];
+    const buffer = receiveBeatWave(emptyWaveBuffer(), previous, 800);
+    expect(receiveBeatWave(buffer, next, 900).points).toEqual([
+      ...previous,
+      ...next,
+    ]);
+  });
+
   it("sorts overlapping bursts, deduplicates by timestamp and never mutates input", () => {
     const initial = receiveWave(
       emptyWaveBuffer(),

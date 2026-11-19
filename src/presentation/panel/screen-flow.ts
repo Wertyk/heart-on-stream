@@ -108,13 +108,33 @@ export function receiptText(
   count: number,
   sdkStarted: boolean,
 ): string {
-  const summary = `Video saved: no · Highlights: ${count}`;
-  if (replay)
-    return `Camera: not used · ${summary} · Sent to Presage: nothing (SDK not used)`;
-  const presage = sdkStarted
-    ? "SDK telemetry: off · Sent to Presage: key check and, by SDK default, automatic vitals insights (no video)"
-    : "Sent to Presage: nothing (SDK did not start)";
-  return `Camera: off · ${summary} · ${presage}`;
+  const { camera, video, telemetry, presage } = receiptFacts(
+    replay,
+    sdkStarted,
+  );
+  const summary = `Camera: ${camera} · Video saved: ${video} · Highlights: ${count}`;
+  return telemetry === null
+    ? `${summary} · Sent to Presage: ${presage}`
+    : `${summary} · SDK telemetry: ${telemetry} · Sent to Presage: ${presage}`;
+}
+
+/** The tiles and screen-reader summary share the same disclosure facts. */
+export function receiptFacts(replay: boolean, sdkStarted: boolean) {
+  return {
+    camera: replay ? "not used" : "off",
+    video: "no",
+    telemetry: !replay && sdkStarted ? "off" : null,
+    presage: replay
+      ? "nothing (SDK not used)"
+      : sdkStarted
+        ? "key check; the SDK may send automatic vitals check-ins during measurement (no video)"
+        : "nothing (SDK did not start)",
+  };
+}
+
+export function receiptTitle(count: number): string {
+  const moments = count === 1 ? "moment" : "moments";
+  return `Your heart marked ${count === 0 ? "nothing" : `${count} ${moments}`}.`;
 }
 
 export function phaseText(state: PanelStatePayload): string {

@@ -61,6 +61,8 @@ export interface PanelState {
   readonly processing: ProcessingStatus;
   /** The live SDK reported startup during this session, retained for its receipt. */
   readonly sdkStarted: boolean;
+  /** Final session duration for the local receipt, including any recorder-only tail. */
+  readonly sessionDurationMs: number | null;
   /** Highlights produced by the current run, retained for its receipt. */
   readonly highlights: readonly Highlight[];
   readonly errors: readonly PanelError[];

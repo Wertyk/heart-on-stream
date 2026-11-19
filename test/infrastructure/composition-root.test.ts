@@ -315,6 +315,7 @@ describe("main-process composition", () => {
       ...frames.map((frame) => [frame]),
       [{ kind: "end", durationUs: 1 }],
     ]);
+    expect(f.panels().at(-1)?.sessionDurationMs).toBe(0.001);
     expect(adapters.recorder.stop).toHaveBeenCalledOnce();
     expect(f.panels().at(-1)).toMatchObject({
       active: false,
@@ -582,6 +583,43 @@ describe("main-process composition", () => {
       ).toBe(true);
     },
   );
+
+  it("reports a recording path only for the session that created it", async () => {
+    const f = fixture();
+    const latestRecording = () =>
+      f.send.mock.calls
+        .filter(([channel]) => channel === "recording:state")
+        .at(-1)?.[1];
+    expect(latestRecording()).toEqual({
+      active: false,
+      filePath: null,
+      error: "",
+    });
+    await f.session.start({ ...selection, recordSession: true });
+    expect(latestRecording()).toEqual({
+      active: true,
+      filePath: adapters.recorder.filePath,
+      error: "",
+    });
+    await f.session.stop();
+    expect(latestRecording()).toEqual({
+      active: false,
+      filePath: adapters.recorder.filePath,
+      error: "",
+    });
+    await f.session.start(selection);
+    expect(latestRecording()).toEqual({
+      active: false,
+      filePath: null,
+      error: "",
+    });
+    await f.session.stop();
+    expect(latestRecording()).toEqual({
+      active: false,
+      filePath: null,
+      error: "",
+    });
+  });
 
   it("keeps recording off without opt-in and keeps credentials in main across windows", async () => {
     vi.stubEnv("SMARTSPECTRA_API_KEY", "test-credential");

@@ -2,7 +2,7 @@
 
 Heart on Stream uses the Presage SmartSpectra SDK to turn webcam pulse and breathing estimates into a consent-first OBS overlay and mark rises above your own pulse baseline as recording chapters and local highlights.
 
-![Heart on Stream’s Vibe overlay calibrating during replay](docs/images/overlay-vibe.png)
+![Heart on Stream’s Vibe overlay during replay: a heart with a halo ring, the live pulse trace and the breathing ribbon, with no numbers](docs/images/overlay-vibe.png)
 
 Built for the [DEV Presage SmartSpectra SDK Challenge](https://dev.to/challenges/presage-2026-11-04).
 
@@ -139,7 +139,7 @@ Replay uses the original measurement timestamps, so the same file and policy pro
 
 - In the reference runs, the camera-based pulse estimate rose one to three minutes after heavy exertion.
 - Config (b) needs your upper chest in frame. A persistent `chestNotVisible` condition pauses measurement. Raise the laptop or sit back to bring more of your chest into view.
-- The overlay animation can stutter at replay speeds above `--speed=1`.
+- At very high replay speeds, the overlay can skip ahead when it falls behind the recording.
 - SmartSpectra SDK 3.5.0 offers no option to turn off automatic LLM Insights during live measurement. Heart on Stream discloses these check-ins before you click **I agree** or start a session.
 - The Electron SDK takes its API key when it is constructed in the renderer, so the key reaches the app’s own sandboxed renderer after consent and Start. [SmartSpectra Electron integration](https://smartspectra.presagetech.com/docs/nodejs#electron-integration)
 - macOS keeps its camera indicator on if OBS still uses the same camera. Check the panel’s **Camera off** status to confirm Heart on Stream released its stream.
