@@ -253,6 +253,26 @@ describe("jitter-buffer playback", () => {
     expect(frame.value).toBeCloseTo(interpolateWave(buffer.points, 1_818.4));
   });
 
+  it("matches the pre-replay-fix live cursor sequence across jitter and rebuffering", () => {
+    let buffer = receiveWave(emptyWaveBuffer(), wave, 0);
+    const cursorAt = (nowMs: number) => {
+      buffer = playWave(buffer, nowMs).buffer;
+      return buffer.cursorAtMs;
+    };
+
+    const cursors = [cursorAt(0), cursorAt(800)];
+    buffer = receiveWave(buffer, [{ atMs: 3_500, v: 0 }], 800);
+    cursors.push(cursorAt(800), cursorAt(816), cursorAt(1_000));
+    buffer = receiveWave(buffer, [{ atMs: 3_500, v: 0 }], 1_200);
+    cursors.push(cursorAt(1_200), cursorAt(5_000));
+    buffer = receiveWave(buffer, [{ atMs: 5_000, v: 0.5 }], 5_000);
+    cursors.push(cursorAt(5_000), cursorAt(5_250));
+
+    expect(cursors).toEqual([
+      1_000, 1_800, 1_800, 1_818.4, 2_030, 2_260, 6_200, 3_500, 3_750,
+    ]);
+  });
+
   it("holds at the delayed replay edge and fast-forwards when a batch leaves it far behind", () => {
     const buffer = receiveWave(emptyWaveBuffer(), wave, 0);
     const held = playWave(buffer, 500, 2_500);
@@ -260,6 +280,29 @@ describe("jitter-buffer playback", () => {
     const advanced = receiveWave(held.buffer, [{ atMs: 6_000, v: 0.5 }], 500);
     expect(playWave(advanced, 516, 6_000).buffer.cursorAtMs).toBe(4_500);
   });
+
+  it.each([0.25, 0.5, 1, 2, 8, 20])(
+    "advances between batches at the observed %s× rate until the safety margin",
+    (speed) => {
+      let buffer = receiveWave(emptyWaveBuffer(), wave, 0);
+      buffer = playWave(buffer, 0, 2_500).buffer;
+      buffer = playWave(buffer, 500 / speed, 2_500).buffer;
+      const secondBatchAt = 2_000 / speed;
+      buffer = receiveWave(buffer, [{ atMs: 4_500, v: 0.5 }], secondBatchAt);
+      const observed = playWave(buffer, secondBatchAt, 4_500).buffer;
+      const next = playWave(observed, secondBatchAt + 10, 4_500).buffer;
+      expect(next.cursorAtMs).toBeCloseTo(
+        (observed.cursorAtMs ?? 0) + 10 * speed,
+      );
+
+      const drainedAt = secondBatchAt + 10 + 2_000 / speed;
+      const drained = playWave(next, drainedAt, 4_500).buffer;
+      expect(drained.cursorAtMs).toBe(4_375);
+      expect(playWave(drained, drainedAt + 10, 4_500).buffer.cursorAtMs).toBe(
+        4_375,
+      );
+    },
+  );
 
   it("fades a replay wave after a gap in recording time or a prolonged stall", () => {
     const buffer = receiveWave(emptyWaveBuffer(), wave, 0);

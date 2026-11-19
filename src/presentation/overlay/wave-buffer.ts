@@ -5,6 +5,9 @@ const maxPlaybackLagMs = 2 * delayMs;
 const catchUpMs = 100;
 const restMs = 500;
 const minReplaySpeed = 0.25;
+const maxReplaySpeed = 20;
+const replayRateWindowMs = 2_000;
+const replayRateWeight = 0.25;
 const historyMs = 12_000;
 const maxPoints = 4_096;
 const breathTrailMs = 6_000;
@@ -14,6 +17,12 @@ export const maxBeatGapMs = 250;
 const gapFillStepMs = 50;
 const gapFillCoverageMs = maxBeatGapMs / 2;
 
+interface ReplayClock {
+  readonly throughMs: number;
+  readonly observedAtMs: number;
+  readonly rate: number | null;
+}
+
 /** Explicit browser times make playback deterministic under irregular batches. */
 export interface WaveBuffer {
   readonly points: OverlayWave;
@@ -21,6 +30,7 @@ export interface WaveBuffer {
   readonly cursorAtMs: number | null;
   readonly playedAtMs: number | null;
   readonly measuredGridTimes?: ReadonlySet<number>;
+  readonly replayClock?: ReplayClock;
 }
 
 export function emptyWaveBuffer(): WaveBuffer {
@@ -121,6 +131,7 @@ export function receiveWave(
   return {
     points,
     ...(measuredGridTimes?.size ? { measuredGridTimes } : {}),
+    ...(buffer.replayClock ? { replayClock: buffer.replayClock } : {}),
     receivedAtMs: advanced ? nowMs : buffer.receivedAtMs,
     cursorAtMs: rebuffer
       ? newest.atMs - delayMs
@@ -224,6 +235,31 @@ export function interpolateWave(points: OverlayWave, atMs: number): number {
   );
 }
 
+function observeReplay(
+  clock: ReplayClock | undefined,
+  throughMs: number,
+  nowMs: number,
+): ReplayClock {
+  if (!clock || clock.throughMs - throughMs > delayMs)
+    return { throughMs, observedAtMs: nowMs, rate: null };
+
+  // Measure across several batches so gaps and same-frame arrivals do not set the pace.
+  const progress = throughMs - clock.throughMs;
+  const elapsed = nowMs - clock.observedAtMs;
+  if (progress < replayRateWindowMs || elapsed <= 0) return clock;
+
+  const observed = Math.min(
+    maxReplaySpeed,
+    Math.max(minReplaySpeed, progress / elapsed),
+  );
+  const previous = clock.rate ?? observed;
+  return {
+    throughMs,
+    observedAtMs: nowMs,
+    rate: previous + (observed - previous) * replayRateWeight,
+  };
+}
+
 /** Absorb ordinary jitter gently and catch up before accelerated replay drops history. */
 export function playWave(
   buffer: WaveBuffer,
@@ -245,26 +281,49 @@ export function playWave(
   }
   const elapsed = Math.max(0, nowMs - buffer.playedAtMs);
   const age = Math.max(0, nowMs - buffer.receivedAtMs);
-  const replay = replayThroughMs !== undefined;
+  const replayClock =
+    replayThroughMs === undefined
+      ? undefined
+      : observeReplay(buffer.replayClock, replayThroughMs, nowMs);
   // A slow replay stretches the gaps between batches. Prefer the recording's
   // observed progress and still fade if both waves stop arriving altogether.
-  const signalAge = replay
-    ? Math.max(replayThroughMs - newest.atMs, age * minReplaySpeed)
-    : age;
-  // Wall time predicts the live stream. Replay can run at any rate, so
-  // advance only as far as the delayed data allows, holding between batches.
-  const target = newest.atMs - delayMs + (replay ? 0 : age);
-  const next = buffer.cursorAtMs + elapsed;
+  const signalAge =
+    replayThroughMs !== undefined
+      ? Math.max(replayThroughMs - newest.atMs, age * minReplaySpeed)
+      : age;
+  const target = newest.atMs - delayMs + (replayClock ? 0 : age);
+  let step = elapsed;
+  if (replayClock) {
+    // The first frame anchors the replay clock. Use 1× until progress estimates the rate.
+    step = buffer.replayClock ? elapsed * (replayClock.rate ?? 1) : 0;
+  }
+  const next = buffer.cursorAtMs + step;
   const lag = target - next;
   const normalCorrection = elapsed * 0.15;
   const catchUp = (lag - delayMs) * Math.min(1, elapsed / catchUpMs);
-  const correction = Math.max(
-    replay ? -elapsed : -normalCorrection,
-    Math.min(Math.max(normalCorrection, catchUp), lag),
-  );
-  const cursorAtMs = lag > maxPlaybackLagMs ? target : next + correction;
+  const correction = replayClock
+    ? Math.max(0, catchUp)
+    : Math.max(
+        -normalCorrection,
+        Math.min(Math.max(normalCorrection, catchUp), lag),
+      );
+  let cursorAtMs = lag > maxPlaybackLagMs ? target : next + correction;
+  if (replayClock) {
+    // Leave enough headroom for a late measured batch to retract provisional fill.
+    // If it does, preserve the last cursor as long as it still has data.
+    const edge = Math.max(
+      newest.atMs - gapFillCoverageMs,
+      Math.min(buffer.cursorAtMs, newest.atMs),
+    );
+    cursorAtMs = Math.min(edge, cursorAtMs);
+  }
   return {
-    buffer: { ...buffer, cursorAtMs, playedAtMs: nowMs },
+    buffer: {
+      ...buffer,
+      ...(replayClock ? { replayClock } : {}),
+      cursorAtMs,
+      playedAtMs: nowMs,
+    },
     value: interpolateWave(buffer.points, cursorAtMs),
     opacity: 1 - smoothStep((signalAge - 3_000) / restMs),
   };
