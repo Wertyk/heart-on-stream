@@ -1,0 +1,728 @@
+{"format":"heart-on-stream","version":1,"appVersion":"0.1.0","metricConfig":"synthetic (development only)","startTimeUs":1794873600000000}
+{"kind":"processing","t":1794873600000000,"status":"running"}
+{"kind":"validation","t":1794873600000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873600000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873600000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873600000000}}
+{"kind":"pulseWave","samples":[{"value":0,"stable":true,"t":1794873600000000}]}
+{"kind":"breathingWave","samples":[{"value":0,"stable":true,"t":1794873600000000}]}
+{"kind":"validation","t":1794873601000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873601000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873601000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873601000000}}
+{"kind":"pulseWave","samples":[{"value":0.7949,"stable":true,"t":1794873600125000},{"value":0.9646,"stable":true,"t":1794873600250000},{"value":0.3754,"stable":true,"t":1794873600375000},{"value":-0.509,"stable":true,"t":1794873600500000},{"value":-0.9931,"stable":true,"t":1794873600625000},{"value":-0.6959,"stable":true,"t":1794873600750000},{"value":0.1487,"stable":true,"t":1794873600875000},{"value":0.8763,"stable":true,"t":1794873601000000}]}
+{"kind":"breathingWave","samples":[{"value":0.3584,"stable":true,"t":1794873600250000},{"value":0.6691,"stable":true,"t":1794873600500000},{"value":0.891,"stable":true,"t":1794873600750000},{"value":0.9945,"stable":true,"t":1794873601000000}]}
+{"kind":"validation","t":1794873602000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873602000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873602000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873602000000}}
+{"kind":"pulseWave","samples":[{"value":0.9157,"stable":true,"t":1794873601125000},{"value":0.2385,"stable":true,"t":1794873601250000},{"value":-0.6252,"stable":true,"t":1794873601375000},{"value":-0.9998,"stable":true,"t":1794873601500000},{"value":-0.592,"stable":true,"t":1794873601625000},{"value":0.279,"stable":true,"t":1794873601750000},{"value":0.9317,"stable":true,"t":1794873601875000},{"value":0.8554,"stable":true,"t":1794873602000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9659,"stable":true,"t":1794873601250000},{"value":0.809,"stable":true,"t":1794873601500000},{"value":0.5446,"stable":true,"t":1794873601750000},{"value":0.2079,"stable":true,"t":1794873602000000}]}
+{"kind":"validation","t":1794873603000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873603000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873603000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873603000000}}
+{"kind":"pulseWave","samples":[{"value":0.1123,"stable":true,"t":1794873602125000},{"value":-0.7181,"stable":true,"t":1794873602250000},{"value":-0.9897,"stable":true,"t":1794873602375000},{"value":-0.4909,"stable":true,"t":1794873602500000},{"value":0.3899,"stable":true,"t":1794873602625000},{"value":0.9673,"stable":true,"t":1794873602750000},{"value":0.7918,"stable":true,"t":1794873602875000},{"value":0,"stable":true,"t":1794873603000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.1564,"stable":true,"t":1794873602250000},{"value":-0.5,"stable":true,"t":1794873602500000},{"value":-0.7771,"stable":true,"t":1794873602750000},{"value":-0.9511,"stable":true,"t":1794873603000000}]}
+{"kind":"validation","t":1794873604000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873604000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873604000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873604000000}}
+{"kind":"pulseWave","samples":[{"value":-0.7934,"stable":true,"t":1794873603125000},{"value":-0.9659,"stable":true,"t":1794873603250000},{"value":-0.3827,"stable":true,"t":1794873603375000},{"value":0.5,"stable":true,"t":1794873603500000},{"value":0.9914,"stable":true,"t":1794873603625000},{"value":0.7071,"stable":true,"t":1794873603750000},{"value":-0.1305,"stable":true,"t":1794873603875000},{"value":-0.866,"stable":true,"t":1794873604000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9986,"stable":true,"t":1794873603250000},{"value":-0.9135,"stable":true,"t":1794873603500000},{"value":-0.7071,"stable":true,"t":1794873603750000},{"value":-0.4067,"stable":true,"t":1794873604000000}]}
+{"kind":"validation","t":1794873605000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873605000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873605000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873605000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9229,"stable":true,"t":1794873604125000},{"value":-0.2538,"stable":true,"t":1794873604250000},{"value":0.615,"stable":true,"t":1794873604375000},{"value":0.9999,"stable":true,"t":1794873604500000},{"value":0.5983,"stable":true,"t":1794873604625000},{"value":-0.274,"stable":true,"t":1794873604750000},{"value":-0.9307,"stable":true,"t":1794873604875000},{"value":-0.8554,"stable":true,"t":1794873605000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.0523,"stable":true,"t":1794873604250000},{"value":0.309,"stable":true,"t":1794873604500000},{"value":0.6293,"stable":true,"t":1794873604750000},{"value":0.866,"stable":true,"t":1794873605000000}]}
+{"kind":"validation","t":1794873606000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873606000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873606000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873606000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1097,"stable":true,"t":1794873605125000},{"value":0.7218,"stable":true,"t":1794873605250000},{"value":0.9885,"stable":true,"t":1794873605375000},{"value":0.4818,"stable":true,"t":1794873605500000},{"value":-0.4019,"stable":true,"t":1794873605625000},{"value":-0.9711,"stable":true,"t":1794873605750000},{"value":-0.7804,"stable":true,"t":1794873605875000},{"value":0.0209,"stable":true,"t":1794873606000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9877,"stable":true,"t":1794873605250000},{"value":0.9781,"stable":true,"t":1794873605500000},{"value":0.8387,"stable":true,"t":1794873605750000},{"value":0.5878,"stable":true,"t":1794873606000000}]}
+{"kind":"validation","t":1794873607000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873607000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873607000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873607000000}}
+{"kind":"pulseWave","samples":[{"value":0.8044,"stable":true,"t":1794873606125000},{"value":0.9617,"stable":true,"t":1794873606250000},{"value":0.3706,"stable":true,"t":1794873606375000},{"value":-0.509,"stable":true,"t":1794873606500000},{"value":-0.9924,"stable":true,"t":1794873606625000},{"value":-0.7034,"stable":true,"t":1794873606750000},{"value":0.1331,"stable":true,"t":1794873606875000},{"value":0.866,"stable":true,"t":1794873607000000}]}
+{"kind":"breathingWave","samples":[{"value":0.2588,"stable":true,"t":1794873606250000},{"value":-0.1045,"stable":true,"t":1794873606500000},{"value":-0.454,"stable":true,"t":1794873606750000},{"value":-0.7431,"stable":true,"t":1794873607000000}]}
+{"kind":"validation","t":1794873608000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873608000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873608000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873608000000}}
+{"kind":"pulseWave","samples":[{"value":0.9239,"stable":true,"t":1794873607125000},{"value":0.2588,"stable":true,"t":1794873607250000},{"value":-0.6088,"stable":true,"t":1794873607375000},{"value":-1,"stable":true,"t":1794873607500000},{"value":-0.6088,"stable":true,"t":1794873607625000},{"value":0.2588,"stable":true,"t":1794873607750000},{"value":0.9239,"stable":true,"t":1794873607875000},{"value":0.866,"stable":true,"t":1794873608000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9336,"stable":true,"t":1794873607250000},{"value":-1,"stable":true,"t":1794873607500000},{"value":-0.9336,"stable":true,"t":1794873607750000},{"value":-0.7431,"stable":true,"t":1794873608000000}]}
+{"kind":"validation","t":1794873609000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873609000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873609000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873609000000}}
+{"kind":"pulseWave","samples":[{"value":0.1279,"stable":true,"t":1794873608125000},{"value":-0.7108,"stable":true,"t":1794873608250000},{"value":-0.9904,"stable":true,"t":1794873608375000},{"value":-0.4909,"stable":true,"t":1794873608500000},{"value":0.3947,"stable":true,"t":1794873608625000},{"value":0.9699,"stable":true,"t":1794873608750000},{"value":0.7821,"stable":true,"t":1794873608875000},{"value":-0.0209,"stable":true,"t":1794873609000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.454,"stable":true,"t":1794873608250000},{"value":-0.1045,"stable":true,"t":1794873608500000},{"value":0.2588,"stable":true,"t":1794873608750000},{"value":0.5878,"stable":true,"t":1794873609000000}]}
+{"kind":"validation","t":1794873610000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873610000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873610000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873610000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8059,"stable":true,"t":1794873609125000},{"value":-0.9603,"stable":true,"t":1794873609250000},{"value":-0.3633,"stable":true,"t":1794873609375000},{"value":0.518,"stable":true,"t":1794873609500000},{"value":0.994,"stable":true,"t":1794873609625000},{"value":0.6921,"stable":true,"t":1794873609750000},{"value":-0.1513,"stable":true,"t":1794873609875000},{"value":-0.8763,"stable":true,"t":1794873610000000}]}
+{"kind":"breathingWave","samples":[{"value":0.8387,"stable":true,"t":1794873609250000},{"value":0.9781,"stable":true,"t":1794873609500000},{"value":0.9877,"stable":true,"t":1794873609750000},{"value":0.866,"stable":true,"t":1794873610000000}]}
+{"kind":"validation","t":1794873611000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873611000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873611000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873611000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9167,"stable":true,"t":1794873610125000},{"value":-0.2436,"stable":true,"t":1794873610250000},{"value":0.6191,"stable":true,"t":1794873610375000},{"value":0.9999,"stable":true,"t":1794873610500000},{"value":0.6025,"stable":true,"t":1794873610625000},{"value":-0.2639,"stable":true,"t":1794873610750000},{"value":-0.9249,"stable":true,"t":1794873610875000},{"value":-0.866,"stable":true,"t":1794873611000000}]}
+{"kind":"breathingWave","samples":[{"value":0.6293,"stable":true,"t":1794873610250000},{"value":0.309,"stable":true,"t":1794873610500000},{"value":-0.0523,"stable":true,"t":1794873610750000},{"value":-0.4067,"stable":true,"t":1794873611000000}]}
+{"kind":"validation","t":1794873612000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873612000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873612000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873612000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1305,"stable":true,"t":1794873611125000},{"value":0.7071,"stable":true,"t":1794873611250000},{"value":0.9914,"stable":true,"t":1794873611375000},{"value":0.5,"stable":true,"t":1794873611500000},{"value":-0.3827,"stable":true,"t":1794873611625000},{"value":-0.9659,"stable":true,"t":1794873611750000},{"value":-0.7934,"stable":true,"t":1794873611875000},{"value":0,"stable":true,"t":1794873612000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.7071,"stable":true,"t":1794873611250000},{"value":-0.9135,"stable":true,"t":1794873611500000},{"value":-0.9986,"stable":true,"t":1794873611750000},{"value":-0.9511,"stable":true,"t":1794873612000000}]}
+{"kind":"validation","t":1794873613000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873613000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873613000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873613000000}}
+{"kind":"pulseWave","samples":[{"value":0.7949,"stable":true,"t":1794873612125000},{"value":0.9646,"stable":true,"t":1794873612250000},{"value":0.3754,"stable":true,"t":1794873612375000},{"value":-0.509,"stable":true,"t":1794873612500000},{"value":-0.9931,"stable":true,"t":1794873612625000},{"value":-0.6959,"stable":true,"t":1794873612750000},{"value":0.1487,"stable":true,"t":1794873612875000},{"value":0.8763,"stable":true,"t":1794873613000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.7771,"stable":true,"t":1794873612250000},{"value":-0.5,"stable":true,"t":1794873612500000},{"value":-0.1564,"stable":true,"t":1794873612750000},{"value":0.2079,"stable":true,"t":1794873613000000}]}
+{"kind":"validation","t":1794873614000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873614000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873614000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873614000000}}
+{"kind":"pulseWave","samples":[{"value":0.9157,"stable":true,"t":1794873613125000},{"value":0.2385,"stable":true,"t":1794873613250000},{"value":-0.6252,"stable":true,"t":1794873613375000},{"value":-0.9998,"stable":true,"t":1794873613500000},{"value":-0.592,"stable":true,"t":1794873613625000},{"value":0.279,"stable":true,"t":1794873613750000},{"value":0.9317,"stable":true,"t":1794873613875000},{"value":0.8554,"stable":true,"t":1794873614000000}]}
+{"kind":"breathingWave","samples":[{"value":0.5446,"stable":true,"t":1794873613250000},{"value":0.809,"stable":true,"t":1794873613500000},{"value":0.9659,"stable":true,"t":1794873613750000},{"value":0.9945,"stable":true,"t":1794873614000000}]}
+{"kind":"validation","t":1794873615000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873615000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873615000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873615000000}}
+{"kind":"pulseWave","samples":[{"value":0.1123,"stable":true,"t":1794873614125000},{"value":-0.7181,"stable":true,"t":1794873614250000},{"value":-0.9897,"stable":true,"t":1794873614375000},{"value":-0.4909,"stable":true,"t":1794873614500000},{"value":0.3899,"stable":true,"t":1794873614625000},{"value":0.9673,"stable":true,"t":1794873614750000},{"value":0.7918,"stable":true,"t":1794873614875000},{"value":0,"stable":true,"t":1794873615000000}]}
+{"kind":"breathingWave","samples":[{"value":0.891,"stable":true,"t":1794873614250000},{"value":0.6691,"stable":true,"t":1794873614500000},{"value":0.3584,"stable":true,"t":1794873614750000},{"value":0,"stable":true,"t":1794873615000000}]}
+{"kind":"validation","t":1794873616000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873616000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873616000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873616000000}}
+{"kind":"pulseWave","samples":[{"value":-0.7934,"stable":true,"t":1794873615125000},{"value":-0.9659,"stable":true,"t":1794873615250000},{"value":-0.3827,"stable":true,"t":1794873615375000},{"value":0.5,"stable":true,"t":1794873615500000},{"value":0.9914,"stable":true,"t":1794873615625000},{"value":0.7071,"stable":true,"t":1794873615750000},{"value":-0.1305,"stable":true,"t":1794873615875000},{"value":-0.866,"stable":true,"t":1794873616000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.3584,"stable":true,"t":1794873615250000},{"value":-0.6691,"stable":true,"t":1794873615500000},{"value":-0.891,"stable":true,"t":1794873615750000},{"value":-0.9945,"stable":true,"t":1794873616000000}]}
+{"kind":"validation","t":1794873617000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873617000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873617000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873617000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9229,"stable":true,"t":1794873616125000},{"value":-0.2538,"stable":true,"t":1794873616250000},{"value":0.615,"stable":true,"t":1794873616375000},{"value":0.9999,"stable":true,"t":1794873616500000},{"value":0.5983,"stable":true,"t":1794873616625000},{"value":-0.274,"stable":true,"t":1794873616750000},{"value":-0.9307,"stable":true,"t":1794873616875000},{"value":-0.8554,"stable":true,"t":1794873617000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9659,"stable":true,"t":1794873616250000},{"value":-0.809,"stable":true,"t":1794873616500000},{"value":-0.5446,"stable":true,"t":1794873616750000},{"value":-0.2079,"stable":true,"t":1794873617000000}]}
+{"kind":"validation","t":1794873618000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873618000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873618000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873618000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1097,"stable":true,"t":1794873617125000},{"value":0.7218,"stable":true,"t":1794873617250000},{"value":0.9885,"stable":true,"t":1794873617375000},{"value":0.4818,"stable":true,"t":1794873617500000},{"value":-0.4019,"stable":true,"t":1794873617625000},{"value":-0.9711,"stable":true,"t":1794873617750000},{"value":-0.7804,"stable":true,"t":1794873617875000},{"value":0.0209,"stable":true,"t":1794873618000000}]}
+{"kind":"breathingWave","samples":[{"value":0.1564,"stable":true,"t":1794873617250000},{"value":0.5,"stable":true,"t":1794873617500000},{"value":0.7771,"stable":true,"t":1794873617750000},{"value":0.9511,"stable":true,"t":1794873618000000}]}
+{"kind":"validation","t":1794873619000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873619000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873619000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873619000000}}
+{"kind":"pulseWave","samples":[{"value":0.8044,"stable":true,"t":1794873618125000},{"value":0.9617,"stable":true,"t":1794873618250000},{"value":0.3706,"stable":true,"t":1794873618375000},{"value":-0.509,"stable":true,"t":1794873618500000},{"value":-0.9924,"stable":true,"t":1794873618625000},{"value":-0.7034,"stable":true,"t":1794873618750000},{"value":0.1331,"stable":true,"t":1794873618875000},{"value":0.866,"stable":true,"t":1794873619000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9986,"stable":true,"t":1794873618250000},{"value":0.9135,"stable":true,"t":1794873618500000},{"value":0.7071,"stable":true,"t":1794873618750000},{"value":0.4067,"stable":true,"t":1794873619000000}]}
+{"kind":"validation","t":1794873620000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873620000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873620000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873620000000}}
+{"kind":"pulseWave","samples":[{"value":0.9239,"stable":true,"t":1794873619125000},{"value":0.2588,"stable":true,"t":1794873619250000},{"value":-0.6088,"stable":true,"t":1794873619375000},{"value":-1,"stable":true,"t":1794873619500000},{"value":-0.6088,"stable":true,"t":1794873619625000},{"value":0.2588,"stable":true,"t":1794873619750000},{"value":0.9239,"stable":true,"t":1794873619875000},{"value":0.866,"stable":true,"t":1794873620000000}]}
+{"kind":"breathingWave","samples":[{"value":0.0523,"stable":true,"t":1794873619250000},{"value":-0.309,"stable":true,"t":1794873619500000},{"value":-0.6293,"stable":true,"t":1794873619750000},{"value":-0.866,"stable":true,"t":1794873620000000}]}
+{"kind":"validation","t":1794873621000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873621000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873621000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873621000000}}
+{"kind":"pulseWave","samples":[{"value":0.1279,"stable":true,"t":1794873620125000},{"value":-0.7108,"stable":true,"t":1794873620250000},{"value":-0.9904,"stable":true,"t":1794873620375000},{"value":-0.4909,"stable":true,"t":1794873620500000},{"value":0.3947,"stable":true,"t":1794873620625000},{"value":0.9699,"stable":true,"t":1794873620750000},{"value":0.7821,"stable":true,"t":1794873620875000},{"value":-0.0209,"stable":true,"t":1794873621000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9877,"stable":true,"t":1794873620250000},{"value":-0.9781,"stable":true,"t":1794873620500000},{"value":-0.8387,"stable":true,"t":1794873620750000},{"value":-0.5878,"stable":true,"t":1794873621000000}]}
+{"kind":"validation","t":1794873622000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873622000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873622000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873622000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8059,"stable":true,"t":1794873621125000},{"value":-0.9603,"stable":true,"t":1794873621250000},{"value":-0.3633,"stable":true,"t":1794873621375000},{"value":0.518,"stable":true,"t":1794873621500000},{"value":0.994,"stable":true,"t":1794873621625000},{"value":0.6921,"stable":true,"t":1794873621750000},{"value":-0.1513,"stable":true,"t":1794873621875000},{"value":-0.8763,"stable":true,"t":1794873622000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.2588,"stable":true,"t":1794873621250000},{"value":0.1045,"stable":true,"t":1794873621500000},{"value":0.454,"stable":true,"t":1794873621750000},{"value":0.7431,"stable":true,"t":1794873622000000}]}
+{"kind":"validation","t":1794873623000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873623000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873623000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873623000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9167,"stable":true,"t":1794873622125000},{"value":-0.2436,"stable":true,"t":1794873622250000},{"value":0.6191,"stable":true,"t":1794873622375000},{"value":0.9999,"stable":true,"t":1794873622500000},{"value":0.6025,"stable":true,"t":1794873622625000},{"value":-0.2639,"stable":true,"t":1794873622750000},{"value":-0.9249,"stable":true,"t":1794873622875000},{"value":-0.866,"stable":true,"t":1794873623000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9336,"stable":true,"t":1794873622250000},{"value":1,"stable":true,"t":1794873622500000},{"value":0.9336,"stable":true,"t":1794873622750000},{"value":0.7431,"stable":true,"t":1794873623000000}]}
+{"kind":"validation","t":1794873624000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873624000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873624000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873624000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1305,"stable":true,"t":1794873623125000},{"value":0.7071,"stable":true,"t":1794873623250000},{"value":0.9914,"stable":true,"t":1794873623375000},{"value":0.5,"stable":true,"t":1794873623500000},{"value":-0.3827,"stable":true,"t":1794873623625000},{"value":-0.9659,"stable":true,"t":1794873623750000},{"value":-0.7934,"stable":true,"t":1794873623875000},{"value":0,"stable":true,"t":1794873624000000}]}
+{"kind":"breathingWave","samples":[{"value":0.454,"stable":true,"t":1794873623250000},{"value":0.1045,"stable":true,"t":1794873623500000},{"value":-0.2588,"stable":true,"t":1794873623750000},{"value":-0.5878,"stable":true,"t":1794873624000000}]}
+{"kind":"validation","t":1794873625000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873625000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873625000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873625000000}}
+{"kind":"pulseWave","samples":[{"value":0.7949,"stable":true,"t":1794873624125000},{"value":0.9646,"stable":true,"t":1794873624250000},{"value":0.3754,"stable":true,"t":1794873624375000},{"value":-0.509,"stable":true,"t":1794873624500000},{"value":-0.9931,"stable":true,"t":1794873624625000},{"value":-0.6959,"stable":true,"t":1794873624750000},{"value":0.1487,"stable":true,"t":1794873624875000},{"value":0.8763,"stable":true,"t":1794873625000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.8387,"stable":true,"t":1794873624250000},{"value":-0.9781,"stable":true,"t":1794873624500000},{"value":-0.9877,"stable":true,"t":1794873624750000},{"value":-0.866,"stable":true,"t":1794873625000000}]}
+{"kind":"validation","t":1794873626000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873626000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873626000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873626000000}}
+{"kind":"pulseWave","samples":[{"value":0.9157,"stable":true,"t":1794873625125000},{"value":0.2385,"stable":true,"t":1794873625250000},{"value":-0.6252,"stable":true,"t":1794873625375000},{"value":-0.9998,"stable":true,"t":1794873625500000},{"value":-0.592,"stable":true,"t":1794873625625000},{"value":0.279,"stable":true,"t":1794873625750000},{"value":0.9317,"stable":true,"t":1794873625875000},{"value":0.8554,"stable":true,"t":1794873626000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.6293,"stable":true,"t":1794873625250000},{"value":-0.309,"stable":true,"t":1794873625500000},{"value":0.0523,"stable":true,"t":1794873625750000},{"value":0.4067,"stable":true,"t":1794873626000000}]}
+{"kind":"validation","t":1794873627000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873627000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873627000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873627000000}}
+{"kind":"pulseWave","samples":[{"value":0.1123,"stable":true,"t":1794873626125000},{"value":-0.7181,"stable":true,"t":1794873626250000},{"value":-0.9897,"stable":true,"t":1794873626375000},{"value":-0.4909,"stable":true,"t":1794873626500000},{"value":0.3899,"stable":true,"t":1794873626625000},{"value":0.9673,"stable":true,"t":1794873626750000},{"value":0.7918,"stable":true,"t":1794873626875000},{"value":0,"stable":true,"t":1794873627000000}]}
+{"kind":"breathingWave","samples":[{"value":0.7071,"stable":true,"t":1794873626250000},{"value":0.9135,"stable":true,"t":1794873626500000},{"value":0.9986,"stable":true,"t":1794873626750000},{"value":0.9511,"stable":true,"t":1794873627000000}]}
+{"kind":"validation","t":1794873628000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873628000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873628000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873628000000}}
+{"kind":"pulseWave","samples":[{"value":-0.7934,"stable":true,"t":1794873627125000},{"value":-0.9659,"stable":true,"t":1794873627250000},{"value":-0.3827,"stable":true,"t":1794873627375000},{"value":0.5,"stable":true,"t":1794873627500000},{"value":0.9914,"stable":true,"t":1794873627625000},{"value":0.7071,"stable":true,"t":1794873627750000},{"value":-0.1305,"stable":true,"t":1794873627875000},{"value":-0.866,"stable":true,"t":1794873628000000}]}
+{"kind":"breathingWave","samples":[{"value":0.7771,"stable":true,"t":1794873627250000},{"value":0.5,"stable":true,"t":1794873627500000},{"value":0.1564,"stable":true,"t":1794873627750000},{"value":-0.2079,"stable":true,"t":1794873628000000}]}
+{"kind":"validation","t":1794873629000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873629000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873629000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873629000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9229,"stable":true,"t":1794873628125000},{"value":-0.2538,"stable":true,"t":1794873628250000},{"value":0.615,"stable":true,"t":1794873628375000},{"value":0.9999,"stable":true,"t":1794873628500000},{"value":0.5983,"stable":true,"t":1794873628625000},{"value":-0.274,"stable":true,"t":1794873628750000},{"value":-0.9307,"stable":true,"t":1794873628875000},{"value":-0.8554,"stable":true,"t":1794873629000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.5446,"stable":true,"t":1794873628250000},{"value":-0.809,"stable":true,"t":1794873628500000},{"value":-0.9659,"stable":true,"t":1794873628750000},{"value":-0.9945,"stable":true,"t":1794873629000000}]}
+{"kind":"validation","t":1794873630000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873630000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873630000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873630000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1097,"stable":true,"t":1794873629125000},{"value":0.7218,"stable":true,"t":1794873629250000},{"value":0.9885,"stable":true,"t":1794873629375000},{"value":0.4818,"stable":true,"t":1794873629500000},{"value":-0.4019,"stable":true,"t":1794873629625000},{"value":-0.9711,"stable":true,"t":1794873629750000},{"value":-0.7804,"stable":true,"t":1794873629875000},{"value":0.0209,"stable":true,"t":1794873630000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.891,"stable":true,"t":1794873629250000},{"value":-0.6691,"stable":true,"t":1794873629500000},{"value":-0.3584,"stable":true,"t":1794873629750000},{"value":0,"stable":true,"t":1794873630000000}]}
+{"kind":"validation","t":1794873631000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873631000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873631000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873631000000}}
+{"kind":"pulseWave","samples":[{"value":0.8044,"stable":true,"t":1794873630125000},{"value":0.9617,"stable":true,"t":1794873630250000},{"value":0.3706,"stable":true,"t":1794873630375000},{"value":-0.509,"stable":true,"t":1794873630500000},{"value":-0.9924,"stable":true,"t":1794873630625000},{"value":-0.7034,"stable":true,"t":1794873630750000},{"value":0.1331,"stable":true,"t":1794873630875000},{"value":0.866,"stable":true,"t":1794873631000000}]}
+{"kind":"breathingWave","samples":[{"value":0.3584,"stable":true,"t":1794873630250000},{"value":0.6691,"stable":true,"t":1794873630500000},{"value":0.891,"stable":true,"t":1794873630750000},{"value":0.9945,"stable":true,"t":1794873631000000}]}
+{"kind":"validation","t":1794873632000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873632000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873632000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873632000000}}
+{"kind":"pulseWave","samples":[{"value":0.9239,"stable":true,"t":1794873631125000},{"value":0.2588,"stable":true,"t":1794873631250000},{"value":-0.6088,"stable":true,"t":1794873631375000},{"value":-1,"stable":true,"t":1794873631500000},{"value":-0.6088,"stable":true,"t":1794873631625000},{"value":0.2588,"stable":true,"t":1794873631750000},{"value":0.9239,"stable":true,"t":1794873631875000},{"value":0.866,"stable":true,"t":1794873632000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9659,"stable":true,"t":1794873631250000},{"value":0.809,"stable":true,"t":1794873631500000},{"value":0.5446,"stable":true,"t":1794873631750000},{"value":0.2079,"stable":true,"t":1794873632000000}]}
+{"kind":"validation","t":1794873633000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873633000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873633000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873633000000}}
+{"kind":"pulseWave","samples":[{"value":0.1279,"stable":true,"t":1794873632125000},{"value":-0.7108,"stable":true,"t":1794873632250000},{"value":-0.9904,"stable":true,"t":1794873632375000},{"value":-0.4909,"stable":true,"t":1794873632500000},{"value":0.3947,"stable":true,"t":1794873632625000},{"value":0.9699,"stable":true,"t":1794873632750000},{"value":0.7821,"stable":true,"t":1794873632875000},{"value":-0.0209,"stable":true,"t":1794873633000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.1564,"stable":true,"t":1794873632250000},{"value":-0.5,"stable":true,"t":1794873632500000},{"value":-0.7771,"stable":true,"t":1794873632750000},{"value":-0.9511,"stable":true,"t":1794873633000000}]}
+{"kind":"validation","t":1794873634000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873634000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873634000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873634000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8059,"stable":true,"t":1794873633125000},{"value":-0.9603,"stable":true,"t":1794873633250000},{"value":-0.3633,"stable":true,"t":1794873633375000},{"value":0.518,"stable":true,"t":1794873633500000},{"value":0.994,"stable":true,"t":1794873633625000},{"value":0.6921,"stable":true,"t":1794873633750000},{"value":-0.1513,"stable":true,"t":1794873633875000},{"value":-0.8763,"stable":true,"t":1794873634000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9986,"stable":true,"t":1794873633250000},{"value":-0.9135,"stable":true,"t":1794873633500000},{"value":-0.7071,"stable":true,"t":1794873633750000},{"value":-0.4067,"stable":true,"t":1794873634000000}]}
+{"kind":"validation","t":1794873635000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873635000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873635000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873635000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9167,"stable":true,"t":1794873634125000},{"value":-0.2436,"stable":true,"t":1794873634250000},{"value":0.6191,"stable":true,"t":1794873634375000},{"value":0.9999,"stable":true,"t":1794873634500000},{"value":0.6025,"stable":true,"t":1794873634625000},{"value":-0.2639,"stable":true,"t":1794873634750000},{"value":-0.9249,"stable":true,"t":1794873634875000},{"value":-0.866,"stable":true,"t":1794873635000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.0523,"stable":true,"t":1794873634250000},{"value":0.309,"stable":true,"t":1794873634500000},{"value":0.6293,"stable":true,"t":1794873634750000},{"value":0.866,"stable":true,"t":1794873635000000}]}
+{"kind":"validation","t":1794873636000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873636000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873636000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873636000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1305,"stable":true,"t":1794873635125000},{"value":0.7071,"stable":true,"t":1794873635250000},{"value":0.9914,"stable":true,"t":1794873635375000},{"value":0.5,"stable":true,"t":1794873635500000},{"value":-0.3827,"stable":true,"t":1794873635625000},{"value":-0.9659,"stable":true,"t":1794873635750000},{"value":-0.7934,"stable":true,"t":1794873635875000},{"value":0,"stable":true,"t":1794873636000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9877,"stable":true,"t":1794873635250000},{"value":0.9781,"stable":true,"t":1794873635500000},{"value":0.8387,"stable":true,"t":1794873635750000},{"value":0.5878,"stable":true,"t":1794873636000000}]}
+{"kind":"validation","t":1794873637000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873637000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873637000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873637000000}}
+{"kind":"pulseWave","samples":[{"value":0.7949,"stable":true,"t":1794873636125000},{"value":0.9646,"stable":true,"t":1794873636250000},{"value":0.3754,"stable":true,"t":1794873636375000},{"value":-0.509,"stable":true,"t":1794873636500000},{"value":-0.9931,"stable":true,"t":1794873636625000},{"value":-0.6959,"stable":true,"t":1794873636750000},{"value":0.1487,"stable":true,"t":1794873636875000},{"value":0.8763,"stable":true,"t":1794873637000000}]}
+{"kind":"breathingWave","samples":[{"value":0.2588,"stable":true,"t":1794873636250000},{"value":-0.1045,"stable":true,"t":1794873636500000},{"value":-0.454,"stable":true,"t":1794873636750000},{"value":-0.7431,"stable":true,"t":1794873637000000}]}
+{"kind":"validation","t":1794873638000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873638000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873638000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873638000000}}
+{"kind":"pulseWave","samples":[{"value":0.9157,"stable":true,"t":1794873637125000},{"value":0.2385,"stable":true,"t":1794873637250000},{"value":-0.6252,"stable":true,"t":1794873637375000},{"value":-0.9998,"stable":true,"t":1794873637500000},{"value":-0.592,"stable":true,"t":1794873637625000},{"value":0.279,"stable":true,"t":1794873637750000},{"value":0.9317,"stable":true,"t":1794873637875000},{"value":0.8554,"stable":true,"t":1794873638000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9336,"stable":true,"t":1794873637250000},{"value":-1,"stable":true,"t":1794873637500000},{"value":-0.9336,"stable":true,"t":1794873637750000},{"value":-0.7431,"stable":true,"t":1794873638000000}]}
+{"kind":"validation","t":1794873639000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873639000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873639000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873639000000}}
+{"kind":"pulseWave","samples":[{"value":0.1123,"stable":true,"t":1794873638125000},{"value":-0.7181,"stable":true,"t":1794873638250000},{"value":-0.9897,"stable":true,"t":1794873638375000},{"value":-0.4909,"stable":true,"t":1794873638500000},{"value":0.3899,"stable":true,"t":1794873638625000},{"value":0.9673,"stable":true,"t":1794873638750000},{"value":0.7918,"stable":true,"t":1794873638875000},{"value":0,"stable":true,"t":1794873639000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.454,"stable":true,"t":1794873638250000},{"value":-0.1045,"stable":true,"t":1794873638500000},{"value":0.2588,"stable":true,"t":1794873638750000},{"value":0.5878,"stable":true,"t":1794873639000000}]}
+{"kind":"validation","t":1794873640000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873640000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873640000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873640000000}}
+{"kind":"pulseWave","samples":[{"value":-0.7934,"stable":true,"t":1794873639125000},{"value":-0.9659,"stable":true,"t":1794873639250000},{"value":-0.3827,"stable":true,"t":1794873639375000},{"value":0.5,"stable":true,"t":1794873639500000},{"value":0.9914,"stable":true,"t":1794873639625000},{"value":0.7071,"stable":true,"t":1794873639750000},{"value":-0.1305,"stable":true,"t":1794873639875000},{"value":-0.866,"stable":true,"t":1794873640000000}]}
+{"kind":"breathingWave","samples":[{"value":0.8387,"stable":true,"t":1794873639250000},{"value":0.9781,"stable":true,"t":1794873639500000},{"value":0.9877,"stable":true,"t":1794873639750000},{"value":0.866,"stable":true,"t":1794873640000000}]}
+{"kind":"validation","t":1794873641000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873641000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873641000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873641000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9229,"stable":true,"t":1794873640125000},{"value":-0.2538,"stable":true,"t":1794873640250000},{"value":0.615,"stable":true,"t":1794873640375000},{"value":0.9999,"stable":true,"t":1794873640500000},{"value":0.5983,"stable":true,"t":1794873640625000},{"value":-0.274,"stable":true,"t":1794873640750000},{"value":-0.9307,"stable":true,"t":1794873640875000},{"value":-0.8554,"stable":true,"t":1794873641000000}]}
+{"kind":"breathingWave","samples":[{"value":0.6293,"stable":true,"t":1794873640250000},{"value":0.309,"stable":true,"t":1794873640500000},{"value":-0.0523,"stable":true,"t":1794873640750000},{"value":-0.4067,"stable":true,"t":1794873641000000}]}
+{"kind":"validation","t":1794873642000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873642000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873642000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873642000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1097,"stable":true,"t":1794873641125000},{"value":0.7218,"stable":true,"t":1794873641250000},{"value":0.9885,"stable":true,"t":1794873641375000},{"value":0.4818,"stable":true,"t":1794873641500000},{"value":-0.4019,"stable":true,"t":1794873641625000},{"value":-0.9711,"stable":true,"t":1794873641750000},{"value":-0.7804,"stable":true,"t":1794873641875000},{"value":0.0209,"stable":true,"t":1794873642000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.7071,"stable":true,"t":1794873641250000},{"value":-0.9135,"stable":true,"t":1794873641500000},{"value":-0.9986,"stable":true,"t":1794873641750000},{"value":-0.9511,"stable":true,"t":1794873642000000}]}
+{"kind":"validation","t":1794873643000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873643000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873643000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873643000000}}
+{"kind":"pulseWave","samples":[{"value":0.8044,"stable":true,"t":1794873642125000},{"value":0.9617,"stable":true,"t":1794873642250000},{"value":0.3706,"stable":true,"t":1794873642375000},{"value":-0.509,"stable":true,"t":1794873642500000},{"value":-0.9924,"stable":true,"t":1794873642625000},{"value":-0.7034,"stable":true,"t":1794873642750000},{"value":0.1331,"stable":true,"t":1794873642875000},{"value":0.866,"stable":true,"t":1794873643000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.7771,"stable":true,"t":1794873642250000},{"value":-0.5,"stable":true,"t":1794873642500000},{"value":-0.1564,"stable":true,"t":1794873642750000},{"value":0.2079,"stable":true,"t":1794873643000000}]}
+{"kind":"validation","t":1794873644000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873644000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873644000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873644000000}}
+{"kind":"pulseWave","samples":[{"value":0.9239,"stable":true,"t":1794873643125000},{"value":0.2588,"stable":true,"t":1794873643250000},{"value":-0.6088,"stable":true,"t":1794873643375000},{"value":-1,"stable":true,"t":1794873643500000},{"value":-0.6088,"stable":true,"t":1794873643625000},{"value":0.2588,"stable":true,"t":1794873643750000},{"value":0.9239,"stable":true,"t":1794873643875000},{"value":0.866,"stable":true,"t":1794873644000000}]}
+{"kind":"breathingWave","samples":[{"value":0.5446,"stable":true,"t":1794873643250000},{"value":0.809,"stable":true,"t":1794873643500000},{"value":0.9659,"stable":true,"t":1794873643750000},{"value":0.9945,"stable":true,"t":1794873644000000}]}
+{"kind":"validation","t":1794873645000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873645000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873645000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873645000000}}
+{"kind":"pulseWave","samples":[{"value":0.1279,"stable":true,"t":1794873644125000},{"value":-0.7108,"stable":true,"t":1794873644250000},{"value":-0.9904,"stable":true,"t":1794873644375000},{"value":-0.4909,"stable":true,"t":1794873644500000},{"value":0.3947,"stable":true,"t":1794873644625000},{"value":0.9699,"stable":true,"t":1794873644750000},{"value":0.7821,"stable":true,"t":1794873644875000},{"value":-0.0209,"stable":true,"t":1794873645000000}]}
+{"kind":"breathingWave","samples":[{"value":0.891,"stable":true,"t":1794873644250000},{"value":0.6691,"stable":true,"t":1794873644500000},{"value":0.3584,"stable":true,"t":1794873644750000},{"value":0,"stable":true,"t":1794873645000000}]}
+{"kind":"validation","t":1794873646000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873646000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873646000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873646000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8059,"stable":true,"t":1794873645125000},{"value":-0.9603,"stable":true,"t":1794873645250000},{"value":-0.3633,"stable":true,"t":1794873645375000},{"value":0.518,"stable":true,"t":1794873645500000},{"value":0.994,"stable":true,"t":1794873645625000},{"value":0.6921,"stable":true,"t":1794873645750000},{"value":-0.1513,"stable":true,"t":1794873645875000},{"value":-0.8763,"stable":true,"t":1794873646000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.3584,"stable":true,"t":1794873645250000},{"value":-0.6691,"stable":true,"t":1794873645500000},{"value":-0.891,"stable":true,"t":1794873645750000},{"value":-0.9945,"stable":true,"t":1794873646000000}]}
+{"kind":"validation","t":1794873647000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873647000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873647000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873647000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9167,"stable":true,"t":1794873646125000},{"value":-0.2436,"stable":true,"t":1794873646250000},{"value":0.6191,"stable":true,"t":1794873646375000},{"value":0.9999,"stable":true,"t":1794873646500000},{"value":0.6025,"stable":true,"t":1794873646625000},{"value":-0.2639,"stable":true,"t":1794873646750000},{"value":-0.9249,"stable":true,"t":1794873646875000},{"value":-0.866,"stable":true,"t":1794873647000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9659,"stable":true,"t":1794873646250000},{"value":-0.809,"stable":true,"t":1794873646500000},{"value":-0.5446,"stable":true,"t":1794873646750000},{"value":-0.2079,"stable":true,"t":1794873647000000}]}
+{"kind":"validation","t":1794873648000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873648000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873648000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873648000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1305,"stable":true,"t":1794873647125000},{"value":0.7071,"stable":true,"t":1794873647250000},{"value":0.9914,"stable":true,"t":1794873647375000},{"value":0.5,"stable":true,"t":1794873647500000},{"value":-0.3827,"stable":true,"t":1794873647625000},{"value":-0.9659,"stable":true,"t":1794873647750000},{"value":-0.7934,"stable":true,"t":1794873647875000},{"value":0,"stable":true,"t":1794873648000000}]}
+{"kind":"breathingWave","samples":[{"value":0.1564,"stable":true,"t":1794873647250000},{"value":0.5,"stable":true,"t":1794873647500000},{"value":0.7771,"stable":true,"t":1794873647750000},{"value":0.9511,"stable":true,"t":1794873648000000}]}
+{"kind":"validation","t":1794873649000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873649000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873649000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873649000000}}
+{"kind":"pulseWave","samples":[{"value":0.7949,"stable":true,"t":1794873648125000},{"value":0.9646,"stable":true,"t":1794873648250000},{"value":0.3754,"stable":true,"t":1794873648375000},{"value":-0.509,"stable":true,"t":1794873648500000},{"value":-0.9931,"stable":true,"t":1794873648625000},{"value":-0.6959,"stable":true,"t":1794873648750000},{"value":0.1487,"stable":true,"t":1794873648875000},{"value":0.8763,"stable":true,"t":1794873649000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9986,"stable":true,"t":1794873648250000},{"value":0.9135,"stable":true,"t":1794873648500000},{"value":0.7071,"stable":true,"t":1794873648750000},{"value":0.4067,"stable":true,"t":1794873649000000}]}
+{"kind":"validation","t":1794873650000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873650000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873650000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873650000000}}
+{"kind":"pulseWave","samples":[{"value":0.9157,"stable":true,"t":1794873649125000},{"value":0.2385,"stable":true,"t":1794873649250000},{"value":-0.6252,"stable":true,"t":1794873649375000},{"value":-0.9998,"stable":true,"t":1794873649500000},{"value":-0.592,"stable":true,"t":1794873649625000},{"value":0.279,"stable":true,"t":1794873649750000},{"value":0.9317,"stable":true,"t":1794873649875000},{"value":0.8554,"stable":true,"t":1794873650000000}]}
+{"kind":"breathingWave","samples":[{"value":0.0523,"stable":true,"t":1794873649250000},{"value":-0.309,"stable":true,"t":1794873649500000},{"value":-0.6293,"stable":true,"t":1794873649750000},{"value":-0.866,"stable":true,"t":1794873650000000}]}
+{"kind":"validation","t":1794873651000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873651000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873651000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873651000000}}
+{"kind":"pulseWave","samples":[{"value":0.1123,"stable":true,"t":1794873650125000},{"value":-0.7181,"stable":true,"t":1794873650250000},{"value":-0.9897,"stable":true,"t":1794873650375000},{"value":-0.4909,"stable":true,"t":1794873650500000},{"value":0.3899,"stable":true,"t":1794873650625000},{"value":0.9673,"stable":true,"t":1794873650750000},{"value":0.7918,"stable":true,"t":1794873650875000},{"value":0,"stable":true,"t":1794873651000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9877,"stable":true,"t":1794873650250000},{"value":-0.9781,"stable":true,"t":1794873650500000},{"value":-0.8387,"stable":true,"t":1794873650750000},{"value":-0.5878,"stable":true,"t":1794873651000000}]}
+{"kind":"validation","t":1794873652000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873652000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873652000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873652000000}}
+{"kind":"pulseWave","samples":[{"value":-0.7934,"stable":true,"t":1794873651125000},{"value":-0.9659,"stable":true,"t":1794873651250000},{"value":-0.3827,"stable":true,"t":1794873651375000},{"value":0.5,"stable":true,"t":1794873651500000},{"value":0.9914,"stable":true,"t":1794873651625000},{"value":0.7071,"stable":true,"t":1794873651750000},{"value":-0.1305,"stable":true,"t":1794873651875000},{"value":-0.866,"stable":true,"t":1794873652000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.2588,"stable":true,"t":1794873651250000},{"value":0.1045,"stable":true,"t":1794873651500000},{"value":0.454,"stable":true,"t":1794873651750000},{"value":0.7431,"stable":true,"t":1794873652000000}]}
+{"kind":"validation","t":1794873653000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873653000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873653000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873653000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9229,"stable":true,"t":1794873652125000},{"value":-0.2538,"stable":true,"t":1794873652250000},{"value":0.615,"stable":true,"t":1794873652375000},{"value":0.9999,"stable":true,"t":1794873652500000},{"value":0.5983,"stable":true,"t":1794873652625000},{"value":-0.274,"stable":true,"t":1794873652750000},{"value":-0.9307,"stable":true,"t":1794873652875000},{"value":-0.8554,"stable":true,"t":1794873653000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9336,"stable":true,"t":1794873652250000},{"value":1,"stable":true,"t":1794873652500000},{"value":0.9336,"stable":true,"t":1794873652750000},{"value":0.7431,"stable":true,"t":1794873653000000}]}
+{"kind":"validation","t":1794873654000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873654000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873654000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873654000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1097,"stable":true,"t":1794873653125000},{"value":0.7218,"stable":true,"t":1794873653250000},{"value":0.9885,"stable":true,"t":1794873653375000},{"value":0.4818,"stable":true,"t":1794873653500000},{"value":-0.4019,"stable":true,"t":1794873653625000},{"value":-0.9711,"stable":true,"t":1794873653750000},{"value":-0.7804,"stable":true,"t":1794873653875000},{"value":0.0209,"stable":true,"t":1794873654000000}]}
+{"kind":"breathingWave","samples":[{"value":0.454,"stable":true,"t":1794873653250000},{"value":0.1045,"stable":true,"t":1794873653500000},{"value":-0.2588,"stable":true,"t":1794873653750000},{"value":-0.5878,"stable":true,"t":1794873654000000}]}
+{"kind":"validation","t":1794873655000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873655000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873655000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873655000000}}
+{"kind":"pulseWave","samples":[{"value":0.8044,"stable":true,"t":1794873654125000},{"value":0.9617,"stable":true,"t":1794873654250000},{"value":0.3706,"stable":true,"t":1794873654375000},{"value":-0.509,"stable":true,"t":1794873654500000},{"value":-0.9924,"stable":true,"t":1794873654625000},{"value":-0.7034,"stable":true,"t":1794873654750000},{"value":0.1331,"stable":true,"t":1794873654875000},{"value":0.866,"stable":true,"t":1794873655000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.8387,"stable":true,"t":1794873654250000},{"value":-0.9781,"stable":true,"t":1794873654500000},{"value":-0.9877,"stable":true,"t":1794873654750000},{"value":-0.866,"stable":true,"t":1794873655000000}]}
+{"kind":"validation","t":1794873656000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873656000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873656000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873656000000}}
+{"kind":"pulseWave","samples":[{"value":0.9239,"stable":true,"t":1794873655125000},{"value":0.2588,"stable":true,"t":1794873655250000},{"value":-0.6088,"stable":true,"t":1794873655375000},{"value":-1,"stable":true,"t":1794873655500000},{"value":-0.6088,"stable":true,"t":1794873655625000},{"value":0.2588,"stable":true,"t":1794873655750000},{"value":0.9239,"stable":true,"t":1794873655875000},{"value":0.866,"stable":true,"t":1794873656000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.6293,"stable":true,"t":1794873655250000},{"value":-0.309,"stable":true,"t":1794873655500000},{"value":0.0523,"stable":true,"t":1794873655750000},{"value":0.4067,"stable":true,"t":1794873656000000}]}
+{"kind":"validation","t":1794873657000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873657000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873657000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873657000000}}
+{"kind":"pulseWave","samples":[{"value":0.1279,"stable":true,"t":1794873656125000},{"value":-0.7108,"stable":true,"t":1794873656250000},{"value":-0.9904,"stable":true,"t":1794873656375000},{"value":-0.4909,"stable":true,"t":1794873656500000},{"value":0.3947,"stable":true,"t":1794873656625000},{"value":0.9699,"stable":true,"t":1794873656750000},{"value":0.7821,"stable":true,"t":1794873656875000},{"value":-0.0209,"stable":true,"t":1794873657000000}]}
+{"kind":"breathingWave","samples":[{"value":0.7071,"stable":true,"t":1794873656250000},{"value":0.9135,"stable":true,"t":1794873656500000},{"value":0.9986,"stable":true,"t":1794873656750000},{"value":0.9511,"stable":true,"t":1794873657000000}]}
+{"kind":"validation","t":1794873658000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873658000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873658000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873658000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8059,"stable":true,"t":1794873657125000},{"value":-0.9603,"stable":true,"t":1794873657250000},{"value":-0.3633,"stable":true,"t":1794873657375000},{"value":0.518,"stable":true,"t":1794873657500000},{"value":0.994,"stable":true,"t":1794873657625000},{"value":0.6921,"stable":true,"t":1794873657750000},{"value":-0.1513,"stable":true,"t":1794873657875000},{"value":-0.8763,"stable":true,"t":1794873658000000}]}
+{"kind":"breathingWave","samples":[{"value":0.7771,"stable":true,"t":1794873657250000},{"value":0.5,"stable":true,"t":1794873657500000},{"value":0.1564,"stable":true,"t":1794873657750000},{"value":-0.2079,"stable":true,"t":1794873658000000}]}
+{"kind":"validation","t":1794873659000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873659000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873659000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873659000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9167,"stable":true,"t":1794873658125000},{"value":-0.2436,"stable":true,"t":1794873658250000},{"value":0.6191,"stable":true,"t":1794873658375000},{"value":0.9999,"stable":true,"t":1794873658500000},{"value":0.6025,"stable":true,"t":1794873658625000},{"value":-0.2639,"stable":true,"t":1794873658750000},{"value":-0.9249,"stable":true,"t":1794873658875000},{"value":-0.866,"stable":true,"t":1794873659000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.5446,"stable":true,"t":1794873658250000},{"value":-0.809,"stable":true,"t":1794873658500000},{"value":-0.9659,"stable":true,"t":1794873658750000},{"value":-0.9945,"stable":true,"t":1794873659000000}]}
+{"kind":"validation","t":1794873660000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873660000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873660000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873660000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1305,"stable":true,"t":1794873659125000},{"value":0.7071,"stable":true,"t":1794873659250000},{"value":0.9914,"stable":true,"t":1794873659375000},{"value":0.5,"stable":true,"t":1794873659500000},{"value":-0.3827,"stable":true,"t":1794873659625000},{"value":-0.9659,"stable":true,"t":1794873659750000},{"value":-0.7934,"stable":true,"t":1794873659875000},{"value":0,"stable":true,"t":1794873660000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.891,"stable":true,"t":1794873659250000},{"value":-0.6691,"stable":true,"t":1794873659500000},{"value":-0.3584,"stable":true,"t":1794873659750000},{"value":0,"stable":true,"t":1794873660000000}]}
+{"kind":"validation","t":1794873661000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873661000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873661000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873661000000}}
+{"kind":"pulseWave","samples":[{"value":0.7949,"stable":true,"t":1794873660125000},{"value":0.9646,"stable":true,"t":1794873660250000},{"value":0.3754,"stable":true,"t":1794873660375000},{"value":-0.509,"stable":true,"t":1794873660500000},{"value":-0.9931,"stable":true,"t":1794873660625000},{"value":-0.6959,"stable":true,"t":1794873660750000},{"value":0.1487,"stable":true,"t":1794873660875000},{"value":0.8763,"stable":true,"t":1794873661000000}]}
+{"kind":"breathingWave","samples":[{"value":0.3584,"stable":true,"t":1794873660250000},{"value":0.6691,"stable":true,"t":1794873660500000},{"value":0.891,"stable":true,"t":1794873660750000},{"value":0.9945,"stable":true,"t":1794873661000000}]}
+{"kind":"validation","t":1794873662000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873662000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873662000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873662000000}}
+{"kind":"pulseWave","samples":[{"value":0.9157,"stable":true,"t":1794873661125000},{"value":0.2385,"stable":true,"t":1794873661250000},{"value":-0.6252,"stable":true,"t":1794873661375000},{"value":-0.9998,"stable":true,"t":1794873661500000},{"value":-0.592,"stable":true,"t":1794873661625000},{"value":0.279,"stable":true,"t":1794873661750000},{"value":0.9317,"stable":true,"t":1794873661875000},{"value":0.8554,"stable":true,"t":1794873662000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9659,"stable":true,"t":1794873661250000},{"value":0.809,"stable":true,"t":1794873661500000},{"value":0.5446,"stable":true,"t":1794873661750000},{"value":0.2079,"stable":true,"t":1794873662000000}]}
+{"kind":"validation","t":1794873663000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873663000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873663000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873663000000}}
+{"kind":"pulseWave","samples":[{"value":0.1123,"stable":true,"t":1794873662125000},{"value":-0.7181,"stable":true,"t":1794873662250000},{"value":-0.9897,"stable":true,"t":1794873662375000},{"value":-0.4909,"stable":true,"t":1794873662500000},{"value":0.3899,"stable":true,"t":1794873662625000},{"value":0.9673,"stable":true,"t":1794873662750000},{"value":0.7918,"stable":true,"t":1794873662875000},{"value":0,"stable":true,"t":1794873663000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.1564,"stable":true,"t":1794873662250000},{"value":-0.5,"stable":true,"t":1794873662500000},{"value":-0.7771,"stable":true,"t":1794873662750000},{"value":-0.9511,"stable":true,"t":1794873663000000}]}
+{"kind":"validation","t":1794873664000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873664000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873664000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873664000000}}
+{"kind":"pulseWave","samples":[{"value":-0.7934,"stable":true,"t":1794873663125000},{"value":-0.9659,"stable":true,"t":1794873663250000},{"value":-0.3827,"stable":true,"t":1794873663375000},{"value":0.5,"stable":true,"t":1794873663500000},{"value":0.9914,"stable":true,"t":1794873663625000},{"value":0.7071,"stable":true,"t":1794873663750000},{"value":-0.1305,"stable":true,"t":1794873663875000},{"value":-0.866,"stable":true,"t":1794873664000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9986,"stable":true,"t":1794873663250000},{"value":-0.9135,"stable":true,"t":1794873663500000},{"value":-0.7071,"stable":true,"t":1794873663750000},{"value":-0.4067,"stable":true,"t":1794873664000000}]}
+{"kind":"validation","t":1794873665000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873665000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873665000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873665000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9229,"stable":true,"t":1794873664125000},{"value":-0.2538,"stable":true,"t":1794873664250000},{"value":0.615,"stable":true,"t":1794873664375000},{"value":0.9999,"stable":true,"t":1794873664500000},{"value":0.5983,"stable":true,"t":1794873664625000},{"value":-0.274,"stable":true,"t":1794873664750000},{"value":-0.9307,"stable":true,"t":1794873664875000},{"value":-0.8554,"stable":true,"t":1794873665000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.0523,"stable":true,"t":1794873664250000},{"value":0.309,"stable":true,"t":1794873664500000},{"value":0.6293,"stable":true,"t":1794873664750000},{"value":0.866,"stable":true,"t":1794873665000000}]}
+{"kind":"validation","t":1794873666000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873666000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873666000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873666000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1097,"stable":true,"t":1794873665125000},{"value":0.7218,"stable":true,"t":1794873665250000},{"value":0.9885,"stable":true,"t":1794873665375000},{"value":0.4818,"stable":true,"t":1794873665500000},{"value":-0.4019,"stable":true,"t":1794873665625000},{"value":-0.9711,"stable":true,"t":1794873665750000},{"value":-0.7804,"stable":true,"t":1794873665875000},{"value":0.0209,"stable":true,"t":1794873666000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9877,"stable":true,"t":1794873665250000},{"value":0.9781,"stable":true,"t":1794873665500000},{"value":0.8387,"stable":true,"t":1794873665750000},{"value":0.5878,"stable":true,"t":1794873666000000}]}
+{"kind":"validation","t":1794873667000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873667000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873667000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873667000000}}
+{"kind":"pulseWave","samples":[{"value":0.8044,"stable":true,"t":1794873666125000},{"value":0.9617,"stable":true,"t":1794873666250000},{"value":0.3706,"stable":true,"t":1794873666375000},{"value":-0.509,"stable":true,"t":1794873666500000},{"value":-0.9924,"stable":true,"t":1794873666625000},{"value":-0.7034,"stable":true,"t":1794873666750000},{"value":0.1331,"stable":true,"t":1794873666875000},{"value":0.866,"stable":true,"t":1794873667000000}]}
+{"kind":"breathingWave","samples":[{"value":0.2588,"stable":true,"t":1794873666250000},{"value":-0.1045,"stable":true,"t":1794873666500000},{"value":-0.454,"stable":true,"t":1794873666750000},{"value":-0.7431,"stable":true,"t":1794873667000000}]}
+{"kind":"validation","t":1794873668000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873668000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873668000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873668000000}}
+{"kind":"pulseWave","samples":[{"value":0.9239,"stable":true,"t":1794873667125000},{"value":0.2588,"stable":true,"t":1794873667250000},{"value":-0.6088,"stable":true,"t":1794873667375000},{"value":-1,"stable":true,"t":1794873667500000},{"value":-0.6088,"stable":true,"t":1794873667625000},{"value":0.2588,"stable":true,"t":1794873667750000},{"value":0.9239,"stable":true,"t":1794873667875000},{"value":0.866,"stable":true,"t":1794873668000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9336,"stable":true,"t":1794873667250000},{"value":-1,"stable":true,"t":1794873667500000},{"value":-0.9336,"stable":true,"t":1794873667750000},{"value":-0.7431,"stable":true,"t":1794873668000000}]}
+{"kind":"validation","t":1794873669000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873669000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873669000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873669000000}}
+{"kind":"pulseWave","samples":[{"value":0.1279,"stable":true,"t":1794873668125000},{"value":-0.7108,"stable":true,"t":1794873668250000},{"value":-0.9904,"stable":true,"t":1794873668375000},{"value":-0.4909,"stable":true,"t":1794873668500000},{"value":0.3947,"stable":true,"t":1794873668625000},{"value":0.9699,"stable":true,"t":1794873668750000},{"value":0.7821,"stable":true,"t":1794873668875000},{"value":-0.0209,"stable":true,"t":1794873669000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.454,"stable":true,"t":1794873668250000},{"value":-0.1045,"stable":true,"t":1794873668500000},{"value":0.2588,"stable":true,"t":1794873668750000},{"value":0.5878,"stable":true,"t":1794873669000000}]}
+{"kind":"validation","t":1794873670000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873670000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873670000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873670000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8059,"stable":true,"t":1794873669125000},{"value":-0.9603,"stable":true,"t":1794873669250000},{"value":-0.3633,"stable":true,"t":1794873669375000},{"value":0.518,"stable":true,"t":1794873669500000},{"value":0.994,"stable":true,"t":1794873669625000},{"value":0.6921,"stable":true,"t":1794873669750000},{"value":-0.1513,"stable":true,"t":1794873669875000},{"value":-0.8763,"stable":true,"t":1794873670000000}]}
+{"kind":"breathingWave","samples":[{"value":0.8387,"stable":true,"t":1794873669250000},{"value":0.9781,"stable":true,"t":1794873669500000},{"value":0.9877,"stable":true,"t":1794873669750000},{"value":0.866,"stable":true,"t":1794873670000000}]}
+{"kind":"validation","t":1794873671000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873671000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873671000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873671000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9167,"stable":true,"t":1794873670125000},{"value":-0.2436,"stable":true,"t":1794873670250000},{"value":0.6191,"stable":true,"t":1794873670375000},{"value":0.9999,"stable":true,"t":1794873670500000},{"value":0.6025,"stable":true,"t":1794873670625000},{"value":-0.2639,"stable":true,"t":1794873670750000},{"value":-0.9249,"stable":true,"t":1794873670875000},{"value":-0.866,"stable":true,"t":1794873671000000}]}
+{"kind":"breathingWave","samples":[{"value":0.6293,"stable":true,"t":1794873670250000},{"value":0.309,"stable":true,"t":1794873670500000},{"value":-0.0523,"stable":true,"t":1794873670750000},{"value":-0.4067,"stable":true,"t":1794873671000000}]}
+{"kind":"validation","t":1794873672000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873672000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873672000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873672000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1305,"stable":true,"t":1794873671125000},{"value":0.7071,"stable":true,"t":1794873671250000},{"value":0.9914,"stable":true,"t":1794873671375000},{"value":0.5,"stable":true,"t":1794873671500000},{"value":-0.3827,"stable":true,"t":1794873671625000},{"value":-0.9659,"stable":true,"t":1794873671750000},{"value":-0.7934,"stable":true,"t":1794873671875000},{"value":0,"stable":true,"t":1794873672000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.7071,"stable":true,"t":1794873671250000},{"value":-0.9135,"stable":true,"t":1794873671500000},{"value":-0.9986,"stable":true,"t":1794873671750000},{"value":-0.9511,"stable":true,"t":1794873672000000}]}
+{"kind":"validation","t":1794873673000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873673000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873673000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873673000000}}
+{"kind":"pulseWave","samples":[{"value":0.7949,"stable":true,"t":1794873672125000},{"value":0.9646,"stable":true,"t":1794873672250000},{"value":0.3754,"stable":true,"t":1794873672375000},{"value":-0.509,"stable":true,"t":1794873672500000},{"value":-0.9931,"stable":true,"t":1794873672625000},{"value":-0.6959,"stable":true,"t":1794873672750000},{"value":0.1487,"stable":true,"t":1794873672875000},{"value":0.8763,"stable":true,"t":1794873673000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.7771,"stable":true,"t":1794873672250000},{"value":-0.5,"stable":true,"t":1794873672500000},{"value":-0.1564,"stable":true,"t":1794873672750000},{"value":0.2079,"stable":true,"t":1794873673000000}]}
+{"kind":"validation","t":1794873674000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873674000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873674000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873674000000}}
+{"kind":"pulseWave","samples":[{"value":0.9157,"stable":true,"t":1794873673125000},{"value":0.2385,"stable":true,"t":1794873673250000},{"value":-0.6252,"stable":true,"t":1794873673375000},{"value":-0.9998,"stable":true,"t":1794873673500000},{"value":-0.592,"stable":true,"t":1794873673625000},{"value":0.279,"stable":true,"t":1794873673750000},{"value":0.9317,"stable":true,"t":1794873673875000},{"value":0.8554,"stable":true,"t":1794873674000000}]}
+{"kind":"breathingWave","samples":[{"value":0.5446,"stable":true,"t":1794873673250000},{"value":0.809,"stable":true,"t":1794873673500000},{"value":0.9659,"stable":true,"t":1794873673750000},{"value":0.9945,"stable":true,"t":1794873674000000}]}
+{"kind":"validation","t":1794873675000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873675000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873675000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873675000000}}
+{"kind":"pulseWave","samples":[{"value":0.1123,"stable":true,"t":1794873674125000},{"value":-0.7181,"stable":true,"t":1794873674250000},{"value":-0.9897,"stable":true,"t":1794873674375000},{"value":-0.4909,"stable":true,"t":1794873674500000},{"value":0.3899,"stable":true,"t":1794873674625000},{"value":0.9673,"stable":true,"t":1794873674750000},{"value":0.7918,"stable":true,"t":1794873674875000},{"value":0,"stable":true,"t":1794873675000000}]}
+{"kind":"breathingWave","samples":[{"value":0.891,"stable":true,"t":1794873674250000},{"value":0.6691,"stable":true,"t":1794873674500000},{"value":0.3584,"stable":true,"t":1794873674750000},{"value":0,"stable":true,"t":1794873675000000}]}
+{"kind":"validation","t":1794873676000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873676000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873676000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873676000000}}
+{"kind":"pulseWave","samples":[{"value":-0.7934,"stable":true,"t":1794873675125000},{"value":-0.9659,"stable":true,"t":1794873675250000},{"value":-0.3827,"stable":true,"t":1794873675375000},{"value":0.5,"stable":true,"t":1794873675500000},{"value":0.9914,"stable":true,"t":1794873675625000},{"value":0.7071,"stable":true,"t":1794873675750000},{"value":-0.1305,"stable":true,"t":1794873675875000},{"value":-0.866,"stable":true,"t":1794873676000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.3584,"stable":true,"t":1794873675250000},{"value":-0.6691,"stable":true,"t":1794873675500000},{"value":-0.891,"stable":true,"t":1794873675750000},{"value":-0.9945,"stable":true,"t":1794873676000000}]}
+{"kind":"validation","t":1794873677000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873677000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873677000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873677000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9229,"stable":true,"t":1794873676125000},{"value":-0.2538,"stable":true,"t":1794873676250000},{"value":0.615,"stable":true,"t":1794873676375000},{"value":0.9999,"stable":true,"t":1794873676500000},{"value":0.5983,"stable":true,"t":1794873676625000},{"value":-0.274,"stable":true,"t":1794873676750000},{"value":-0.9307,"stable":true,"t":1794873676875000},{"value":-0.8554,"stable":true,"t":1794873677000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9659,"stable":true,"t":1794873676250000},{"value":-0.809,"stable":true,"t":1794873676500000},{"value":-0.5446,"stable":true,"t":1794873676750000},{"value":-0.2079,"stable":true,"t":1794873677000000}]}
+{"kind":"validation","t":1794873678000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873678000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873678000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873678000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1097,"stable":true,"t":1794873677125000},{"value":0.7218,"stable":true,"t":1794873677250000},{"value":0.9885,"stable":true,"t":1794873677375000},{"value":0.4818,"stable":true,"t":1794873677500000},{"value":-0.4019,"stable":true,"t":1794873677625000},{"value":-0.9711,"stable":true,"t":1794873677750000},{"value":-0.7804,"stable":true,"t":1794873677875000},{"value":0.0209,"stable":true,"t":1794873678000000}]}
+{"kind":"breathingWave","samples":[{"value":0.1564,"stable":true,"t":1794873677250000},{"value":0.5,"stable":true,"t":1794873677500000},{"value":0.7771,"stable":true,"t":1794873677750000},{"value":0.9511,"stable":true,"t":1794873678000000}]}
+{"kind":"validation","t":1794873679000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873679000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873679000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873679000000}}
+{"kind":"pulseWave","samples":[{"value":0.8044,"stable":true,"t":1794873678125000},{"value":0.9617,"stable":true,"t":1794873678250000},{"value":0.3706,"stable":true,"t":1794873678375000},{"value":-0.509,"stable":true,"t":1794873678500000},{"value":-0.9924,"stable":true,"t":1794873678625000},{"value":-0.7034,"stable":true,"t":1794873678750000},{"value":0.1331,"stable":true,"t":1794873678875000},{"value":0.866,"stable":true,"t":1794873679000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9986,"stable":true,"t":1794873678250000},{"value":0.9135,"stable":true,"t":1794873678500000},{"value":0.7071,"stable":true,"t":1794873678750000},{"value":0.4067,"stable":true,"t":1794873679000000}]}
+{"kind":"validation","t":1794873680000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873680000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873680000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873680000000}}
+{"kind":"pulseWave","samples":[{"value":0.9239,"stable":true,"t":1794873679125000},{"value":0.2588,"stable":true,"t":1794873679250000},{"value":-0.6088,"stable":true,"t":1794873679375000},{"value":-1,"stable":true,"t":1794873679500000},{"value":-0.6088,"stable":true,"t":1794873679625000},{"value":0.2588,"stable":true,"t":1794873679750000},{"value":0.9239,"stable":true,"t":1794873679875000},{"value":0.866,"stable":true,"t":1794873680000000}]}
+{"kind":"breathingWave","samples":[{"value":0.0523,"stable":true,"t":1794873679250000},{"value":-0.309,"stable":true,"t":1794873679500000},{"value":-0.6293,"stable":true,"t":1794873679750000},{"value":-0.866,"stable":true,"t":1794873680000000}]}
+{"kind":"validation","t":1794873681000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873681000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873681000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873681000000}}
+{"kind":"pulseWave","samples":[{"value":0.1279,"stable":true,"t":1794873680125000},{"value":-0.7108,"stable":true,"t":1794873680250000},{"value":-0.9904,"stable":true,"t":1794873680375000},{"value":-0.4909,"stable":true,"t":1794873680500000},{"value":0.3947,"stable":true,"t":1794873680625000},{"value":0.9699,"stable":true,"t":1794873680750000},{"value":0.7821,"stable":true,"t":1794873680875000},{"value":-0.0209,"stable":true,"t":1794873681000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9877,"stable":true,"t":1794873680250000},{"value":-0.9781,"stable":true,"t":1794873680500000},{"value":-0.8387,"stable":true,"t":1794873680750000},{"value":-0.5878,"stable":true,"t":1794873681000000}]}
+{"kind":"validation","t":1794873682000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873682000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873682000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873682000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8059,"stable":true,"t":1794873681125000},{"value":-0.9603,"stable":true,"t":1794873681250000},{"value":-0.3633,"stable":true,"t":1794873681375000},{"value":0.518,"stable":true,"t":1794873681500000},{"value":0.994,"stable":true,"t":1794873681625000},{"value":0.6921,"stable":true,"t":1794873681750000},{"value":-0.1513,"stable":true,"t":1794873681875000},{"value":-0.8763,"stable":true,"t":1794873682000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.2588,"stable":true,"t":1794873681250000},{"value":0.1045,"stable":true,"t":1794873681500000},{"value":0.454,"stable":true,"t":1794873681750000},{"value":0.7431,"stable":true,"t":1794873682000000}]}
+{"kind":"validation","t":1794873683000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873683000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873683000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873683000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9167,"stable":true,"t":1794873682125000},{"value":-0.2436,"stable":true,"t":1794873682250000},{"value":0.6191,"stable":true,"t":1794873682375000},{"value":0.9999,"stable":true,"t":1794873682500000},{"value":0.6025,"stable":true,"t":1794873682625000},{"value":-0.2639,"stable":true,"t":1794873682750000},{"value":-0.9249,"stable":true,"t":1794873682875000},{"value":-0.866,"stable":true,"t":1794873683000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9336,"stable":true,"t":1794873682250000},{"value":1,"stable":true,"t":1794873682500000},{"value":0.9336,"stable":true,"t":1794873682750000},{"value":0.7431,"stable":true,"t":1794873683000000}]}
+{"kind":"validation","t":1794873684000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873684000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873684000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873684000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1305,"stable":true,"t":1794873683125000},{"value":0.7071,"stable":true,"t":1794873683250000},{"value":0.9914,"stable":true,"t":1794873683375000},{"value":0.5,"stable":true,"t":1794873683500000},{"value":-0.3827,"stable":true,"t":1794873683625000},{"value":-0.9659,"stable":true,"t":1794873683750000},{"value":-0.7934,"stable":true,"t":1794873683875000},{"value":0,"stable":true,"t":1794873684000000}]}
+{"kind":"breathingWave","samples":[{"value":0.454,"stable":true,"t":1794873683250000},{"value":0.1045,"stable":true,"t":1794873683500000},{"value":-0.2588,"stable":true,"t":1794873683750000},{"value":-0.5878,"stable":true,"t":1794873684000000}]}
+{"kind":"validation","t":1794873685000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873685000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88.2,"confidence":95,"stable":true,"t":1794873685000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873685000000}}
+{"kind":"pulseWave","samples":[{"value":0.9146,"stable":true,"t":1794873684125000},{"value":0.7396,"stable":true,"t":1794873684250000},{"value":-0.3165,"stable":true,"t":1794873684375000},{"value":-0.9956,"stable":true,"t":1794873684500000},{"value":-0.4886,"stable":true,"t":1794873684625000},{"value":0.6004,"stable":true,"t":1794873684750000},{"value":0.9742,"stable":true,"t":1794873684875000},{"value":0.1874,"stable":true,"t":1794873685000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.891,"stable":true,"t":1794873684250000},{"value":-1,"stable":true,"t":1794873684500000},{"value":-0.891,"stable":true,"t":1794873684750000},{"value":-0.5878,"stable":true,"t":1794873685000000}]}
+{"kind":"validation","t":1794873686000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873686000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88,"confidence":95,"stable":true,"t":1794873686000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873686000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8211,"stable":true,"t":1794873685125000},{"value":-0.8554,"stable":true,"t":1794873685250000},{"value":0.1253,"stable":true,"t":1794873685375000},{"value":0.9573,"stable":true,"t":1794873685500000},{"value":0.6534,"stable":true,"t":1794873685625000},{"value":-0.4258,"stable":true,"t":1794873685750000},{"value":-0.9998,"stable":true,"t":1794873685875000},{"value":-0.3875,"stable":true,"t":1794873686000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.1564,"stable":true,"t":1794873685250000},{"value":0.309,"stable":true,"t":1794873685500000},{"value":0.7071,"stable":true,"t":1794873685750000},{"value":0.9511,"stable":true,"t":1794873686000000}]}
+{"kind":"validation","t":1794873687000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873687000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":87.8,"confidence":95,"stable":true,"t":1794873687000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873687000000}}
+{"kind":"pulseWave","samples":[{"value":0.6826,"stable":true,"t":1794873686125000},{"value":0.9461,"stable":true,"t":1794873686250000},{"value":0.0915,"stable":true,"t":1794873686375000},{"value":-0.8712,"stable":true,"t":1794873686500000},{"value":-0.8044,"stable":true,"t":1794873686625000},{"value":0.213,"stable":true,"t":1794873686750000},{"value":0.9787,"stable":true,"t":1794873686875000},{"value":0.5878,"stable":true,"t":1794873687000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9877,"stable":true,"t":1794873686250000},{"value":0.809,"stable":true,"t":1794873686500000},{"value":0.454,"stable":true,"t":1794873686750000},{"value":0,"stable":true,"t":1794873687000000}]}
+{"kind":"validation","t":1794873688000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873688000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88,"confidence":95,"stable":true,"t":1794873688000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873688000000}}
+{"kind":"pulseWave","samples":[{"value":-0.5,"stable":true,"t":1794873687125000},{"value":-0.9945,"stable":true,"t":1794873687250000},{"value":-0.309,"stable":true,"t":1794873687375000},{"value":0.7431,"stable":true,"t":1794873687500000},{"value":0.9135,"stable":true,"t":1794873687625000},{"value":0,"stable":true,"t":1794873687750000},{"value":-0.9135,"stable":true,"t":1794873687875000},{"value":-0.7431,"stable":true,"t":1794873688000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.454,"stable":true,"t":1794873687250000},{"value":-0.809,"stable":true,"t":1794873687500000},{"value":-0.9877,"stable":true,"t":1794873687750000},{"value":-0.9511,"stable":true,"t":1794873688000000}]}
+{"kind":"validation","t":1794873689000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873689000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88.2,"confidence":95,"stable":true,"t":1794873689000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873689000000}}
+{"kind":"pulseWave","samples":[{"value":0.3115,"stable":true,"t":1794873688125000},{"value":0.9951,"stable":true,"t":1794873688250000},{"value":0.4932,"stable":true,"t":1794873688375000},{"value":-0.5962,"stable":true,"t":1794873688500000},{"value":-0.9753,"stable":true,"t":1794873688625000},{"value":-0.1925,"stable":true,"t":1794873688750000},{"value":0.8197,"stable":true,"t":1794873688875000},{"value":0.8554,"stable":true,"t":1794873689000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.7071,"stable":true,"t":1794873688250000},{"value":-0.309,"stable":true,"t":1794873688500000},{"value":0.1564,"stable":true,"t":1794873688750000},{"value":0.5878,"stable":true,"t":1794873689000000}]}
+{"kind":"validation","t":1794873690000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873690000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88,"confidence":95,"stable":true,"t":1794873690000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873690000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1253,"stable":true,"t":1794873689125000},{"value":-0.9573,"stable":true,"t":1794873689250000},{"value":-0.6534,"stable":true,"t":1794873689375000},{"value":0.4258,"stable":true,"t":1794873689500000},{"value":0.9998,"stable":true,"t":1794873689625000},{"value":0.3875,"stable":true,"t":1794873689750000},{"value":-0.6845,"stable":true,"t":1794873689875000},{"value":-0.9444,"stable":true,"t":1794873690000000}]}
+{"kind":"breathingWave","samples":[{"value":0.891,"stable":true,"t":1794873689250000},{"value":1,"stable":true,"t":1794873689500000},{"value":0.891,"stable":true,"t":1794873689750000},{"value":0.5878,"stable":true,"t":1794873690000000}]}
+{"kind":"validation","t":1794873691000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873691000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":87.8,"confidence":95,"stable":true,"t":1794873691000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873691000000}}
+{"kind":"pulseWave","samples":[{"value":-0.0863,"stable":true,"t":1794873690125000},{"value":0.8738,"stable":true,"t":1794873690250000},{"value":0.8013,"stable":true,"t":1794873690375000},{"value":-0.2181,"stable":true,"t":1794873690500000},{"value":-0.9798,"stable":true,"t":1794873690625000},{"value":-0.5835,"stable":true,"t":1794873690750000},{"value":0.5023,"stable":true,"t":1794873690875000},{"value":0.9945,"stable":true,"t":1794873691000000}]}
+{"kind":"breathingWave","samples":[{"value":0.1564,"stable":true,"t":1794873690250000},{"value":-0.309,"stable":true,"t":1794873690500000},{"value":-0.7071,"stable":true,"t":1794873690750000},{"value":-0.9511,"stable":true,"t":1794873691000000}]}
+{"kind":"validation","t":1794873692000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873692000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88,"confidence":95,"stable":true,"t":1794873692000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873692000000}}
+{"kind":"pulseWave","samples":[{"value":0.309,"stable":true,"t":1794873691125000},{"value":-0.7431,"stable":true,"t":1794873691250000},{"value":-0.9135,"stable":true,"t":1794873691375000},{"value":0,"stable":true,"t":1794873691500000},{"value":0.9135,"stable":true,"t":1794873691625000},{"value":0.7431,"stable":true,"t":1794873691750000},{"value":-0.309,"stable":true,"t":1794873691875000},{"value":-0.9945,"stable":true,"t":1794873692000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9877,"stable":true,"t":1794873691250000},{"value":-0.809,"stable":true,"t":1794873691500000},{"value":-0.454,"stable":true,"t":1794873691750000},{"value":0,"stable":true,"t":1794873692000000}]}
+{"kind":"validation","t":1794873693000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873693000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88.2,"confidence":95,"stable":true,"t":1794873693000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873693000000}}
+{"kind":"pulseWave","samples":[{"value":-0.4977,"stable":true,"t":1794873692125000},{"value":0.592,"stable":true,"t":1794873692250000},{"value":0.9765,"stable":true,"t":1794873692375000},{"value":0.1977,"stable":true,"t":1794873692500000},{"value":-0.8166,"stable":true,"t":1794873692625000},{"value":-0.8581,"stable":true,"t":1794873692750000},{"value":0.1227,"stable":true,"t":1794873692875000},{"value":0.9573,"stable":true,"t":1794873693000000}]}
+{"kind":"breathingWave","samples":[{"value":0.454,"stable":true,"t":1794873692250000},{"value":0.809,"stable":true,"t":1794873692500000},{"value":0.9877,"stable":true,"t":1794873692750000},{"value":0.9511,"stable":true,"t":1794873693000000}]}
+{"kind":"validation","t":1794873694000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873694000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88,"confidence":95,"stable":true,"t":1794873694000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873694000000}}
+{"kind":"pulseWave","samples":[{"value":0.6534,"stable":true,"t":1794873693125000},{"value":-0.4258,"stable":true,"t":1794873693250000},{"value":-0.9998,"stable":true,"t":1794873693375000},{"value":-0.3875,"stable":true,"t":1794873693500000},{"value":0.6845,"stable":true,"t":1794873693625000},{"value":0.9444,"stable":true,"t":1794873693750000},{"value":0.0837,"stable":true,"t":1794873693875000},{"value":-0.8763,"stable":true,"t":1794873694000000}]}
+{"kind":"breathingWave","samples":[{"value":0.7071,"stable":true,"t":1794873693250000},{"value":0.309,"stable":true,"t":1794873693500000},{"value":-0.1564,"stable":true,"t":1794873693750000},{"value":-0.5878,"stable":true,"t":1794873694000000}]}
+{"kind":"validation","t":1794873695000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873695000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":87.8,"confidence":95,"stable":true,"t":1794873695000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873695000000}}
+{"kind":"pulseWave","samples":[{"value":-0.7981,"stable":true,"t":1794873694125000},{"value":0.2233,"stable":true,"t":1794873694250000},{"value":0.9808,"stable":true,"t":1794873694375000},{"value":0.5793,"stable":true,"t":1794873694500000},{"value":-0.5068,"stable":true,"t":1794873694625000},{"value":-0.994,"stable":true,"t":1794873694750000},{"value":-0.3065,"stable":true,"t":1794873694875000},{"value":0.7431,"stable":true,"t":1794873695000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.891,"stable":true,"t":1794873694250000},{"value":-1,"stable":true,"t":1794873694500000},{"value":-0.891,"stable":true,"t":1794873694750000},{"value":-0.5878,"stable":true,"t":1794873695000000}]}
+{"kind":"validation","t":1794873696000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873696000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88,"confidence":95,"stable":true,"t":1794873696000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873696000000}}
+{"kind":"pulseWave","samples":[{"value":0.9135,"stable":true,"t":1794873695125000},{"value":0,"stable":true,"t":1794873695250000},{"value":-0.9135,"stable":true,"t":1794873695375000},{"value":-0.7431,"stable":true,"t":1794873695500000},{"value":0.309,"stable":true,"t":1794873695625000},{"value":0.9945,"stable":true,"t":1794873695750000},{"value":0.5,"stable":true,"t":1794873695875000},{"value":-0.5878,"stable":true,"t":1794873696000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.1564,"stable":true,"t":1794873695250000},{"value":0.309,"stable":true,"t":1794873695500000},{"value":0.7071,"stable":true,"t":1794873695750000},{"value":0.9511,"stable":true,"t":1794873696000000}]}
+{"kind":"validation","t":1794873697000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873697000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88.2,"confidence":95,"stable":true,"t":1794873697000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873697000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9776,"stable":true,"t":1794873696125000},{"value":-0.2028,"stable":true,"t":1794873696250000},{"value":0.8136,"stable":true,"t":1794873696375000},{"value":0.8607,"stable":true,"t":1794873696500000},{"value":-0.1175,"stable":true,"t":1794873696625000},{"value":-0.9558,"stable":true,"t":1794873696750000},{"value":-0.6554,"stable":true,"t":1794873696875000},{"value":0.4258,"stable":true,"t":1794873697000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9877,"stable":true,"t":1794873696250000},{"value":0.809,"stable":true,"t":1794873696500000},{"value":0.454,"stable":true,"t":1794873696750000},{"value":0,"stable":true,"t":1794873697000000}]}
+{"kind":"validation","t":1794873698000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873698000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88,"confidence":95,"stable":true,"t":1794873698000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873698000000}}
+{"kind":"pulseWave","samples":[{"value":0.9998,"stable":true,"t":1794873697125000},{"value":0.3875,"stable":true,"t":1794873697250000},{"value":-0.6845,"stable":true,"t":1794873697375000},{"value":-0.9444,"stable":true,"t":1794873697500000},{"value":-0.0837,"stable":true,"t":1794873697625000},{"value":0.8763,"stable":true,"t":1794873697750000},{"value":0.7965,"stable":true,"t":1794873697875000},{"value":-0.2284,"stable":true,"t":1794873698000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.454,"stable":true,"t":1794873697250000},{"value":-0.809,"stable":true,"t":1794873697500000},{"value":-0.9877,"stable":true,"t":1794873697750000},{"value":-0.9511,"stable":true,"t":1794873698000000}]}
+{"kind":"validation","t":1794873699000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873699000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":87.8,"confidence":95,"stable":true,"t":1794873699000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873699000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9818,"stable":true,"t":1794873698125000},{"value":-0.575,"stable":true,"t":1794873698250000},{"value":0.5113,"stable":true,"t":1794873698375000},{"value":0.9934,"stable":true,"t":1794873698500000},{"value":0.3015,"stable":true,"t":1794873698625000},{"value":-0.7466,"stable":true,"t":1794873698750000},{"value":-0.9125,"stable":true,"t":1794873698875000},{"value":0,"stable":true,"t":1794873699000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.7071,"stable":true,"t":1794873698250000},{"value":-0.309,"stable":true,"t":1794873698500000},{"value":0.1564,"stable":true,"t":1794873698750000},{"value":0.5878,"stable":true,"t":1794873699000000}]}
+{"kind":"validation","t":1794873700000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873700000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88,"confidence":95,"stable":true,"t":1794873700000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873700000000}}
+{"kind":"pulseWave","samples":[{"value":0.9135,"stable":true,"t":1794873699125000},{"value":0.7431,"stable":true,"t":1794873699250000},{"value":-0.309,"stable":true,"t":1794873699375000},{"value":-0.9945,"stable":true,"t":1794873699500000},{"value":-0.5,"stable":true,"t":1794873699625000},{"value":0.5878,"stable":true,"t":1794873699750000},{"value":0.9781,"stable":true,"t":1794873699875000},{"value":0.2079,"stable":true,"t":1794873700000000}]}
+{"kind":"breathingWave","samples":[{"value":0.891,"stable":true,"t":1794873699250000},{"value":1,"stable":true,"t":1794873699500000},{"value":0.891,"stable":true,"t":1794873699750000},{"value":0.5878,"stable":true,"t":1794873700000000}]}
+{"kind":"validation","t":1794873701000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873701000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88.2,"confidence":95,"stable":true,"t":1794873701000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873701000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8106,"stable":true,"t":1794873700125000},{"value":-0.8634,"stable":true,"t":1794873700250000},{"value":0.1123,"stable":true,"t":1794873700375000},{"value":0.9542,"stable":true,"t":1794873700500000},{"value":0.6593,"stable":true,"t":1794873700625000},{"value":-0.421,"stable":true,"t":1794873700750000},{"value":-0.9998,"stable":true,"t":1794873700875000},{"value":-0.3875,"stable":true,"t":1794873701000000}]}
+{"kind":"breathingWave","samples":[{"value":0.1564,"stable":true,"t":1794873700250000},{"value":-0.309,"stable":true,"t":1794873700500000},{"value":-0.7071,"stable":true,"t":1794873700750000},{"value":-0.9511,"stable":true,"t":1794873701000000}]}
+{"kind":"validation","t":1794873702000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873702000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88,"confidence":95,"stable":true,"t":1794873702000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873702000000}}
+{"kind":"pulseWave","samples":[{"value":0.6845,"stable":true,"t":1794873701125000},{"value":0.9444,"stable":true,"t":1794873701250000},{"value":0.0837,"stable":true,"t":1794873701375000},{"value":-0.8763,"stable":true,"t":1794873701500000},{"value":-0.7965,"stable":true,"t":1794873701625000},{"value":0.2284,"stable":true,"t":1794873701750000},{"value":0.9823,"stable":true,"t":1794873701875000},{"value":0.5707,"stable":true,"t":1794873702000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9877,"stable":true,"t":1794873701250000},{"value":-0.809,"stable":true,"t":1794873701500000},{"value":-0.454,"stable":true,"t":1794873701750000},{"value":0,"stable":true,"t":1794873702000000}]}
+{"kind":"validation","t":1794873703000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873703000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":87.8,"confidence":95,"stable":true,"t":1794873703000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873703000000}}
+{"kind":"pulseWave","samples":[{"value":-0.5158,"stable":true,"t":1794873702125000},{"value":-0.9928,"stable":true,"t":1794873702250000},{"value":-0.2965,"stable":true,"t":1794873702375000},{"value":0.7501,"stable":true,"t":1794873702500000},{"value":0.9103,"stable":true,"t":1794873702625000},{"value":-0.0052,"stable":true,"t":1794873702750000},{"value":-0.9146,"stable":true,"t":1794873702875000},{"value":-0.7431,"stable":true,"t":1794873703000000}]}
+{"kind":"breathingWave","samples":[{"value":0.454,"stable":true,"t":1794873702250000},{"value":0.809,"stable":true,"t":1794873702500000},{"value":0.9877,"stable":true,"t":1794873702750000},{"value":0.9511,"stable":true,"t":1794873703000000}]}
+{"kind":"validation","t":1794873704000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873704000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":88,"confidence":95,"stable":true,"t":1794873704000000}}
+{"kind":"breathingRate","reading":{"value":18,"confidence":95,"stable":true,"t":1794873704000000}}
+{"kind":"pulseWave","samples":[{"value":0.309,"stable":true,"t":1794873703125000},{"value":0.9945,"stable":true,"t":1794873703250000},{"value":0.5,"stable":true,"t":1794873703375000},{"value":-0.5878,"stable":true,"t":1794873703500000},{"value":-0.9781,"stable":true,"t":1794873703625000},{"value":-0.2079,"stable":true,"t":1794873703750000},{"value":0.809,"stable":true,"t":1794873703875000},{"value":0.866,"stable":true,"t":1794873704000000}]}
+{"kind":"breathingWave","samples":[{"value":0.7071,"stable":true,"t":1794873703250000},{"value":0.309,"stable":true,"t":1794873703500000},{"value":-0.1564,"stable":true,"t":1794873703750000},{"value":-0.5878,"stable":true,"t":1794873704000000}]}
+{"kind":"validation","t":1794873705000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873705000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873705000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873705000000}}
+{"kind":"pulseWave","samples":[{"value":0.1279,"stable":true,"t":1794873704125000},{"value":-0.7108,"stable":true,"t":1794873704250000},{"value":-0.9904,"stable":true,"t":1794873704375000},{"value":-0.4909,"stable":true,"t":1794873704500000},{"value":0.3947,"stable":true,"t":1794873704625000},{"value":0.9699,"stable":true,"t":1794873704750000},{"value":0.7821,"stable":true,"t":1794873704875000},{"value":-0.0209,"stable":true,"t":1794873705000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.8387,"stable":true,"t":1794873704250000},{"value":-0.9781,"stable":true,"t":1794873704500000},{"value":-0.9877,"stable":true,"t":1794873704750000},{"value":-0.866,"stable":true,"t":1794873705000000}]}
+{"kind":"validation","t":1794873706000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873706000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873706000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873706000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8059,"stable":true,"t":1794873705125000},{"value":-0.9603,"stable":true,"t":1794873705250000},{"value":-0.3633,"stable":true,"t":1794873705375000},{"value":0.518,"stable":true,"t":1794873705500000},{"value":0.994,"stable":true,"t":1794873705625000},{"value":0.6921,"stable":true,"t":1794873705750000},{"value":-0.1513,"stable":true,"t":1794873705875000},{"value":-0.8763,"stable":true,"t":1794873706000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.6293,"stable":true,"t":1794873705250000},{"value":-0.309,"stable":true,"t":1794873705500000},{"value":0.0523,"stable":true,"t":1794873705750000},{"value":0.4067,"stable":true,"t":1794873706000000}]}
+{"kind":"validation","t":1794873707000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873707000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873707000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873707000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9167,"stable":true,"t":1794873706125000},{"value":-0.2436,"stable":true,"t":1794873706250000},{"value":0.6191,"stable":true,"t":1794873706375000},{"value":0.9999,"stable":true,"t":1794873706500000},{"value":0.6025,"stable":true,"t":1794873706625000},{"value":-0.2639,"stable":true,"t":1794873706750000},{"value":-0.9249,"stable":true,"t":1794873706875000},{"value":-0.866,"stable":true,"t":1794873707000000}]}
+{"kind":"breathingWave","samples":[{"value":0.7071,"stable":true,"t":1794873706250000},{"value":0.9135,"stable":true,"t":1794873706500000},{"value":0.9986,"stable":true,"t":1794873706750000},{"value":0.9511,"stable":true,"t":1794873707000000}]}
+{"kind":"validation","t":1794873708000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873708000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873708000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873708000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1305,"stable":true,"t":1794873707125000},{"value":0.7071,"stable":true,"t":1794873707250000},{"value":0.9914,"stable":true,"t":1794873707375000},{"value":0.5,"stable":true,"t":1794873707500000},{"value":-0.3827,"stable":true,"t":1794873707625000},{"value":-0.9659,"stable":true,"t":1794873707750000},{"value":-0.7934,"stable":true,"t":1794873707875000},{"value":0,"stable":true,"t":1794873708000000}]}
+{"kind":"breathingWave","samples":[{"value":0.7771,"stable":true,"t":1794873707250000},{"value":0.5,"stable":true,"t":1794873707500000},{"value":0.1564,"stable":true,"t":1794873707750000},{"value":-0.2079,"stable":true,"t":1794873708000000}]}
+{"kind":"validation","t":1794873709000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873709000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873709000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873709000000}}
+{"kind":"pulseWave","samples":[{"value":0.7949,"stable":true,"t":1794873708125000},{"value":0.9646,"stable":true,"t":1794873708250000},{"value":0.3754,"stable":true,"t":1794873708375000},{"value":-0.509,"stable":true,"t":1794873708500000},{"value":-0.9931,"stable":true,"t":1794873708625000},{"value":-0.6959,"stable":true,"t":1794873708750000},{"value":0.1487,"stable":true,"t":1794873708875000},{"value":0.8763,"stable":true,"t":1794873709000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.5446,"stable":true,"t":1794873708250000},{"value":-0.809,"stable":true,"t":1794873708500000},{"value":-0.9659,"stable":true,"t":1794873708750000},{"value":-0.9945,"stable":true,"t":1794873709000000}]}
+{"kind":"validation","t":1794873710000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873710000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873710000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873710000000}}
+{"kind":"pulseWave","samples":[{"value":0.9157,"stable":true,"t":1794873709125000},{"value":0.2385,"stable":true,"t":1794873709250000},{"value":-0.6252,"stable":true,"t":1794873709375000},{"value":-0.9998,"stable":true,"t":1794873709500000},{"value":-0.592,"stable":true,"t":1794873709625000},{"value":0.279,"stable":true,"t":1794873709750000},{"value":0.9317,"stable":true,"t":1794873709875000},{"value":0.8554,"stable":true,"t":1794873710000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.891,"stable":true,"t":1794873709250000},{"value":-0.6691,"stable":true,"t":1794873709500000},{"value":-0.3584,"stable":true,"t":1794873709750000},{"value":0,"stable":true,"t":1794873710000000}]}
+{"kind":"validation","t":1794873711000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873711000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873711000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873711000000}}
+{"kind":"pulseWave","samples":[{"value":0.1123,"stable":true,"t":1794873710125000},{"value":-0.7181,"stable":true,"t":1794873710250000},{"value":-0.9897,"stable":true,"t":1794873710375000},{"value":-0.4909,"stable":true,"t":1794873710500000},{"value":0.3899,"stable":true,"t":1794873710625000},{"value":0.9673,"stable":true,"t":1794873710750000},{"value":0.7918,"stable":true,"t":1794873710875000},{"value":0,"stable":true,"t":1794873711000000}]}
+{"kind":"breathingWave","samples":[{"value":0.3584,"stable":true,"t":1794873710250000},{"value":0.6691,"stable":true,"t":1794873710500000},{"value":0.891,"stable":true,"t":1794873710750000},{"value":0.9945,"stable":true,"t":1794873711000000}]}
+{"kind":"validation","t":1794873712000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873712000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873712000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873712000000}}
+{"kind":"pulseWave","samples":[{"value":-0.7934,"stable":true,"t":1794873711125000},{"value":-0.9659,"stable":true,"t":1794873711250000},{"value":-0.3827,"stable":true,"t":1794873711375000},{"value":0.5,"stable":true,"t":1794873711500000},{"value":0.9914,"stable":true,"t":1794873711625000},{"value":0.7071,"stable":true,"t":1794873711750000},{"value":-0.1305,"stable":true,"t":1794873711875000},{"value":-0.866,"stable":true,"t":1794873712000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9659,"stable":true,"t":1794873711250000},{"value":0.809,"stable":true,"t":1794873711500000},{"value":0.5446,"stable":true,"t":1794873711750000},{"value":0.2079,"stable":true,"t":1794873712000000}]}
+{"kind":"validation","t":1794873713000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873713000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873713000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873713000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9229,"stable":true,"t":1794873712125000},{"value":-0.2538,"stable":true,"t":1794873712250000},{"value":0.615,"stable":true,"t":1794873712375000},{"value":0.9999,"stable":true,"t":1794873712500000},{"value":0.5983,"stable":true,"t":1794873712625000},{"value":-0.274,"stable":true,"t":1794873712750000},{"value":-0.9307,"stable":true,"t":1794873712875000},{"value":-0.8554,"stable":true,"t":1794873713000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.1564,"stable":true,"t":1794873712250000},{"value":-0.5,"stable":true,"t":1794873712500000},{"value":-0.7771,"stable":true,"t":1794873712750000},{"value":-0.9511,"stable":true,"t":1794873713000000}]}
+{"kind":"validation","t":1794873714000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873714000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873714000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873714000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1097,"stable":true,"t":1794873713125000},{"value":0.7218,"stable":true,"t":1794873713250000},{"value":0.9885,"stable":true,"t":1794873713375000},{"value":0.4818,"stable":true,"t":1794873713500000},{"value":-0.4019,"stable":true,"t":1794873713625000},{"value":-0.9711,"stable":true,"t":1794873713750000},{"value":-0.7804,"stable":true,"t":1794873713875000},{"value":0.0209,"stable":true,"t":1794873714000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9986,"stable":true,"t":1794873713250000},{"value":-0.9135,"stable":true,"t":1794873713500000},{"value":-0.7071,"stable":true,"t":1794873713750000},{"value":-0.4067,"stable":true,"t":1794873714000000}]}
+{"kind":"validation","t":1794873715000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873715000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873715000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873715000000}}
+{"kind":"pulseWave","samples":[{"value":0.8044,"stable":true,"t":1794873714125000},{"value":0.9617,"stable":true,"t":1794873714250000},{"value":0.3706,"stable":true,"t":1794873714375000},{"value":-0.509,"stable":true,"t":1794873714500000},{"value":-0.9924,"stable":true,"t":1794873714625000},{"value":-0.7034,"stable":true,"t":1794873714750000},{"value":0.1331,"stable":true,"t":1794873714875000},{"value":0.866,"stable":true,"t":1794873715000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.0523,"stable":true,"t":1794873714250000},{"value":0.309,"stable":true,"t":1794873714500000},{"value":0.6293,"stable":true,"t":1794873714750000},{"value":0.866,"stable":true,"t":1794873715000000}]}
+{"kind":"validation","t":1794873716000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873716000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873716000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873716000000}}
+{"kind":"pulseWave","samples":[{"value":0.9239,"stable":true,"t":1794873715125000},{"value":0.2588,"stable":true,"t":1794873715250000},{"value":-0.6088,"stable":true,"t":1794873715375000},{"value":-1,"stable":true,"t":1794873715500000},{"value":-0.6088,"stable":true,"t":1794873715625000},{"value":0.2588,"stable":true,"t":1794873715750000},{"value":0.9239,"stable":true,"t":1794873715875000},{"value":0.866,"stable":true,"t":1794873716000000}]}
+{"kind":"breathingWave","samples":[{"value":0.9877,"stable":true,"t":1794873715250000},{"value":0.9781,"stable":true,"t":1794873715500000},{"value":0.8387,"stable":true,"t":1794873715750000},{"value":0.5878,"stable":true,"t":1794873716000000}]}
+{"kind":"validation","t":1794873717000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873717000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70.2,"confidence":95,"stable":true,"t":1794873717000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873717000000}}
+{"kind":"pulseWave","samples":[{"value":0.1279,"stable":true,"t":1794873716125000},{"value":-0.7108,"stable":true,"t":1794873716250000},{"value":-0.9904,"stable":true,"t":1794873716375000},{"value":-0.4909,"stable":true,"t":1794873716500000},{"value":0.3947,"stable":true,"t":1794873716625000},{"value":0.9699,"stable":true,"t":1794873716750000},{"value":0.7821,"stable":true,"t":1794873716875000},{"value":-0.0209,"stable":true,"t":1794873717000000}]}
+{"kind":"breathingWave","samples":[{"value":0.2588,"stable":true,"t":1794873716250000},{"value":-0.1045,"stable":true,"t":1794873716500000},{"value":-0.454,"stable":true,"t":1794873716750000},{"value":-0.7431,"stable":true,"t":1794873717000000}]}
+{"kind":"validation","t":1794873718000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873718000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873718000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873718000000}}
+{"kind":"pulseWave","samples":[{"value":-0.8059,"stable":true,"t":1794873717125000},{"value":-0.9603,"stable":true,"t":1794873717250000},{"value":-0.3633,"stable":true,"t":1794873717375000},{"value":0.518,"stable":true,"t":1794873717500000},{"value":0.994,"stable":true,"t":1794873717625000},{"value":0.6921,"stable":true,"t":1794873717750000},{"value":-0.1513,"stable":true,"t":1794873717875000},{"value":-0.8763,"stable":true,"t":1794873718000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.9336,"stable":true,"t":1794873717250000},{"value":-1,"stable":true,"t":1794873717500000},{"value":-0.9336,"stable":true,"t":1794873717750000},{"value":-0.7431,"stable":true,"t":1794873718000000}]}
+{"kind":"validation","t":1794873719000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873719000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":69.8,"confidence":95,"stable":true,"t":1794873719000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873719000000}}
+{"kind":"pulseWave","samples":[{"value":-0.9167,"stable":true,"t":1794873718125000},{"value":-0.2436,"stable":true,"t":1794873718250000},{"value":0.6191,"stable":true,"t":1794873718375000},{"value":0.9999,"stable":true,"t":1794873718500000},{"value":0.6025,"stable":true,"t":1794873718625000},{"value":-0.2639,"stable":true,"t":1794873718750000},{"value":-0.9249,"stable":true,"t":1794873718875000},{"value":-0.866,"stable":true,"t":1794873719000000}]}
+{"kind":"breathingWave","samples":[{"value":-0.454,"stable":true,"t":1794873718250000},{"value":-0.1045,"stable":true,"t":1794873718500000},{"value":0.2588,"stable":true,"t":1794873718750000},{"value":0.5878,"stable":true,"t":1794873719000000}]}
+{"kind":"validation","t":1794873720000000,"code":"ok","hint":"Synthetic development signal"}
+{"kind":"talking","t":1794873720000000,"detected":false,"stable":true}
+{"kind":"pulseRate","reading":{"value":70,"confidence":95,"stable":true,"t":1794873720000000}}
+{"kind":"breathingRate","reading":{"value":14,"confidence":95,"stable":true,"t":1794873720000000}}
+{"kind":"pulseWave","samples":[{"value":-0.1305,"stable":true,"t":1794873719125000},{"value":0.7071,"stable":true,"t":1794873719250000},{"value":0.9914,"stable":true,"t":1794873719375000},{"value":0.5,"stable":true,"t":1794873719500000},{"value":-0.3827,"stable":true,"t":1794873719625000},{"value":-0.9659,"stable":true,"t":1794873719750000},{"value":-0.7934,"stable":true,"t":1794873719875000},{"value":0,"stable":true,"t":1794873720000000}]}
+{"kind":"breathingWave","samples":[{"value":0.8387,"stable":true,"t":1794873719250000},{"value":0.9781,"stable":true,"t":1794873719500000},{"value":0.9877,"stable":true,"t":1794873719750000},{"value":0.866,"stable":true,"t":1794873720000000}]}
