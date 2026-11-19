@@ -348,6 +348,7 @@ it("keeps the strong sample's confirming pulse recorder-only after live End and 
     const tasks: { run: () => void; delay: number }[] = [];
     const source = new JsonlReplaySource(path, {
       scheduler: {
+        nowMs: () => 0,
         schedule(run, delay) {
           tasks.push({ run, delay });
           return () => {};

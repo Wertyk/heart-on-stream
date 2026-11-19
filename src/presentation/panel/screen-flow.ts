@@ -80,7 +80,7 @@ export function cyclePrivacyMode(mode: PrivacyMode): PrivacyMode {
 
 export const privacyDescriptions: Record<PrivacyMode, string> = {
   off: "Off — camera and SDK stopped. The overlay receives only mode and replay status.",
-  vibe: "Vibe — The overlay animates with your beat and breath timing and carries no numbers. It also shows intensity and status.",
+  vibe: "Vibe — no BPM or breathing-rate numbers. The overlay receives beat and breath waveform points with timing, intensity and status, so viewers could still estimate a rate from the rhythm.",
   numbers: "Numbers — Vibe plus rounded pulse and breathing estimates.",
   highlightsOnly:
     "Highlights only — only mode and replay status reach the overlay. Local highlights continue.",
@@ -97,7 +97,10 @@ export function sessionHighlights(state: PanelStatePayload) {
 }
 
 export function receiptText(replay: boolean, count: number): string {
-  return `Camera: ${replay ? "not used" : "off"} · Video saved: no · Highlights: ${count} · Telemetry: disabled · AI: none`;
+  const summary = `Video saved: no · Highlights: ${count}`;
+  return replay
+    ? `Camera: not used · ${summary} · Sent to Presage: nothing (SDK not used)`
+    : `Camera: off · ${summary} · SDK telemetry: off · Sent to Presage: key check and automatic vitals insights (no video)`;
 }
 
 export function phaseText(state: PanelStatePayload): string {

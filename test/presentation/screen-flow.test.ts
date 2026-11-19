@@ -75,9 +75,11 @@ describe("streamer screen flow", () => {
     expect(current).toHaveLength(1);
     expect(sessionHighlights({ ...state, highlights })).toHaveLength(0);
     expect(receiptText(false, current.length)).toBe(
-      "Camera: off · Video saved: no · Highlights: 1 · Telemetry: disabled · AI: none",
+      "Camera: off · Video saved: no · Highlights: 1 · SDK telemetry: off · Sent to Presage: key check and automatic vitals insights (no video)",
     );
-    expect(receiptText(true, 0)).toContain("Camera: not used");
+    expect(receiptText(true, 0)).toBe(
+      "Camera: not used · Video saved: no · Highlights: 0 · Sent to Presage: nothing (SDK not used)",
+    );
   });
 
   it("shows calibration, baseline progress and the immediate multiple-faces message", () => {
@@ -119,9 +121,9 @@ describe("streamer screen flow", () => {
     ]).toEqual(["numbers", "highlightsOnly", "vibe", "vibe"]);
   });
 
-  it("tells streamers that Vibe shares their beat and breath timing without numbers", () => {
-    expect(privacyDescriptions.vibe).toContain(
-      "The overlay animates with your beat and breath timing and carries no numbers.",
+  it("discloses the Vibe overlay payload and that viewers can estimate a rate", () => {
+    expect(privacyDescriptions.vibe).toBe(
+      "Vibe — no BPM or breathing-rate numbers. The overlay receives beat and breath waveform points with timing, intensity and status, so viewers could still estimate a rate from the rhythm.",
     );
   });
 });

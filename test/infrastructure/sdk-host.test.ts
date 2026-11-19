@@ -73,6 +73,7 @@ function fakeStream(deviceId: string) {
 function fakeSdk() {
   return {
     on: vi.fn().mockReturnThis(),
+    requestInsight: vi.fn<SmartSpectraSDK["requestInsight"]>(),
     useMediaStream: vi.fn<SmartSpectraSDK["useMediaStream"]>().mockReturnThis(),
     start: vi.fn(async () => {}),
     stop: vi.fn(async () => {}),
@@ -144,6 +145,17 @@ function fixture() {
 }
 
 describe("SDK capture host with fake media and SDK", () => {
+  it("starts measurement without requesting insights or registering an insight listener", async () => {
+    const f = fixture();
+    await f.host.start("camera", "b");
+    await f.host.stop();
+    expect(f.sdk.start).toHaveBeenCalledOnce();
+    expect(f.sdk.requestInsight).not.toHaveBeenCalled();
+    expect(f.sdk.on.mock.calls.map(([event]) => event)).not.toContain(
+      "insight",
+    );
+  });
+
   it("forwards final destroy status on close without reentering SDK destruction", async () => {
     const f = fixture();
     await f.host.start("camera", "a");

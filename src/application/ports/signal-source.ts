@@ -16,4 +16,7 @@ export interface SignalSource {
   ): () => void;
   start(): Promise<void>;
   stop(): Promise<void>;
+  /** Replay can freeze and continue its timeline without emitting capture boundaries. */
+  pause?(): void;
+  resume?(): void;
 }

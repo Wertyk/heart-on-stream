@@ -1,6 +1,7 @@
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { StreamSession } from "../../src/application/use-cases/stream-session";
 import type { OverlayState } from "../../src/domain/privacy/index";
@@ -66,6 +67,35 @@ function v2(records: readonly SessionRecord[]): string {
   });
 }
 
+function controlledScheduler() {
+  let nowMs = 0;
+  const tasks = new Set<{ atMs: number; run: () => void }>();
+  return {
+    nowMs: () => nowMs,
+    schedule(run: () => void, delayMs: number) {
+      const task = { atMs: nowMs + delayMs, run };
+      tasks.add(task);
+      return () => {
+        tasks.delete(task);
+      };
+    },
+    get pending() {
+      return tasks.size;
+    },
+    async advance(ms: number, afterDelivery?: () => Promise<void>) {
+      const until = nowMs + ms;
+      for (const task of tasks) {
+        if (task.atMs > until) break;
+        nowMs = task.atMs;
+        tasks.delete(task);
+        task.run();
+        await afterDelivery?.();
+      }
+      nowMs = until;
+    },
+  };
+}
+
 describe("JSONL replay", () => {
   it.each([0.25, 1, 2, 20])(
     "preserves timestamps and relative timing at speed %s",
@@ -90,6 +120,126 @@ describe("JSONL replay", () => {
       expect(onEnd).toHaveBeenCalledOnce();
     },
   );
+
+  it("freezes delivery and completion, then uses the remaining delay at 2x", async () => {
+    const scheduler = controlledScheduler();
+    const delivered: (SessionRecord | "completed")[] = [];
+    const source = new JsonlReplaySource(await file(), {
+      scheduler,
+      speed: 2,
+      onEnd: () => delivered.push("completed"),
+    });
+    source.subscribe((record) => delivered.push(record));
+    await source.start();
+    await scheduler.advance(200);
+    expect(delivered).toEqual([frames[0]]);
+
+    source.pause();
+    await scheduler.advance(5_000);
+    source.pause();
+    expect(scheduler.pending).toBe(0);
+    expect(delivered).toEqual([frames[0]]);
+
+    source.resume();
+    source.resume();
+    await scheduler.advance(299);
+    expect(delivered).toEqual([frames[0]]);
+    await scheduler.advance(1);
+    expect(delivered).toEqual(frames.slice(0, 2));
+    await scheduler.advance(499);
+    expect(delivered).toEqual(frames.slice(0, 2));
+    await scheduler.advance(1);
+    expect(delivered).toEqual([...frames, "completed"]);
+    expect(scheduler.pending).toBe(0);
+  });
+
+  it("drops a paused run on Stop and starts the next replay at the beginning", async () => {
+    const scheduler = controlledScheduler();
+    const onEnd = vi.fn();
+    const source = new JsonlReplaySource(await file(), { scheduler, onEnd });
+    const received = vi.fn();
+    source.subscribe(received);
+    await source.start();
+    await scheduler.advance(500);
+    source.pause();
+    await source.stop();
+    source.resume();
+    await scheduler.advance(5_000);
+    expect(scheduler.pending).toBe(0);
+    expect(received.mock.calls).toEqual([[frames[0]]]);
+    expect(onEnd).not.toHaveBeenCalled();
+
+    await source.start();
+    await scheduler.advance(0);
+    expect(received.mock.calls).toEqual([[frames[0]], [frames[0]]]);
+    await scheduler.advance(2_000);
+    expect(received.mock.calls).toEqual([
+      [frames[0]],
+      ...frames.map((f) => [f]),
+    ]);
+    expect(onEnd).toHaveBeenCalledOnce();
+  });
+
+  it("finds the same strong-exertion highlight after a manual replay pause near 200 s", async () => {
+    const sample = fileURLToPath(
+      new URL("../../samples/live-b-exertion-strong.jsonl", import.meta.url),
+    );
+    const speed = 20;
+    async function play(pauseAt?: number) {
+      const ports = fixture();
+      const scheduler = controlledScheduler();
+      const onEnd = vi.fn(() => void replay.stopSession());
+      const source = new JsonlReplaySource(sample, { scheduler, speed, onEnd });
+      const received = vi.fn();
+      source.subscribe(received);
+      const replay = new StreamSession({ ...ports, source }, { replay: true });
+      const advance = (seconds: number) =>
+        scheduler.advance((seconds * 1_000) / speed, () => replay.whenIdle());
+      await replay.startSession({
+        consentRecorded: true,
+        privacyMode: "numbers",
+      });
+      if (pauseAt !== undefined) {
+        await advance(pauseAt);
+        const delivered = received.mock.calls.length;
+        const position = replay.sessionDurationMs;
+        expect(position / 1_000).toBeCloseTo(pauseAt, 0);
+        expect(replay.currentHighlights).toEqual([]);
+        const pausing = replay.setPaused(true);
+        expect(ports.publisher.states.at(-1)).toMatchObject({
+          status: "paused",
+          pulseBpm: null,
+          breathingRate: null,
+          beatWave: [],
+          breathWave: [],
+        });
+        await pausing;
+        expect(replay.panelState).toMatchObject({
+          active: true,
+          phase: "paused",
+          pauseReason: "manual",
+        });
+        await advance(60);
+        expect.soft(received).toHaveBeenCalledTimes(delivered);
+        expect.soft(onEnd).not.toHaveBeenCalled();
+        expect.soft(replay.sessionDurationMs).toBe(position);
+        expect.soft(replay.panelState).toMatchObject({
+          active: true,
+          phase: "paused",
+          pauseReason: "manual",
+        });
+        await replay.setPaused(false);
+      }
+      await advance(300);
+      expect(onEnd).toHaveBeenCalledOnce();
+      expect(replay.panelState.active).toBe(false);
+      return replay.currentHighlights;
+    }
+    const uninterrupted = await play();
+    expect(uninterrupted).toMatchObject([{ sessionOffsetUs: 207_877_700 }]);
+    expect(await play(200)).toEqual(uninterrupted);
+    expect(await play(206.5)).toEqual(uninterrupted);
+  });
 
   it("ends at 120 s when playback starts 60 s before the measurement origin", async () => {
     const records: SessionRecord[] = [
@@ -174,6 +324,8 @@ describe("JSONL replay", () => {
       mode: "off",
       replay: true,
     });
+    await replay.setPaused(true);
+    expect(replay.panelState.pauseReason).toBeNull();
 
     await vi.advanceTimersByTimeAsync(1_500);
     const viewer: OverlayState[] = [];
@@ -674,6 +826,7 @@ describe("JSONL replay", () => {
     const received: string[] = [];
     const source = new JsonlReplaySource(await file(input), {
       scheduler: {
+        nowMs: () => 0,
         schedule(run, delay) {
           const cancel = vi.fn();
           tasks.push({ delay, run, cancel });

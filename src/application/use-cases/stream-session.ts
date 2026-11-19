@@ -189,15 +189,16 @@ export class StreamSession {
   /** Detached snapshots are suitable for IPC; subscribers cannot mutate session state. */
   get panelState(): PanelState {
     const snapshot = this.machine.snapshot;
+    const replayPaused = this.replay && this.pauseReason !== null;
     const showReadings =
       this.active && this.sharing.secondFaceDelivery === null;
     return {
       active: this.active,
       t: this.updatedAt,
-      phase: this.active ? snapshot.phase : null,
+      phase: this.active ? (replayPaused ? "paused" : snapshot.phase) : null,
       progress: this.active ? snapshot.progress : null,
       baselineBpm: this.active ? snapshot.baselineBpm : null,
-      intensity: this.active ? snapshot.intensity : "calm",
+      intensity: this.active && !replayPaused ? snapshot.intensity : "calm",
       pauseReason: this.pauseReason,
       talkingRecent: showReadings && snapshot.talkingRecent,
       privacyMode: this.sharing.mode,
@@ -454,6 +455,8 @@ export class StreamSession {
     let publication: Promise<void> | undefined;
     if (paused && this.sharing.mode !== "off" && !this.sharing.paused) {
       this.sharing.paused = true;
+      // Freeze at the request boundary even if earlier frames are still queued.
+      if (this.replay) this.ports.source.pause?.();
       publication = this.publish();
     }
     return this.enqueue(async () => {
@@ -469,6 +472,12 @@ export class StreamSession {
         this.sharing.mode !== "off" &&
         this.sharing.paused !== paused;
       if (latchChanged) this.sharing.paused = paused;
+      if (this.replay && revision === this.pauseRevision) {
+        // Start may have been queued at Pause. Resume must follow older frames
+        // and respect a newer Pause or End request.
+        if (paused) this.ports.source.pause?.();
+        else this.ports.source.resume?.();
+      }
       if (publication) {
         await publication;
         this.touch();
@@ -1005,10 +1014,9 @@ export class StreamSession {
     const t = this.machine.snapshot.t;
     this.advanceShareableSince(t);
     this.clearShareableReadings();
-    if (this.replay) {
-      this.machine.step({ kind: reason === null ? "resume" : "pause" });
-      return;
-    }
+    // Manual replay controls preserve the machine's detection windows. Only
+    // capture boundaries from the file change its measurement state in replay.
+    if (this.replay) return;
     this.processing = reason === null ? "starting" : "idle";
     if (reason !== null && this.sessionStartUs !== null)
       this.captureGapStartedAt ??= requestedAt;

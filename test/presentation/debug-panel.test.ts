@@ -214,6 +214,32 @@ describe("streamer panel DOM", () => {
     },
   );
 
+  it("discloses the SDK's live network activity before agreement", () => {
+    const f = fixture();
+    const screen = f.screen("consent");
+    expect(screen?.hidden).toBe(false);
+    const children = screen?.children ?? [];
+    const agreeIndex = children.indexOf(f.node("agree"));
+    expect(agreeIndex).toBeGreaterThan(0);
+    const beforeAgreement = children.slice(0, agreeIndex);
+    expect(beforeAgreement).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          tag: "p",
+          hidden: false,
+          textContent:
+            "Pulse and breathing are computed on this computer. The SDK contacts Presage to check your API key. SDK telemetry is disabled.",
+        }),
+        expect.objectContaining({
+          tag: "p",
+          hidden: false,
+          textContent:
+            "During live measurement the Presage SDK also sends automatic LLM Insights check-ins: once readings stabilize and then every 60 seconds, it sends recent pulse rate, heart-rate variability and breathing rate values (no video or images) to Presage, which forwards them to a language model. The SDK has no setting to turn this off. Heart on Stream never requests insights and ignores any replies.",
+        }),
+      ]),
+    );
+  });
+
   it("requires the only-person checkbox and I agree before Setup or Start; preserves opted-in configuration", async () => {
     const f = fixture();
     expect(f.screen("consent")?.hidden).toBe(false);

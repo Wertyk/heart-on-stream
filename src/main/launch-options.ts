@@ -1,4 +1,6 @@
-/** Invalid replay arguments are panel messages, never process-startup exceptions. */
+import { resolve } from "node:path";
+
+/** Replay argument errors are shown in the panel at startup. Options travel through Electron's lock as plain data. */
 export interface LaunchOptions {
   readonly replay: boolean;
   readonly record: boolean;
@@ -52,4 +54,42 @@ export function parseLaunchOptions(args: readonly string[]): LaunchOptions {
     loop,
     error,
   };
+}
+
+/** Check the shape of the options delivered by Electron's lock. */
+export function isLaunchOptions(
+  additionalData: unknown,
+): additionalData is LaunchOptions {
+  if (typeof additionalData !== "object" || additionalData === null)
+    return false;
+  const { replay, record, file, speed, loop, error } =
+    additionalData as Partial<Record<keyof LaunchOptions, unknown>>;
+  return (
+    typeof error === "string" &&
+    typeof replay === "boolean" &&
+    typeof record === "boolean" &&
+    (file === null || typeof file === "string") &&
+    typeof speed === "number" &&
+    Number.isFinite(speed) &&
+    typeof loop === "boolean"
+  );
+}
+
+/** Compare effective options for a valid relaunch. */
+export function hasDifferentLaunchOptions(
+  running: LaunchOptions,
+  requested: LaunchOptions,
+  workingDirectory: string,
+): boolean {
+  if (running.replay !== requested.replay) return true;
+  if (!requested.replay) return running.record !== requested.record;
+  const runningFile = running.file === null ? null : resolve(running.file);
+  const requestedFile =
+    requested.file === null ? null : resolve(workingDirectory, requested.file);
+  return (
+    running.error !== "" ||
+    runningFile !== requestedFile ||
+    running.speed !== requested.speed ||
+    running.loop !== requested.loop
+  );
 }

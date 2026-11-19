@@ -187,7 +187,8 @@ export function createDebugPanel(
       "Pulse and breathing estimates come from your camera via the Presage SmartSpectra SDK.",
       "The overlay shows only what your selected privacy mode allows. This panel is for you, the streamer, only.",
       "No video or images are ever saved or sent anywhere. Your camera choice and highlights.json are stored locally. Numeric session recordings are saved only if recording is enabled.",
-      "SDK telemetry is disabled. The SDK contacts Presage to authenticate the key. No AI service is used.",
+      "Pulse and breathing are computed on this computer. The SDK contacts Presage to check your API key. SDK telemetry is disabled.",
+      "During live measurement the Presage SDK also sends automatic LLM Insights check-ins: once readings stabilize and then every 60 seconds, it sends recent pulse rate, heart-rate variability and breathing rate values (no video or images) to Presage, which forwards them to a language model. The SDK has no setting to turn this off. Heart on Stream never requests insights and ignores any replies.",
       "For wellness / entertainment. This is not a medical device.",
     ])
       consentScreen.append(element("p", text));
