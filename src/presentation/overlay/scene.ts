@@ -40,6 +40,7 @@ const emptyRings: BeatRings = {
 
 export interface OverlayScene {
   readonly state: OverlayState | null;
+  readonly replayRate: number | null;
   readonly beat: WaveBuffer;
   readonly breath: WaveBuffer;
   readonly rings: BeatRings;
@@ -75,6 +76,7 @@ const idleAnimation: OverlayAnimation = {
 export function emptyScene(): OverlayScene {
   return {
     state: null,
+    replayRate: null,
     beat: emptyWaveBuffer(),
     breath: emptyWaveBuffer(),
     rings: emptyRings,
@@ -88,12 +90,15 @@ export function receiveSnapshot(
   state: OverlayState,
   nowMs: number,
 ): OverlayScene {
+  // End publishes Off. Pausing or hiding the waves keeps the same replay run.
+  const replayRate =
+    state.replay && state.mode !== "off" ? scene.replayRate : null;
   if (
     state.mode === "off" ||
     state.mode === "highlightsOnly" ||
     state.status === "paused"
   ) {
-    return { ...emptyScene(), state };
+    return { ...emptyScene(), state, replayRate };
   }
   const previous = scene.state;
   const reset =
@@ -103,7 +108,7 @@ export function receiveSnapshot(
       (previous.status === "paused" ||
         (previous.status !== "calibrating" && state.status === "calibrating")));
   const beat = receiveBeatWave(
-    reset ? emptyWaveBuffer() : scene.beat,
+    reset ? emptyWaveBuffer(replayRate) : scene.beat,
     state.beatWave,
     nowMs,
   );
@@ -121,9 +126,10 @@ export function receiveSnapshot(
   }
   return {
     state,
+    replayRate,
     beat,
     breath: receiveWave(
-      reset ? emptyWaveBuffer() : scene.breath,
+      reset ? emptyWaveBuffer(replayRate) : scene.breath,
       state.breathWave,
       nowMs,
     ),
@@ -200,7 +206,16 @@ export function advanceScene(
     : undefined;
   const beat = playWave(scene.beat, nowMs, replayThroughMs);
   const breath = playWave(scene.breath, nowMs, replayThroughMs);
-  const next = { ...scene, beat: beat.buffer, breath: breath.buffer };
+  const next = {
+    ...scene,
+    beat: beat.buffer,
+    breath: breath.buffer,
+    replayRate: state.replay
+      ? (beat.buffer.replayClock?.rate ??
+        breath.buffer.replayClock?.rate ??
+        scene.replayRate)
+      : null,
+  };
   if (state.status === "calibrating")
     return {
       scene: next,

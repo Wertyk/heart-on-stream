@@ -31,10 +31,19 @@ export interface WaveBuffer {
   readonly playedAtMs: number | null;
   readonly measuredGridTimes?: ReadonlySet<number>;
   readonly replayClock?: ReplayClock;
+  readonly replayResumeRate: number | null;
 }
 
-export function emptyWaveBuffer(): WaveBuffer {
-  return { points: [], receivedAtMs: null, cursorAtMs: null, playedAtMs: null };
+export function emptyWaveBuffer(
+  replayResumeRate: number | null = null,
+): WaveBuffer {
+  return {
+    points: [],
+    receivedAtMs: null,
+    cursorAtMs: null,
+    playedAtMs: null,
+    replayResumeRate,
+  };
 }
 
 /** Late pulse batches replace the covered interval, including stale gap-fill timestamps. */
@@ -132,6 +141,7 @@ export function receiveWave(
     points,
     ...(measuredGridTimes?.size ? { measuredGridTimes } : {}),
     ...(buffer.replayClock ? { replayClock: buffer.replayClock } : {}),
+    replayResumeRate: buffer.replayResumeRate,
     receivedAtMs: advanced ? nowMs : buffer.receivedAtMs,
     cursorAtMs: rebuffer
       ? newest.atMs - delayMs
@@ -281,7 +291,7 @@ export function playWave(
   }
   const elapsed = Math.max(0, nowMs - buffer.playedAtMs);
   const age = Math.max(0, nowMs - buffer.receivedAtMs);
-  const replayClock =
+  let replayClock =
     replayThroughMs === undefined
       ? undefined
       : observeReplay(buffer.replayClock, replayThroughMs, nowMs);
@@ -317,10 +327,25 @@ export function playWave(
     );
     cursorAtMs = Math.min(edge, cursorAtMs);
   }
+  let { replayResumeRate } = buffer;
+  // Keep the existing preroll until two fresh samples can be drawn. The new
+  // clock's observation starts at the first fresh frame after the reset.
+  if (
+    replayClock &&
+    replayResumeRate !== null &&
+    cursorAtMs >= (buffer.points[1]?.atMs ?? Infinity)
+  ) {
+    replayClock = {
+      ...replayClock,
+      rate: replayClock.rate ?? replayResumeRate,
+    };
+    replayResumeRate = null;
+  }
   return {
     buffer: {
       ...buffer,
       ...(replayClock ? { replayClock } : {}),
+      replayResumeRate,
       cursorAtMs,
       playedAtMs: nowMs,
     },

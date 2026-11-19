@@ -18,7 +18,7 @@ const auditBufferedEdges = [42_850, 42_826.4];
 
 function replayScheduler() {
   let nowMs = 0;
-  // This uninterrupted replay schedules all records in deadline order.
+  // The replay source schedules records in deadline order on Start and Resume.
   const tasks = new Set<{ atMs: number; run: () => void }>();
   return {
     nowMs: () => nowMs,
@@ -44,6 +44,154 @@ function replayScheduler() {
     },
   };
 }
+
+const startInVibe = { consentRecorded: true, privacyMode: "vibe" } as const;
+
+function calmReplay(speed: number) {
+  const scheduler = replayScheduler();
+  const ports = fixture();
+  const source = new JsonlReplaySource(sample, { speed, scheduler });
+  const session = new StreamSession({ ...ports, source }, { replay: true });
+  let scene = emptyScene();
+  let frame = 0;
+  ports.publisher.connect((state) => {
+    scene = receiveSnapshot(scene, state, scheduler.nowMs());
+  });
+
+  return {
+    session,
+    nowMs: scheduler.nowMs,
+    publisher: ports.publisher,
+    get scene() {
+      return scene;
+    },
+    async drawThrough(
+      endMs: number,
+      visit?: (frame: ReturnType<typeof advanceScene>, nowMs: number) => void,
+    ) {
+      while ((frame * 1_000) / 60 <= endMs) {
+        const nowMs = (frame++ * 1_000) / 60;
+        await scheduler.advanceTo(nowMs, () => session.whenIdle());
+        const next = advanceScene(scene, nowMs);
+        scene = next.scene;
+        visit?.(next, nowMs);
+      }
+    },
+  };
+}
+
+async function measureRecovery(
+  replay: ReturnType<typeof calmReplay>,
+  resumedAtMs: number,
+  speed: number,
+) {
+  let firstTraceFrame = Infinity;
+  let previousCursor: number | undefined;
+  let missingTraceFrames = 0;
+  let stalledFrames = 0;
+  let firstTraceStep: number | undefined;
+  await replay.drawThrough(resumedAtMs + 4_000 / speed, (frame, nowMs) => {
+    const trace = frame.animation.pulseTrace;
+    if (!trace) {
+      if (previousCursor !== undefined) missingTraceFrames++;
+      return;
+    }
+    if (firstTraceFrame === Infinity)
+      firstTraceFrame = Math.round(((nowMs - resumedAtMs) * 60) / 1_000);
+    const newest = trace.points.at(-1)?.atMs ?? 0;
+    if (previousCursor !== undefined) {
+      const step = trace.cursorAtMs - previousCursor;
+      firstTraceStep ??= step;
+      if (step <= 0 && newest - trace.cursorAtMs >= maxSafetyMarginMs)
+        stalledFrames++;
+    }
+    previousCursor = trace.cursorAtMs;
+  });
+  return { firstTraceFrame, missingTraceFrames, stalledFrames, firstTraceStep };
+}
+
+// First drawable 60 Hz frame after Resume before the clock retained its rate.
+it.each([
+  [0.25, 116],
+  [0.5, 100],
+])(
+  "keeps the calm replay trace moving after a 30 s manual pause at %s×",
+  async (speed, baselineFirstTraceFrame) => {
+    const replay = calmReplay(speed);
+    await replay.session.startSession(startInVibe);
+    const pausedAtMs = 112_000 / speed;
+    const resumedAtMs = pausedAtMs + 30_000;
+    await replay.drawThrough(pausedAtMs);
+    expect(replay.scene.state).toMatchObject({ mode: "vibe", status: "live" });
+    await replay.session.setPaused(true);
+    await replay.drawThrough(resumedAtMs);
+    expect(replay.scene.state).toMatchObject({
+      mode: "vibe",
+      status: "paused",
+    });
+    expect(replay.scene.beat.points).toHaveLength(0);
+    await replay.session.setPaused(false);
+
+    const recovery = await measureRecovery(replay, resumedAtMs, speed);
+    await replay.session.stopSession();
+
+    expect
+      .soft(recovery.firstTraceFrame)
+      .toBeLessThanOrEqual(baselineFirstTraceFrame);
+    expect.soft(recovery.missingTraceFrames).toBe(0);
+    expect.soft(recovery.stalledFrames).toBe(0);
+    expect(recovery.firstTraceStep).toBeCloseTo((speed * 1_000) / 60, 0);
+  },
+);
+
+it.each([0.25, 0.5])(
+  "keeps the calm replay trace moving from Highlights only back to Vibe at %s×",
+  async (speed) => {
+    const replay = calmReplay(speed);
+    await replay.session.startSession(startInVibe);
+    const returnedAtMs = 112_000 / speed;
+    await replay.drawThrough(returnedAtMs - 1_000);
+    expect(replay.scene.state).toMatchObject({ mode: "vibe", status: "live" });
+    await replay.session.setPrivacyMode("highlightsOnly");
+    await replay.drawThrough(returnedAtMs);
+    expect(replay.scene.state).toMatchObject({ mode: "highlightsOnly" });
+    expect(replay.scene.beat.points).toHaveLength(0);
+    await replay.session.setPrivacyMode("vibe");
+
+    const recovery = await measureRecovery(replay, returnedAtMs, speed);
+    await replay.session.stopSession();
+
+    expect.soft(recovery.missingTraceFrames).toBe(0);
+    expect.soft(recovery.stalledFrames).toBe(0);
+    expect(recovery.firstTraceStep).toBeCloseTo((speed * 1_000) / 60, 0);
+  },
+);
+
+it("starts a second calm replay with the same cursor as a fresh overlay", async () => {
+  const speed = 0.25;
+  const replay = calmReplay(speed);
+  await replay.session.startSession(startInVibe);
+  const endedAtMs = 112_000 / speed;
+  await replay.drawThrough(endedAtMs);
+  await replay.session.stopSession();
+  expect(replay.scene.state).toEqual({ mode: "off", replay: true });
+
+  let fresh = emptyScene();
+  replay.publisher.connect((state) => {
+    fresh = receiveSnapshot(fresh, state, replay.nowMs());
+  });
+  await replay.session.startSession(startInVibe);
+  let advancingFrames = 0;
+  await replay.drawThrough(endedAtMs + 60_000, ({ scene }, frameMs) => {
+    const previousCursor = fresh.beat.cursorAtMs;
+    fresh = advanceScene(fresh, frameMs).scene;
+    expect(scene.beat.cursorAtMs).toBe(fresh.beat.cursorAtMs);
+    if (previousCursor !== null && fresh.beat.cursorAtMs !== previousCursor)
+      advancingFrames++;
+  });
+  await replay.session.stopSession();
+  expect(advancingFrames).toBeGreaterThan(100);
+});
 
 it.each([0.25, 0.5, 1, 2, 8, 20])(
   "advances the calm replay and draws its Vibe pulse trace on every live frame at %s×",

@@ -261,6 +261,50 @@ describe("snapshot accumulation and reset", () => {
     expect(resumed.breath.points).toEqual([]);
   });
 
+  it("re-anchors the learned rate when fresh points follow a replay capture pause", () => {
+    const snapshot = {
+      ...vibe,
+      beatWave: [{ atMs: 4_000, v: 1 }],
+      breathWave: [],
+    };
+    let scene = advanceScene(
+      receiveSnapshot(emptyScene(), snapshot, 0),
+      0,
+    ).scene;
+    scene = receiveSnapshot(
+      scene,
+      { ...snapshot, beatWave: [{ atMs: 6_000, v: 1 }] },
+      4_000,
+    );
+    scene = advanceScene(scene, 4_000).scene;
+    scene = receiveSnapshot(
+      scene,
+      { ...snapshot, status: "paused", beatWave: [] },
+      4_100,
+    );
+    scene = receiveSnapshot(scene, { ...snapshot, beatWave: [] }, 34_100);
+    scene = receiveSnapshot(
+      scene,
+      {
+        ...snapshot,
+        beatWave: [10_000, 10_500, 12_000].map((atMs) => ({ atMs, v: 1 })),
+      },
+      36_000,
+    );
+    const first = advanceScene(scene, 36_000);
+    expect(first.animation.pulseTrace?.cursorAtMs).toBe(10_500);
+    const resumed = advanceScene(first.scene, 36_020).scene;
+    expect.soft(resumed.beat.cursorAtMs).toBe(10_510);
+
+    scene = receiveSnapshot(
+      resumed,
+      { ...snapshot, beatWave: [{ atMs: 14_000, v: 1 }] },
+      40_000,
+    );
+    const observed = advanceScene(scene, 40_000).scene;
+    expect(advanceScene(observed, 40_020).scene.beat.cursorAtMs).toBe(12_510);
+  });
+
   it("discards old session times on privacy changes or renewed calibration", () => {
     const scene = receiveSnapshot(emptyScene(), vibe, 0);
     const restarted = receiveSnapshot(
