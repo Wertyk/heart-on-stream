@@ -294,7 +294,7 @@ export function createDebugPanel(
   const cycleHelp = () =>
     element(
       "p",
-      "The privacy hotkey cycles Vibe → Numbers → Highlights only. Off is excluded because it ends measurement.",
+      "Use the arrow keys to move between modes and Enter or Space to apply. The privacy hotkey cycles Vibe → Numbers → Highlights only. Off ends measurement.",
       "help",
     );
   const record = element("input");
@@ -426,7 +426,14 @@ export function createDebugPanel(
     "help",
   );
   const raw = element("details");
-  raw.append(element("summary", "Raw SDK values"));
+  raw.append(
+    element("summary", "Raw SDK values"),
+    element(
+      "p",
+      "Latest SDK output. Estimates can be stale during or after a warning or pause.",
+      "help",
+    ),
+  );
   const rawValues = element("dl");
   const values = new Map<string, HTMLElement>();
   for (const text of [
@@ -851,21 +858,28 @@ export function createDebugPanel(
       state.privacyMode === "off" ||
       state.phase === "paused" ||
       state.pauseReason !== null ||
-      state.validation?.code === "multipleFacesFound" ||
+      (state.validation !== null && state.validation.code !== "ok") ||
       pulseOutOfRange;
+    const fresh = <T extends { readonly t: number }>(reading: T | null) =>
+      reading &&
+      (state.readingsFreshAfter === null ||
+        reading.t > state.readingsFreshAfter)
+        ? reading
+        : null;
     if (!state.active) history.reset();
     // Main can withdraw the pulse before it reports a queued second-face warning.
     const withdrawn = pulse === null && history.samples.length > 0;
     const time = state.runtime?.sessionStartedAt === null ? null : state.t;
     const visiblePulse = state.active
-      ? history.update(time, pulse, hidden || withdrawn)
+      ? history.update(time, fresh(pulse), hidden || withdrawn)
       : null;
+    const visibleBreathing = hidden ? null : fresh(breathing);
     const baselineBpm = visiblePulse === null ? null : state.baselineBpm;
     const threshold = state.talkingRecent
       ? DEFAULT_SPIKE_POLICY.talkingSpikeDeltaBpm
       : DEFAULT_SPIKE_POLICY.spikeDeltaBpm;
     chart.render(
-      !hidden && pulse !== null,
+      visiblePulse !== null,
       history.samples,
       time,
       baselineBpm,
@@ -882,10 +896,7 @@ export function createDebugPanel(
         : `Your baseline ${Math.round(baselineBpm)} · ${delta >= 0 ? "+" : ""}${delta} now`,
     );
     write(pulseValue, visiblePulse ? visiblePulse.value.toFixed(0) : "—");
-    write(
-      breathingValue,
-      !hidden && breathing ? breathing.value.toFixed(1) : "—",
-    );
+    write(breathingValue, visibleBreathing?.value.toFixed(1) ?? "—");
     intensity.hidden = visiblePulse === null;
     signal.setAttribute(
       "data-intensity",

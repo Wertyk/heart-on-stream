@@ -277,16 +277,9 @@ describe("snapshot accumulation and reset", () => {
     expect(switched.beat.points).toEqual([]);
   });
 
-  it("keeps the heart visible while disconnected and clears stale numerical labels", () => {
+  it("discards all scene state on disconnect", () => {
     const scene = receiveSnapshot(emptyScene(), numbers, 0);
-    const offline = disconnectScene(scene);
-    expect(overlayView(offline.state)).toMatchObject({
-      visible: true,
-      replay: true,
-      pulseLabel: null,
-      breathingLabel: null,
-    });
-    expect(offline.beat).toBe(scene.beat);
+    expect(disconnectScene(scene)).toEqual(emptyScene());
     expect(disconnectScene(emptyScene())).toEqual(emptyScene());
   });
 });

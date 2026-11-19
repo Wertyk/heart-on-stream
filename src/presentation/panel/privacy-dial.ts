@@ -10,7 +10,7 @@ export const privacyLabels: Record<PrivacyMode, string> = {
   highlightsOnly: "Highlights only",
 };
 
-/** All activation paths share the same selection handler and description. */
+/** Moving focus cannot change which readings are shared. */
 export function createPrivacyDial(
   id: string,
   helpId: string,
@@ -31,19 +31,28 @@ export function createPrivacyDial(
     button.type = "button";
     return { mode, button };
   });
+  function setTabStop(mode: PrivacyMode): void {
+    for (const choice of choices)
+      choice.button.tabIndex = choice.mode === mode ? 0 : -1;
+  }
   function setValue(mode: PrivacyMode): void {
     value = mode;
     if (help.textContent !== privacyDescriptions[mode])
       help.textContent = privacyDescriptions[mode];
     for (const choice of choices)
       choice.button.setAttribute("aria-pressed", String(choice.mode === mode));
+    if (!choices.some(({ button }) => button === document.activeElement))
+      setTabStop(mode);
   }
   function choose(mode: PrivacyMode): void {
-    if (group.disabled || value === mode) return;
+    if (group.disabled) return;
+    setTabStop(mode);
+    if (value === mode) return;
     setValue(mode);
     onChange(mode);
   }
   choices.forEach(({ button, mode }, index) => {
+    button.addEventListener("focus", () => setTabStop(mode));
     button.addEventListener("click", () => choose(mode));
     button.addEventListener("keydown", (event) => {
       if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
@@ -52,9 +61,7 @@ export function createPrivacyDial(
       const direction = event.key === "ArrowRight" ? 1 : -1;
       const next =
         choices[(index + direction + choices.length) % choices.length];
-      if (!next) return;
-      next.button.focus();
-      choose(next.mode);
+      next?.button.focus();
     });
   });
   segments.append(...choices.map(({ button }) => button));

@@ -56,6 +56,8 @@ export interface PanelState {
   readonly pulse: Reading | null;
   readonly pulseOutOfRange: boolean;
   readonly breathing: Reading | null;
+  /** Main figures require samples strictly newer than this signal boundary. */
+  readonly readingsFreshAfter: TimestampUs | null;
   readonly talking: TalkingDetection | null;
   readonly validation: ValidationState | null;
   readonly processing: ProcessingStatus;

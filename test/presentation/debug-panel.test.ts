@@ -11,6 +11,7 @@ import type {
   PanelCommandResult,
 } from "../../src/shared/ipc-contract";
 import {
+  at,
   deferred,
   pulse,
   pulses,
@@ -31,8 +32,12 @@ class ElementFake {
   disabled = false;
   hidden = false;
   open = false;
+  tabIndex = 0;
   srcObject: unknown = null;
-  readonly focus = vi.fn();
+  readonly focus = vi.fn(() => {
+    Object.defineProperty(document, "activeElement", { value: this });
+    this.trigger("focus");
+  });
   readonly play = vi.fn(async () => {});
   readonly children: (ElementFake | string)[] = [];
   readonly attributes = new Map<string, string>();
@@ -70,7 +75,22 @@ class ElementFake {
     this.listeners.set(event, callback);
   }
   trigger(event: string, key = "") {
-    this.listeners.get(event)?.({ key, preventDefault() {} } as KeyboardEvent);
+    let prevented = false;
+    this.listeners.get(event)?.({
+      key,
+      preventDefault() {
+        prevented = true;
+      },
+    } as KeyboardEvent);
+    // Native buttons click on Enter and on Space release.
+    if (
+      this.tag === "button" &&
+      !this.disabled &&
+      !prevented &&
+      ((key === "Enter" && event === "keydown") ||
+        (key === " " && event === "keyup"))
+    )
+      this.trigger("click");
   }
 }
 afterEach(() => vi.unstubAllGlobals());
@@ -87,6 +107,7 @@ function fixture(
     return node;
   };
   vi.stubGlobal("document", {
+    activeElement: null,
     createElement,
     createElementNS: (_: string, tag: string) => createElement(tag),
   });
@@ -138,6 +159,11 @@ function fixture(
     return found;
   };
   const click = (id: string) => node(id).trigger("click");
+  const press = (key: string) => {
+    const focused = document.activeElement as unknown as ElementFake;
+    focused.trigger("keydown", key);
+    focused.trigger("keyup", key);
+  };
   const screen = (name: string) =>
     elements.find(
       (value) =>
@@ -179,6 +205,7 @@ function fixture(
     elements,
     node,
     click,
+    press,
     screen,
     accept,
     state,
@@ -194,6 +221,40 @@ function visibleDescendants(node: ElementFake | string): ElementFake[] {
     ? []
     : [node, ...node.children.flatMap(visibleDescendants)];
 }
+
+function displayedReadings(f: ReturnType<typeof fixture>) {
+  const [pulse, breathing] = f.elements.filter(
+    (node) => node.className === "signal-value",
+  );
+  const raw = f.elements.find((node) => node.tag === "details");
+  const rawValue = (label: string) => {
+    const list = raw?.children.find(
+      (node) => node instanceof ElementFake && node.tag === "dl",
+    );
+    if (!(list instanceof ElementFake)) throw new Error("Missing raw values");
+    const index = list.children.findIndex(
+      (node) => node instanceof ElementFake && node.textContent === label,
+    );
+    const value = list.children[index + 1];
+    if (index === -1 || !(value instanceof ElementFake))
+      throw new Error(`Missing raw ${label}`);
+    return value.textContent;
+  };
+  return {
+    pulse: pulse?.textContent,
+    breathing: breathing?.textContent,
+    chartVisible: !f.node("pulse-chart").hidden,
+    trace: f.node("pulse-chart-trace").attributes.get("d"),
+    rawPulse: rawValue("Pulse rate"),
+    rawBreathing: rawValue("Breathing rate"),
+  };
+}
+
+const breathingAt = (seconds: number, value: number) =>
+  ({
+    kind: "breathingRate",
+    reading: { t: at(seconds), value, confidence: 90, stable: true },
+  }) as const;
 
 const highlightAt = (sessionOffsetUs: number) => ({
   t: 1000 + sessionOffsetUs,
@@ -496,13 +557,68 @@ describe("streamer panel DOM", () => {
     expect(f.node("receipt-timeline-markers").children).toHaveLength(0);
   });
 
-  it("selects the same sharing mode by keyboard and click in the segmented dial", async () => {
+  it.each(["live-privacy-mode", "privacy-mode"])(
+    "%s arrows move the tab stop without applying a mode, and Enter, Space and click activate",
+    async (id) => {
+      const f = fixture();
+      await f.accept();
+      const live = id === "live-privacy-mode";
+      if (live)
+        f.panel.showSession({ ...f.state, active: true, privacyMode: "vibe" });
+      const [off, vibe, numbers, highlights] = [
+        f.node(`${id}-off`),
+        f.node(`${id}-vibe`),
+        f.node(`${id}-numbers`),
+        f.node(`${id}-highlightsOnly`),
+      ];
+      const choices = [off, vibe, numbers, highlights];
+      const focused = (choice: ElementFake) => {
+        expect(document.activeElement).toBe(choice);
+        expect(choices.filter((button) => button.tabIndex === 0)).toEqual([
+          choice,
+        ]);
+      };
+      const pressed = () =>
+        choices.filter(
+          (button) => button.attributes.get("aria-pressed") === "true",
+        );
+
+      vibe.focus();
+      f.press("ArrowRight");
+      expect(document.activeElement).toBe(numbers);
+      f.press("ArrowRight");
+      expect(f.actions.setPrivacyMode).not.toHaveBeenCalled();
+      expect(pressed()).toEqual([vibe]);
+      focused(highlights);
+
+      vibe.focus();
+      f.press("ArrowLeft");
+      expect(f.actions.setPrivacyMode).not.toHaveBeenCalled();
+      expect(pressed()).toEqual([vibe]);
+      focused(off);
+
+      f.press("ArrowRight");
+      f.press("ArrowRight");
+      f.press("Enter");
+      expect(pressed()).toEqual([numbers]);
+      f.press("ArrowRight");
+      f.press(" ");
+      expect(pressed()).toEqual([highlights]);
+      f.click(`${id}-off`);
+      expect(pressed()).toEqual([off]);
+      expect(f.actions.setPrivacyMode.mock.calls).toEqual(
+        live ? [["numbers"], ["highlightsOnly"], ["off"]] : [],
+      );
+    },
+  );
+
+  it("starts Setup with the explicitly selected mode after further arrow navigation", async () => {
     const f = fixture();
     await f.accept();
-    f.node("privacy-mode-vibe").trigger("keydown", "ArrowRight");
-    expect(f.node("privacy-mode-numbers").attributes.get("aria-pressed")).toBe(
-      "true",
-    );
+    f.node("privacy-mode-vibe").focus();
+    f.press("ArrowRight");
+    f.press("Enter");
+    f.press("ArrowRight");
     f.click("start");
     expect(f.actions.start).toHaveBeenCalledExactlyOnceWith(
       "camera",
@@ -510,22 +626,6 @@ describe("streamer panel DOM", () => {
       false,
       "numbers",
     );
-    f.panel.showSession({ ...f.state, active: true, privacyMode: "vibe" });
-    f.node("live-privacy-mode-vibe").trigger("keydown", "ArrowRight");
-    expect(f.node("live-privacy-mode-numbers").focus).toHaveBeenCalledOnce();
-    expect(
-      f.node("live-privacy-mode-numbers").attributes.get("aria-pressed"),
-    ).toBe("true");
-    expect(f.actions.setPrivacyMode).toHaveBeenLastCalledWith("numbers");
-    f.panel.showSession({ ...f.state, active: true, privacyMode: "vibe" });
-    f.click("live-privacy-mode-numbers");
-    expect(
-      f.node("live-privacy-mode-vibe").attributes.get("aria-pressed"),
-    ).toBe("false");
-    expect(f.actions.setPrivacyMode.mock.calls).toEqual([
-      ["numbers"],
-      ["numbers"],
-    ]);
   });
 
   it("plots distinct pulse readings in the last two measurement minutes and follows the talking threshold", async () => {
@@ -606,6 +706,118 @@ describe("streamer panel DOM", () => {
     update(2_000);
     expect(hidden()).toBe(false);
     expect(trace()).toMatch(/^M[^L]+$/);
+  });
+
+  it.each([1, 3])(
+    "hides the main figures and chart through a %s-second warning and waits for newer samples",
+    async (warningSeconds) => {
+      const f = fixture(true);
+      await f.accept();
+      const { session } = sessionFixture({ replay: true, policy: quickPolicy });
+      session.subscribePanel((state) => f.panel.showSession(state));
+      await session.startSession({
+        consentRecorded: true,
+        privacyMode: "vibe",
+      });
+      await session.ingestFrame(pulse(1, 78));
+      await session.ingestFrame(breathingAt(1, 14));
+      expect(displayedReadings(f)).toMatchObject({
+        pulse: "78",
+        breathing: "14.0",
+        chartVisible: true,
+        trace: expect.stringMatching(/^M/u),
+      });
+
+      await session.ingestFrame({
+        kind: "validation",
+        t: at(2),
+        code: "excessiveMotion",
+        hint: "Hold still",
+      });
+      expect(session.panelState.phase).toBe("live");
+      expect(displayedReadings(f)).toEqual({
+        pulse: "—",
+        breathing: "—",
+        chartVisible: false,
+        trace: "",
+        rawPulse: "78.0 BPM",
+        rawBreathing: "14.0 breaths/min",
+      });
+
+      const end = 2 + warningSeconds;
+      await session.ingestFrame(pulse(end - 0.25, 85));
+      await session.ingestFrame(breathingAt(end - 0.25, 15));
+      expect(session.panelState.phase).toBe(
+        warningSeconds > 2 ? "paused" : "live",
+      );
+      expect(displayedReadings(f)).toEqual({
+        pulse: "—",
+        breathing: "—",
+        chartVisible: false,
+        trace: "",
+        rawPulse: "85.0 BPM",
+        rawBreathing: "15.0 breaths/min",
+      });
+
+      await session.ingestFrame({
+        kind: "validation",
+        t: at(end),
+        code: "ok",
+        hint: "Ready",
+      });
+      await session.ingestFrame(breathingAt(end, 16));
+      expect(displayedReadings(f)).toMatchObject({
+        pulse: "—",
+        breathing: "—",
+        chartVisible: false,
+        rawBreathing: "16.0 breaths/min",
+      });
+      await session.ingestFrame(breathingAt(end + 0.25, 17));
+      await session.ingestFrame(pulse(end + 0.25, 80));
+      expect(displayedReadings(f)).toMatchObject({
+        pulse: "80",
+        breathing: "17.0",
+        chartVisible: true,
+        trace: expect.stringMatching(/^M[^L]+$/u),
+      });
+    },
+  );
+
+  it("waits for a breathing sample newer than capture Resume and its recovery validation", async () => {
+    const f = fixture();
+    await f.accept();
+    const { session, clock } = sessionFixture({ policy: quickPolicy });
+    session.subscribePanel((state) => f.panel.showSession(state));
+    await session.startSession({ consentRecorded: true, privacyMode: "vibe" });
+    await session.ingestFrame(breathingAt(1, 14));
+    expect(displayedReadings(f).breathing).toBe("14.0");
+
+    clock.value = at(2);
+    await session.setPaused(true);
+    expect(displayedReadings(f).breathing).toBe("—");
+    clock.value = at(5);
+    await session.setPaused(false);
+    expect(session.panelState.t).toBe(at(1));
+    expect(displayedReadings(f).breathing).toBe("—");
+
+    await session.ingestFrame(breathingAt(4, 15));
+    expect(displayedReadings(f)).toMatchObject({
+      breathing: "—",
+      rawBreathing: "15.0 breaths/min",
+    });
+    await session.ingestFrame({
+      kind: "validation",
+      t: at(6),
+      code: "ok",
+      hint: "Ready",
+    });
+    await session.ingestFrame(breathingAt(5.5, 16));
+    expect(displayedReadings(f)).toMatchObject({
+      breathing: "—",
+      rawBreathing: "16.0 breaths/min",
+    });
+    await session.ingestFrame(breathingAt(6.5, 17));
+    expect(displayedReadings(f).breathing).toBe("17.0");
   });
 
   it("requires the only-person checkbox and I agree before Setup or Start; preserves opted-in configuration", async () => {

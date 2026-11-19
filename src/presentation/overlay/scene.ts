@@ -192,8 +192,14 @@ export function advanceScene(
   if (!state || !("status" in state) || state.status === "paused")
     return { scene, animation: idleAnimation };
 
-  const beat = playWave(scene.beat, nowMs);
-  const breath = playWave(scene.breath, nowMs);
+  const replayThroughMs = state.replay
+    ? Math.max(
+        scene.beat.points.at(-1)?.atMs ?? 0,
+        scene.breath.points.at(-1)?.atMs ?? 0,
+      )
+    : undefined;
+  const beat = playWave(scene.beat, nowMs, replayThroughMs);
+  const breath = playWave(scene.breath, nowMs, replayThroughMs);
   const next = { ...scene, beat: beat.buffer, breath: breath.buffer };
   if (state.status === "calibrating")
     return {
@@ -240,12 +246,7 @@ export function advanceScene(
   };
 }
 
-/** Keep the last privacy choice while disconnected, but never show stale rates. */
+/** Discard the last snapshot so a reconnect cannot display stale activity. */
 export function disconnectScene(scene: OverlayScene): OverlayScene {
-  return scene.state?.mode === "numbers"
-    ? {
-        ...scene,
-        state: { ...scene.state, pulseBpm: null, breathingRate: null },
-      }
-    : scene;
+  return scene.state === null ? scene : emptyScene();
 }

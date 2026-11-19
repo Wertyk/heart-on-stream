@@ -81,6 +81,57 @@ describe("wave accumulation", () => {
     ]);
   });
 
+  it("removes the provisional peak after the measured batch ending at 40.034 s", () => {
+    const provisional: OverlayWave = [
+      { atMs: 40_000, v: 0.2 },
+      { atMs: 40_050, v: 0.4 },
+      { atMs: 40_100, v: 1 },
+      { atMs: 40_150, v: 0.3 },
+      { atMs: 40_200, v: 0.2 },
+    ];
+    const measured: OverlayWave = [
+      { atMs: 39_970, v: 0.2 },
+      { atMs: 40_003, v: 0.2 },
+      { atMs: 40_034, v: 0.2 },
+    ];
+    const buffer = receiveBeatWave(emptyWaveBuffer(), provisional, 41_000);
+    const replaced = receiveBeatWave(buffer, measured, 41_100);
+    const peaks: number[] = [];
+    visitBeatPeaks(replaced.points, 39_970, 40_200, (peak) => peaks.push(peak));
+    expect(peaks).toEqual([]);
+    expect(replaced.points).toEqual([...measured, provisional.at(-1)]);
+  });
+
+  it("preserves known measured samples under trailing coverage", () => {
+    const previous: OverlayWave = [
+      { atMs: 40_100, v: 0.5 },
+      { atMs: 40_134, v: 0.4 },
+    ];
+    const late: OverlayWave = [{ atMs: 40_034, v: 0.2 }];
+    const buffer = receiveBeatWave(emptyWaveBuffer(), previous, 41_000);
+    expect(receiveBeatWave(buffer, late, 41_100).points).toEqual([
+      ...late,
+      ...previous,
+    ]);
+  });
+
+  it("extends coverage from a measured sample aligned with the gap-fill grid", () => {
+    const provisional: OverlayWave = [
+      { atMs: 40_100, v: 1 },
+      { atMs: 40_150, v: 0 },
+      { atMs: 40_200, v: 0 },
+    ];
+    const measured: OverlayWave = [
+      { atMs: 40_017, v: 0.2 },
+      { atMs: 40_050, v: 0.2 },
+    ];
+    const buffer = receiveBeatWave(emptyWaveBuffer(), provisional, 41_000);
+    expect(receiveBeatWave(buffer, measured, 41_100).points).toEqual([
+      ...measured,
+      provisional.at(-1),
+    ]);
+  });
+
   it("sorts overlapping bursts, deduplicates by timestamp and never mutates input", () => {
     const initial = receiveWave(
       emptyWaveBuffer(),
@@ -200,6 +251,21 @@ describe("jitter-buffer playback", () => {
     const frame = playWave(buffer, 816);
     expect(frame.buffer.cursorAtMs).toBeCloseTo(1_818.4);
     expect(frame.value).toBeCloseTo(interpolateWave(buffer.points, 1_818.4));
+  });
+
+  it("holds at the delayed replay edge and fast-forwards when a batch leaves it far behind", () => {
+    const buffer = receiveWave(emptyWaveBuffer(), wave, 0);
+    const held = playWave(buffer, 500, 2_500);
+    expect(held.buffer.cursorAtMs).toBe(1_000);
+    const advanced = receiveWave(held.buffer, [{ atMs: 6_000, v: 0.5 }], 500);
+    expect(playWave(advanced, 516, 6_000).buffer.cursorAtMs).toBe(4_500);
+  });
+
+  it("fades a replay wave after a gap in recording time or a prolonged stall", () => {
+    const buffer = receiveWave(emptyWaveBuffer(), wave, 0);
+    expect(playWave(buffer, 4_000, 3_500).opacity).toBe(1);
+    expect(playWave(buffer, 4_000, 6_000).opacity).toBe(0);
+    expect(playWave(buffer, 14_000, 2_500).opacity).toBe(0);
   });
 
   it("drains queued points then eases to rest in 500 ms without synthesizing beats", () => {

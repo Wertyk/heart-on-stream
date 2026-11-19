@@ -4,6 +4,7 @@ const delayMs = 1_500;
 const maxPlaybackLagMs = 2 * delayMs;
 const catchUpMs = 100;
 const restMs = 500;
+const minReplaySpeed = 0.25;
 const historyMs = 12_000;
 const maxPoints = 4_096;
 const breathTrailMs = 6_000;
@@ -55,28 +56,35 @@ export function receiveWave(
   }
   const replace = overlap === "replace";
   const startsOffGrid = replace && batchOldest % gapFillStepMs !== 0;
-  const measuredGridTimes = replace ? new Set<number>() : undefined;
-  const pointsByTime = new Map<number, OverlayWavePoint>();
-  for (const point of buffer.points) {
-    const measured = buffer.measuredGridTimes?.has(point.atMs);
-    // A late SDK point also supersedes provisional fill just before the batch.
-    const staleLeadingFill =
-      startsOffGrid &&
-      point.atMs % gapFillStepMs === 0 &&
-      point.atMs < batchOldest &&
-      batchOldest - point.atMs <= gapFillCoverageMs &&
-      !measured;
-    const covered =
-      replace && point.atMs >= batchOldest && point.atMs <= batchNewest;
-    if (covered || staleLeadingFill) continue;
-    pointsByTime.set(point.atMs, point);
-    if (measured) measuredGridTimes?.add(point.atMs);
-  }
   const offGrid = replace
     ? batch
         .filter((point) => point.atMs % gapFillStepMs !== 0)
         .sort((a, b) => a.atMs - b.atMs)
     : [];
+  const lastOffGrid = offGrid.at(-1);
+  // An aligned endpoint within this window must also be measured.
+  const endsMeasured =
+    lastOffGrid && batchNewest - lastOffGrid.atMs <= gapFillCoverageMs;
+  const measuredGridTimes = replace ? new Set<number>() : undefined;
+  const pointsByTime = new Map<number, OverlayWavePoint>();
+  for (const point of buffer.points) {
+    const measured = buffer.measuredGridTimes?.has(point.atMs);
+    // A late SDK point also supersedes provisional fill outside the batch.
+    const staleEdgeFill =
+      !measured &&
+      point.atMs % gapFillStepMs === 0 &&
+      ((startsOffGrid &&
+        point.atMs < batchOldest &&
+        batchOldest - point.atMs <= gapFillCoverageMs) ||
+        (endsMeasured &&
+          point.atMs > batchNewest &&
+          point.atMs - batchNewest <= gapFillCoverageMs));
+    const covered =
+      replace && point.atMs >= batchOldest && point.atMs <= batchNewest;
+    if (covered || staleEdgeFill) continue;
+    pointsByTime.set(point.atMs, point);
+    if (measured) measuredGridTimes?.add(point.atMs);
+  }
   for (const point of batch) {
     pointsByTime.set(point.atMs, { v: point.v, atMs: point.atMs });
     if (measuredGridTimes && point.atMs % gapFillStepMs === 0) {
@@ -220,6 +228,7 @@ export function interpolateWave(points: OverlayWave, atMs: number): number {
 export function playWave(
   buffer: WaveBuffer,
   nowMs: number,
+  replayThroughMs?: number,
 ): {
   buffer: WaveBuffer;
   value: number;
@@ -236,20 +245,28 @@ export function playWave(
   }
   const elapsed = Math.max(0, nowMs - buffer.playedAtMs);
   const age = Math.max(0, nowMs - buffer.receivedAtMs);
-  const target = newest.atMs - delayMs + age;
+  const replay = replayThroughMs !== undefined;
+  // A slow replay stretches the gaps between batches. Prefer the recording's
+  // observed progress and still fade if both waves stop arriving altogether.
+  const signalAge = replay
+    ? Math.max(replayThroughMs - newest.atMs, age * minReplaySpeed)
+    : age;
+  // Wall time predicts the live stream. Replay can run at any rate, so
+  // advance only as far as the delayed data allows, holding between batches.
+  const target = newest.atMs - delayMs + (replay ? 0 : age);
   const next = buffer.cursorAtMs + elapsed;
   const lag = target - next;
   const normalCorrection = elapsed * 0.15;
   const catchUp = (lag - delayMs) * Math.min(1, elapsed / catchUpMs);
   const correction = Math.max(
-    -normalCorrection,
+    replay ? -elapsed : -normalCorrection,
     Math.min(Math.max(normalCorrection, catchUp), lag),
   );
   const cursorAtMs = lag > maxPlaybackLagMs ? target : next + correction;
   return {
     buffer: { ...buffer, cursorAtMs, playedAtMs: nowMs },
     value: interpolateWave(buffer.points, cursorAtMs),
-    opacity: 1 - smoothStep((age - 3_000) / restMs),
+    opacity: 1 - smoothStep((signalAge - 3_000) / restMs),
   };
 }
 

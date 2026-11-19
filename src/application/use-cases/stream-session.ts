@@ -209,6 +209,7 @@ export class StreamSession {
       pulseOutOfRange: showReadings && snapshot.pulse === "out_of_range",
       breathing:
         showReadings && this.breathing !== null ? { ...this.breathing } : null,
+      readingsFreshAfter: this.active ? this.shareableSince : null,
       talking:
         showReadings && this.talking !== null ? { ...this.talking } : null,
       validation: this.active ? snapshot.validation : null,

@@ -12,6 +12,7 @@ import {
 } from "../../../src/presentation/overlay/render";
 import {
   advanceScene,
+  disconnectScene,
   emptyScene,
   receiveSnapshot,
 } from "../../../src/presentation/overlay/scene";
@@ -138,6 +139,9 @@ const numbers: NumbersOverlayState = {
 function overlay(state: OverlayState = vibe) {
   let scene = receiveSnapshot(emptyScene(), state, 0);
   return {
+    disconnect() {
+      scene = disconnectScene(scene);
+    },
     receive(next: OverlayState, nowMs: number) {
       scene = receiveSnapshot(scene, next, nowMs);
     },
@@ -240,6 +244,30 @@ describe("OBS overlay drawing", () => {
     silent.receive({ ...spike, beatWave: [] }, 100);
     expect(silent.draw(100).rings).toHaveLength(0);
   });
+
+  it.each([vibe, numbers])(
+    "clears the $mode canvas on disconnect during a spike until a fresh snapshot",
+    (state) => {
+      const source = overlay(state);
+      source.receive({ ...state, intensity: "spike" }, 50);
+      expect(source.draw(50).labels.map(({ text }) => text)).toContain("SPIKE");
+
+      source.disconnect();
+      for (const nowMs of [51, 60_050]) {
+        const frame = source.draw(nowMs);
+        expect(frame.clears).toEqual([[0, 0, 1_920, 1_080]]);
+        expect(frame.fills).toEqual([]);
+        expect(frame.strokes).toEqual([]);
+        expect(frame.labels).toEqual([]);
+      }
+
+      source.receive({ ...state, beatWave: [], breathWave: [] }, 60_100);
+      const fresh = source.draw(60_100);
+      expect(fresh.labels.map(({ text }) => text)).toContain("CALM");
+      expect(fresh.rings).toEqual([]);
+      expect(fresh.waves).toEqual([]);
+    },
+  );
 
   it("draws a muted heart and rotating calibration arc without numbers", () => {
     const source = overlay({ ...numbers, status: "calibrating" });
