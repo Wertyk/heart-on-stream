@@ -6,6 +6,8 @@ Heart on Stream uses the Presage SmartSpectra SDK to turn webcam pulse and breat
 
 Built for the [DEV Presage SmartSpectra SDK Challenge](https://dev.to/challenges/presage-2026-11-04).
 
+Watch the [demo video (2:26)](heart-on-stream-demo.mp4). Clips marked LIVE are recordings of real camera sessions, sped-up clips show their speed, and the voice-over is synthetic.
+
 ## Quick start without a camera or key
 
 Use Node.js 24 or later and Corepack. If Corepack is missing, install it with `npm install --global corepack`. Run these commands from the repository root. Corepack uses the pnpm version pinned in [package.json](package.json). [Corepack installation and usage](https://github.com/nodejs/corepack#how-to-install)
