@@ -59,6 +59,8 @@ export interface PanelState {
   readonly talking: TalkingDetection | null;
   readonly validation: ValidationState | null;
   readonly processing: ProcessingStatus;
+  /** The live SDK reported startup during this session, retained for its receipt. */
+  readonly sdkStarted: boolean;
   /** Highlights produced by the current run, retained for its receipt. */
   readonly highlights: readonly Highlight[];
   readonly errors: readonly PanelError[];

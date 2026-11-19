@@ -7,6 +7,8 @@ export interface ScreenFlow {
   readonly replay: boolean;
   readonly consentAccepted: boolean;
   readonly sessionActive: boolean;
+  /** Main may still report the previous run during a new camera preflight. */
+  readonly hasMainSession: boolean;
   readonly captureBusy: boolean;
 }
 export type FlowEvent =
@@ -23,6 +25,7 @@ export function initialFlow(replay: boolean): ScreenFlow {
     replay,
     consentAccepted: false,
     sessionActive: false,
+    hasMainSession: false,
     captureBusy: false,
   };
 }
@@ -45,7 +48,11 @@ export function transitionFlow(flow: ScreenFlow, event: FlowEvent): ScreenFlow {
         next = { ...flow, screen: "live" };
       break;
     case "session":
-      next = { ...flow, sessionActive: event.active };
+      next = {
+        ...flow,
+        sessionActive: event.active,
+        hasMainSession: flow.hasMainSession || event.active,
+      };
       if (event.active && flow.consentAccepted)
         next = { ...next, screen: "live" };
       if (!event.active && flow.sessionActive && !flow.captureBusy)
@@ -63,7 +70,7 @@ export function transitionFlow(flow: ScreenFlow, event: FlowEvent): ScreenFlow {
       break;
     case "new":
       if (flow.screen === "receipt" && !flow.captureBusy && !flow.sessionActive)
-        next = { ...flow, screen: "setup" };
+        next = { ...flow, screen: "setup", hasMainSession: false };
       break;
   }
   return next;
@@ -96,11 +103,18 @@ export function sessionHighlights(state: PanelStatePayload) {
       );
 }
 
-export function receiptText(replay: boolean, count: number): string {
+export function receiptText(
+  replay: boolean,
+  count: number,
+  sdkStarted: boolean,
+): string {
   const summary = `Video saved: no · Highlights: ${count}`;
-  return replay
-    ? `Camera: not used · ${summary} · Sent to Presage: nothing (SDK not used)`
-    : `Camera: off · ${summary} · SDK telemetry: off · Sent to Presage: key check and automatic vitals insights (no video)`;
+  if (replay)
+    return `Camera: not used · ${summary} · Sent to Presage: nothing (SDK not used)`;
+  const presage = sdkStarted
+    ? "SDK telemetry: off · Sent to Presage: key check and, by SDK default, automatic vitals insights (no video)"
+    : "Sent to Presage: nothing (SDK did not start)";
+  return `Camera: off · ${summary} · ${presage}`;
 }
 
 export function phaseText(state: PanelStatePayload): string {

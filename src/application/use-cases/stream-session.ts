@@ -160,6 +160,7 @@ export class StreamSession {
   private recording = false;
   private recorderNeedsStop = false;
   private processing: ProcessingStatus = "uninitialized";
+  private sdkStarted = false;
   private pulse: Reading | null = null;
   private lastPulseAt: TimestampUs | null = null;
   private breathing: Reading | null = null;
@@ -212,6 +213,7 @@ export class StreamSession {
         showReadings && this.talking !== null ? { ...this.talking } : null,
       validation: this.active ? snapshot.validation : null,
       processing: this.processing,
+      sdkStarted: this.sdkStarted,
       highlights: this.currentHighlights,
       errors: [...this.errors].map(([operation, message]) => ({
         operation,
@@ -325,6 +327,7 @@ export class StreamSession {
       this.captureGapStartedAt = null;
       this.finalDurationMs = null;
       this.processing = "starting";
+      this.sdkStarted = false;
       this.pulse = null;
       this.lastPulseAt = null;
       this.breathing = null;
@@ -714,6 +717,15 @@ export class StreamSession {
       if (secondFace && this.active && this.finalDurationMs === null)
         this.openSecondFaceInterval(frame.t);
       if (!currentCapture()) return;
+      // Startup can arrive while sharing is paused or End is draining frames.
+      if (
+        !this.replay &&
+        this.active &&
+        frame.kind === "processing" &&
+        (frame.status === "starting" || frame.status === "running") &&
+        isTime(frame.t)
+      )
+        this.sdkStarted = true;
       return draining && !(this.replay && frame.kind === "end")
         ? this.recordDrainFrame(frame, delivery)
         : this.ingest(frame, signal, delivery, recording);

@@ -239,6 +239,39 @@ describe("main-process composition", () => {
     expect(f.panels().at(-1)?.active).toBe(true);
   });
 
+  it("retains SDK startup from the current IPC capture through End and ignores a prior session's frames", async () => {
+    const f = fixture();
+    await f.session.start(selection);
+    const generation = f.session.captureGeneration;
+    f.pushFrame({ kind: "processing", status: "idle", t: at(0) });
+    await vi.advanceTimersByTimeAsync(0);
+    expect(f.panels().at(-1)).toMatchObject({
+      active: true,
+      sdkStarted: false,
+      runtime: { sessionStartedAt: at(0) },
+    });
+
+    await f.session.setPrivacyMode?.("off", "drain");
+    f.pushFrame({ kind: "processing", status: "starting", t: at(1) });
+    await f.session.stop();
+    expect(f.panels().at(-1)).toMatchObject({
+      active: false,
+      processing: "idle",
+      sdkStarted: true,
+    });
+
+    await f.session.start(selection);
+    f.pushFrame(
+      { kind: "processing", status: "running", t: at(2) },
+      generation,
+    );
+    await f.session.stop();
+    expect(f.panels().at(-1)).toMatchObject({
+      active: false,
+      sdkStarted: false,
+    });
+  });
+
   it("wires all ports and opt-in recording, forwards ordered IPC frames and panel snapshots", async () => {
     vi.stubEnv("OBS_WS_URL", "ws://127.0.0.1:4455");
     vi.stubEnv("OBS_WS_PASSWORD", "fake-password");

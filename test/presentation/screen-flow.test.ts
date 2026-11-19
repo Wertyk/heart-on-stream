@@ -74,10 +74,10 @@ describe("streamer screen flow", () => {
     });
     expect(current).toHaveLength(1);
     expect(sessionHighlights({ ...state, highlights })).toHaveLength(0);
-    expect(receiptText(false, current.length)).toBe(
-      "Camera: off · Video saved: no · Highlights: 1 · SDK telemetry: off · Sent to Presage: key check and automatic vitals insights (no video)",
+    expect(receiptText(false, current.length, true)).toBe(
+      "Camera: off · Video saved: no · Highlights: 1 · SDK telemetry: off · Sent to Presage: key check and, by SDK default, automatic vitals insights (no video)",
     );
-    expect(receiptText(true, 0)).toBe(
+    expect(receiptText(true, 0, false)).toBe(
       "Camera: not used · Video saved: no · Highlights: 0 · Sent to Presage: nothing (SDK not used)",
     );
   });

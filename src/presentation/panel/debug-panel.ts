@@ -188,7 +188,7 @@ export function createDebugPanel(
       "The overlay shows only what your selected privacy mode allows. This panel is for you, the streamer, only.",
       "No video or images are ever saved or sent anywhere. Your camera choice and highlights.json are stored locally. Numeric session recordings are saved only if recording is enabled.",
       "Pulse and breathing are computed on this computer. The SDK contacts Presage to check your API key. SDK telemetry is disabled.",
-      "During live measurement the Presage SDK also sends automatic LLM Insights check-ins: once readings stabilize and then every 60 seconds, it sends recent pulse rate, heart-rate variability and breathing rate values (no video or images) to Presage, which forwards them to a language model. The SDK has no setting to turn this off. Heart on Stream never requests insights and ignores any replies.",
+      "During live measurement the Presage SDK also sends automatic LLM Insights check-ins: once readings stabilize and then every 60 seconds, it sends an allowlisted set of the vitals the SDK has computed (pulse rate, breathing rate and heart-rate variability, where available) with session and request identifiers, but no video or images, to Presage, which forwards them to a language model. The SDK has no setting to turn this off. Heart on Stream never requests insights and ignores any replies.",
       "For wellness / entertainment. This is not a medical device.",
     ])
       consentScreen.append(element("p", text));
@@ -447,7 +447,7 @@ export function createDebugPanel(
 
   const receiptSummary = element(
     "p",
-    receiptText(replay, 0),
+    receiptText(replay, 0, false),
     "receipt-summary",
   );
   receiptSummary.id = "receipt-summary";
@@ -506,6 +506,7 @@ export function createDebugPanel(
   );
   const newSession = button("New session", "new-session", () => {
     receiptMessage.textContent = "";
+    receiptSummary.textContent = receiptText(replay, 0, false);
     error.textContent = "";
     mode.value = liveMode.value = "vibe";
     modeHelp.textContent = liveModeHelp.textContent = privacyDescriptions.vibe;
@@ -635,6 +636,7 @@ export function createDebugPanel(
     copy.disabled = !overlayUrl.textContent || commandBusy;
     saveHighlights.disabled =
       commandBusy ||
+      !flow.hasMainSession ||
       !latestState ||
       sessionHighlights(latestState).length === 0;
   }
@@ -787,9 +789,11 @@ export function createDebugPanel(
       write(
         indicator,
         replay
-          ? state.active
-            ? "Replay playing"
-            : "Replay stopped"
+          ? !state.active
+            ? "Replay stopped"
+            : state.pauseReason !== null
+              ? "Replay paused"
+              : "Replay playing"
           : cameraOn
             ? "Camera on"
             : state.active &&
@@ -806,7 +810,7 @@ export function createDebugPanel(
       write(multipleFaces, message);
       multipleFaces.hidden = !message;
       showReadings(state);
-      const current = sessionHighlights(state);
+      const current = flow.hasMainSession ? sessionHighlights(state) : [];
       const key = JSON.stringify(current);
       if (key !== lastHighlightKey) {
         highlights.replaceChildren(
@@ -820,7 +824,11 @@ export function createDebugPanel(
         lastHighlightKey = key;
       }
       emptyHighlights.hidden = current.length > 0;
-      receiptSummary.textContent = receiptText(replay, current.length);
+      receiptSummary.textContent = receiptText(
+        replay,
+        current.length,
+        flow.hasMainSession && state.sdkStarted,
+      );
       show("Processing status", state.processing);
       if (replay)
         show("Frames per second", "Not included in numeric replay frames");

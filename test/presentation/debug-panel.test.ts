@@ -1,10 +1,15 @@
 import { readFileSync } from "node:fs";
+import { ProcessingStatus } from "@smartspectra/node-sdk/renderer";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { SdkHost } from "../../src/infrastructure/smartspectra/sdk-host/sdk-host";
 import {
   createDebugPanel,
   type DebugViewModel,
 } from "../../src/presentation/panel/debug-panel";
-import type { PanelCommandResult } from "../../src/shared/ipc-contract";
+import type {
+  HeartBridge,
+  PanelCommandResult,
+} from "../../src/shared/ipc-contract";
 import {
   deferred,
   pulse,
@@ -178,6 +183,85 @@ const settle = async () => {
   for (let i = 0; i < 8; i++) await Promise.resolve();
 };
 
+function liveReceiptFixture() {
+  const f = fixture();
+  const { session, source, clock } = sessionFixture();
+  const unsubscribe = session.subscribePanel((state) =>
+    f.panel.showSession(state),
+  );
+  const track = Object.assign(new EventTarget(), {
+    stop: vi.fn(),
+    getSettings: () => ({ deviceId: "camera" }),
+  });
+  const stream = {
+    getTracks: () => [track],
+    getVideoTracks: () => [track],
+  } as unknown as MediaStream;
+  const getCameraAccessStatus = vi.fn<HeartBridge["getCameraAccessStatus"]>(
+    async () => "not-determined",
+  );
+  const getUserMedia = vi.fn(async () => stream);
+  const sdk = {
+    on: vi.fn().mockReturnThis(),
+    useMediaStream: vi.fn().mockReturnThis(),
+    start: vi.fn(async () => emitProcessing(ProcessingStatus.kStarting)),
+    stop: vi.fn(async () => emitProcessing(ProcessingStatus.kIdle)),
+    destroy: vi.fn(),
+  };
+  function emitProcessing(status: number): void {
+    const call = sdk.on.mock.calls.find(
+      ([event]) => event === "processingStatus",
+    );
+    if (!call) throw new Error("Missing SDK processing listener");
+    (call[1] as (status: number) => void)(status);
+  }
+  const createSdk = vi.fn(() => sdk);
+  const host = new SdkHost({
+    bridge: {
+      getCameraAccessStatus,
+      async beginMeasurement() {
+        await session.startSession({
+          consentRecorded: true,
+          privacyMode: "vibe",
+        });
+        return {
+          apiKey: "test-credential",
+          captureGeneration: session.captureGeneration,
+        };
+      },
+      pushFrame: ({ frame, captureGeneration }) =>
+        source.emit(frame, captureGeneration),
+      noticeEnd: () => void session.withdrawSharing("drain"),
+      endMeasurement: () => session.stopSession(),
+    },
+    createSdk,
+    mediaDevices: { getUserMedia, abort: () => {} },
+    nowUs: () => clock.now(),
+    now: () => 0,
+    schedule: () => () => {},
+    onState: f.panel.showMeasurement,
+    onStream: f.panel.showStream,
+    onCameraDisconnected: () => {},
+  });
+  f.actions.start.mockImplementation(() => host.start("camera", "b"));
+  f.actions.stop.mockImplementation(async () => {
+    const withdrawal = session.withdrawSharing("drain");
+    await Promise.all([
+      withdrawal,
+      host.stop({ withdrawalFallback: undefined }),
+    ]);
+  });
+  return {
+    ...f,
+    host,
+    unsubscribe,
+    getCameraAccessStatus,
+    getUserMedia,
+    createSdk,
+    sdk,
+  };
+}
+
 describe("streamer panel DOM", () => {
   it.each([false, true])(
     "keeps the readings notice visible on Live, expanded raw values and Receipt (replay: %s)",
@@ -234,11 +318,76 @@ describe("streamer panel DOM", () => {
           tag: "p",
           hidden: false,
           textContent:
-            "During live measurement the Presage SDK also sends automatic LLM Insights check-ins: once readings stabilize and then every 60 seconds, it sends recent pulse rate, heart-rate variability and breathing rate values (no video or images) to Presage, which forwards them to a language model. The SDK has no setting to turn this off. Heart on Stream never requests insights and ignores any replies.",
+            "During live measurement the Presage SDK also sends automatic LLM Insights check-ins: once readings stabilize and then every 60 seconds, it sends an allowlisted set of the vitals the SDK has computed (pulse rate, breathing rate and heart-rate variability, where available) with session and request identifiers, but no video or images, to Presage, which forwards them to a language model. The SDK has no setting to turn this off. Heart on Stream never requests insights and ignores any replies.",
         }),
       ]),
     );
   });
+
+  it("reports no Presage traffic when the camera denies the first Start", async () => {
+    const f = liveReceiptFixture();
+    f.getUserMedia.mockRejectedValueOnce(
+      new DOMException("Permission denied", "NotAllowedError"),
+    );
+    try {
+      await f.accept();
+      f.click("start");
+      await vi.waitFor(() => expect(f.screen("receipt")?.hidden).toBe(false));
+      expect(f.getUserMedia).toHaveBeenCalledOnce();
+      expect(f.createSdk).not.toHaveBeenCalled();
+      expect(f.node("command-error").textContent).toContain("NotAllowedError");
+      expect(f.node("receipt-summary").textContent).toBe(
+        "Camera: off · Video saved: no · Highlights: 0 · Sent to Presage: nothing (SDK did not start)",
+      );
+    } finally {
+      await f.host.dispose();
+      f.unsubscribe();
+    }
+  });
+
+  it.each(["camera acquisition", "OS access check"] as const)(
+    "reports SDK startup on End and clears it for a new session ended during %s",
+    async (stage) => {
+      const f = liveReceiptFixture();
+      const opening = deferred<MediaStream>();
+      const access = deferred<"not-determined">();
+      try {
+        await f.accept();
+        f.click("start");
+        await vi.waitFor(() => expect(f.sdk.start).toHaveBeenCalledOnce());
+        f.click("end-session");
+        await vi.waitFor(() => expect(f.screen("receipt")?.hidden).toBe(false));
+        expect(f.node("receipt-summary").textContent).toBe(
+          "Camera: off · Video saved: no · Highlights: 0 · SDK telemetry: off · Sent to Presage: key check and, by SDK default, automatic vitals insights (no video)",
+        );
+
+        if (stage === "camera acquisition")
+          f.getUserMedia.mockReturnValueOnce(opening.promise);
+        else f.getCameraAccessStatus.mockReturnValueOnce(access.promise);
+        f.click("new-session");
+        f.click("start");
+        await vi.waitFor(() =>
+          expect(
+            stage === "camera acquisition"
+              ? f.getUserMedia
+              : f.getCameraAccessStatus,
+          ).toHaveBeenCalledTimes(2),
+        );
+        f.click("end-session");
+        access.resolve("not-determined");
+        await vi.waitFor(() => expect(f.screen("receipt")?.hidden).toBe(false));
+        expect(f.createSdk).toHaveBeenCalledOnce();
+        expect(f.node("receipt-summary").textContent).toBe(
+          "Camera: off · Video saved: no · Highlights: 0 · Sent to Presage: nothing (SDK did not start)",
+        );
+      } finally {
+        access.resolve("not-determined");
+        await f.host.dispose();
+        opening.resolve({ getTracks: () => [] } as unknown as MediaStream);
+        f.unsubscribe();
+      }
+    },
+  );
 
   it("requires the only-person checkbox and I agree before Setup or Start; preserves opted-in configuration", async () => {
     const f = fixture();
@@ -466,10 +615,40 @@ describe("streamer panel DOM", () => {
     expect(f.node("measuring-indicator").textContent).toBe("Replay playing");
     f.panel.showSession(f.state);
     expect(f.screen("receipt")?.hidden).toBe(false);
-    expect(f.node("receipt-summary").textContent).toContain("Camera: not used");
+    expect(f.node("receipt-summary").textContent).toBe(
+      "Camera: not used · Video saved: no · Highlights: 0 · Sent to Presage: nothing (SDK not used)",
+    );
     f.click("new-session");
     expect(f.screen("setup")?.hidden).toBe(false);
     expect(badge?.hidden).toBe(false);
+  });
+
+  it("shows Replay paused on Pause and Replay playing after Resume", async () => {
+    const f = fixture(true);
+    const { session } = sessionFixture({ replay: true });
+    const unsubscribe = session.subscribePanel(f.panel.showSession);
+    f.actions.start.mockImplementation(() =>
+      session.startSession({ consentRecorded: true, privacyMode: "vibe" }),
+    );
+    f.actions.pause.mockImplementation(() => session.setPaused(true));
+    f.actions.resume.mockImplementation(() => session.setPaused(false));
+    try {
+      await f.accept();
+      f.click("start");
+      await session.whenIdle();
+      expect(f.node("measuring-indicator").textContent).toBe("Replay playing");
+
+      f.click("pause");
+      await session.whenIdle();
+      expect(f.node("measuring-indicator").textContent).toBe("Replay paused");
+
+      f.click("resume");
+      await session.whenIdle();
+      expect(f.node("measuring-indicator").textContent).toBe("Replay playing");
+    } finally {
+      unsubscribe();
+      await session.stopSession();
+    }
   });
 
   it("shows conditions, current-session highlights, raw values and runtime messages, retaining the expanded raw view", async () => {
